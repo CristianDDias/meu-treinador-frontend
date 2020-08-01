@@ -6,6 +6,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { Header } from "./components/Header/Header";
 import { NavBar } from "./components/NavBar/NavBar";
 import { Trainers } from "./pages/Trainers/Trainers";
+import { TrainerProfile } from "./pages/TrainerProfile/TrainerProfile";
 import { Trainings } from "./pages/Trainings/Trainings";
 import { Calendar } from "./pages/Calendar/Calendar";
 import { Profile } from "./pages/Profile/Profile";
@@ -25,13 +26,16 @@ export const App = () => {
     <>
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        <div className={classes.layout}>
-          <Header />
-          <BrowserRouter>
+        <BrowserRouter>
+          <div className={classes.layout}>
+            <Header />
             <Container maxWidth="xs" disableGutters>
               <Switch>
-                <Route path="/trainers">
+                <Route exact path="/trainers">
                   <Trainers />
+                </Route>
+                <Route path="/trainers/:trainerId">
+                  <TrainerProfile />
                 </Route>
                 <Route path="/calendar">
                   <Calendar />
@@ -46,8 +50,8 @@ export const App = () => {
               </Switch>
             </Container>
             <NavBar />
-          </BrowserRouter>
-        </div>
+          </div>
+        </BrowserRouter>
       </ThemeProvider>
     </>
   );

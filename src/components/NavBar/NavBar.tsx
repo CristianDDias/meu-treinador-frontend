@@ -22,7 +22,7 @@ export const NavBar = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const handleChange = (_: any, value: string) => {
+  const navigateTo = (_: any, value: string) => {
     history.push(`/${value}`);
   };
 
@@ -32,7 +32,7 @@ export const NavBar = () => {
     <BottomNavigation
       showLabels
       value={value}
-      onChange={handleChange}
+      onChange={navigateTo}
       className={classes.navigation}
     >
       <BottomNavigationAction

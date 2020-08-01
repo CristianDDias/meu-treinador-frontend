@@ -1,6 +1,8 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
+import ButtonBase from "@material-ui/core/ButtonBase";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import StarIcon from "@material-ui/icons/StarRate";
@@ -42,29 +44,37 @@ interface TrainerListItemProps {
 }
 
 export const TrainerListItem: React.FC<TrainerListItemProps> = ({
-  trainer: { name, description, rating, img },
+  trainer: { id, name, description, rating, img },
 }) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const navigateToTrainer = () => {
+    history.push(`${history.location.pathname}/${id}`);
+  };
+
   return (
-    <Paper className={classes.paper}>
-      <Avatar variant="rounded" src={img} className={classes.avatar} />
-      <div className={classes.info}>
-        <div className={classes.header}>
-          <Typography>{name}</Typography>
-          <div className={classes.rating}>
-            <Typography variant="caption">{rating}</Typography>
-            <StarIcon color="primary" fontSize="small" />
+    <ButtonBase focusRipple onClick={navigateToTrainer}>
+      <Paper className={classes.paper}>
+        <Avatar variant="rounded" src={img} className={classes.avatar} />
+        <div className={classes.info}>
+          <div className={classes.header}>
+            <Typography>{name}</Typography>
+            <div className={classes.rating}>
+              <Typography variant="caption">{rating}</Typography>
+              <StarIcon color="primary" fontSize="small" />
+            </div>
           </div>
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            align="justify"
+            className={classes.description}
+          >
+            {description}
+          </Typography>
         </div>
-        <Typography
-          variant="caption"
-          color="textSecondary"
-          align="justify"
-          className={classes.description}
-        >
-          {description}
-        </Typography>
-      </div>
-    </Paper>
+      </Paper>
+    </ButtonBase>
   );
 };
