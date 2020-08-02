@@ -8,9 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import BackIcon from "@material-ui/icons/ArrowBack";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  toolbar: {
-    boxShadow: theme.softShadow,
-  },
   title: {
     width: "100%",
     color: "#ffffff",
@@ -37,7 +34,7 @@ export const Header = () => {
 
   return (
     <AppBar position="static" elevation={0}>
-      <Toolbar variant="dense" className={classes.toolbar}>
+      <Toolbar variant="dense">
         <IconButton
           edge="start"
           className={hideBackButton ? classes.hidden : classes.button}

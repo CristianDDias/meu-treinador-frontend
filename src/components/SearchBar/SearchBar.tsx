@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     background: theme.palette.background.paper,
     padding: theme.spacing(1),
-    boxShadow: theme.softShadow,
+    borderBottom: theme.border,
     zIndex: theme.zIndex.appBar,
   },
   input: {

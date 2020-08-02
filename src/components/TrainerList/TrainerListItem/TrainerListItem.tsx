@@ -2,25 +2,20 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
-import ButtonBase from "@material-ui/core/ButtonBase";
-import Paper from "@material-ui/core/Paper";
+import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
 import StarIcon from "@material-ui/icons/StarRate";
 import { Trainer } from "../../../interfaces/trainer";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  paper: {
-    display: "flex",
-    boxShadow: theme.softShadow,
-  },
   avatar: {
-    width: "100px",
-    height: "100px",
+    width: theme.spacing(11),
+    height: theme.spacing(11),
+    marginRight: theme.spacing(1),
   },
   info: {
     display: "flex",
     flexDirection: "column",
-    padding: theme.spacing(0.5, 1, 1, 1),
   },
   header: {
     display: "flex",
@@ -53,27 +48,25 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
   };
 
   return (
-    <ButtonBase focusRipple onClick={navigateToTrainer}>
-      <Paper elevation={0} className={classes.paper}>
-        <Avatar variant="rounded" src={img} className={classes.avatar} />
-        <div className={classes.info}>
-          <div className={classes.header}>
-            <Typography>{name}</Typography>
-            <div className={classes.rating}>
-              <Typography variant="caption">{rating}</Typography>
-              <StarIcon color="primary" fontSize="small" />
-            </div>
+    <ListItem button onClick={navigateToTrainer}>
+      <Avatar variant="rounded" src={img} className={classes.avatar} />
+      <div className={classes.info}>
+        <div className={classes.header}>
+          <Typography>{name}</Typography>
+          <div className={classes.rating}>
+            <Typography variant="caption">{rating}</Typography>
+            <StarIcon color="primary" fontSize="small" />
           </div>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            align="justify"
-            className={classes.description}
-          >
-            {description}
-          </Typography>
         </div>
-      </Paper>
-    </ButtonBase>
+        <Typography
+          variant="caption"
+          color="textSecondary"
+          align="justify"
+          className={classes.description}
+        >
+          {description}
+        </Typography>
+      </div>
+    </ListItem>
   );
 };

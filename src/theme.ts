@@ -2,12 +2,10 @@ import { createMuiTheme } from "@material-ui/core/styles";
 
 declare module "@material-ui/core/styles/createMuiTheme" {
   interface Theme {
-    softShadow: string;
-    softShadowUp: string;
+    border: string;
   }
   interface ThemeOptions {
-    softShadow?: string;
-    softShadowUp?: string;
+    border?: string;
   }
 }
 
@@ -17,8 +15,7 @@ export const theme = createMuiTheme({
       main: "#ff824c",
     },
   },
-  softShadow: "0 1px 4px 0 rgba(0,0,0,0.25)",
-  softShadowUp: "0 0px 4px 0 rgba(0,0,0,0.25)",
+  border: "1px solid rgba(0, 0, 0, 0.12)",
 });
 
 // blue     1a91ff - 007cdc

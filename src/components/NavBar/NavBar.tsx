@@ -10,7 +10,7 @@ import TrainingIcon from "@material-ui/icons/DirectionsRun";
 
 const useStyles = makeStyles((theme: Theme) => ({
   navigation: {
-    boxShadow: theme.softShadowUp,
+    borderTop: theme.border,
     zIndex: theme.zIndex.appBar,
   },
 }));
