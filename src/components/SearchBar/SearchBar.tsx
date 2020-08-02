@@ -1,28 +1,26 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FilterIcon from "@material-ui/icons/Tune";
 import SearchIcon from "@material-ui/icons/Search";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      display: "flex",
-      alignItems: "center",
-      background: theme.palette.background.paper,
-      padding: theme.spacing(1),
-      boxShadow: theme.shadows[1],
-      zIndex: theme.zIndex.appBar,
-    },
-    input: {
-      flexBasis: 0,
-      flexGrow: 1,
-      marginRight: theme.spacing(1),
-    },
-  })
-);
+const useStyles = makeStyles((theme: Theme) => ({
+  container: {
+    display: "flex",
+    alignItems: "center",
+    background: theme.palette.background.paper,
+    padding: theme.spacing(1),
+    boxShadow: theme.softShadow,
+    zIndex: theme.zIndex.appBar,
+  },
+  input: {
+    flexBasis: 0,
+    flexGrow: 1,
+    marginRight: theme.spacing(1),
+  },
+}));
 
 interface SearchBarProps {
   placeholder: string;

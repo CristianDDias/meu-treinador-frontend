@@ -1,13 +1,16 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import BackIcon from "@material-ui/icons/ArrowBack";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
+  toolbar: {
+    boxShadow: theme.softShadow,
+  },
   title: {
     width: "100%",
     color: "#ffffff",
@@ -19,7 +22,7 @@ const useStyles = makeStyles({
   hidden: {
     display: "none",
   },
-});
+}));
 
 export const Header = () => {
   const classes = useStyles();
@@ -33,8 +36,8 @@ export const Header = () => {
   const hideBackButton = location.pathname.split("/")[2] ? false : true;
 
   return (
-    <AppBar position="static" elevation={2}>
-      <Toolbar variant="dense">
+    <AppBar position="static" elevation={0}>
+      <Toolbar variant="dense" className={classes.toolbar}>
         <IconButton
           edge="start"
           className={hideBackButton ? classes.hidden : classes.button}

@@ -1,23 +1,21 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { TrainerList } from "../../components/TrainerList/TrainerList";
 import { Trainer } from "../../interfaces/trainer";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      height: "100%",
-      display: "flex",
-      flexDirection: "column",
-    },
-    list: {
-      flexBasis: 0,
-      flexGrow: 1,
-      overflow: "auto",
-    },
-  })
-);
+const useStyles = makeStyles({
+  container: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
+  list: {
+    flexBasis: 0,
+    flexGrow: 1,
+    overflow: "auto",
+  },
+});
 
 const trainers: Trainer[] = Array.from(Array(10), (_, index) => ({
   id: `${index}`,

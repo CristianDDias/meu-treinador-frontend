@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import CalendarIcon from "@material-ui/icons/DateRange";
@@ -8,14 +8,12 @@ import ProfileIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import TrainingIcon from "@material-ui/icons/DirectionsRun";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    navigation: {
-      boxShadow: theme.shadows[2],
-      zIndex: theme.zIndex.appBar,
-    },
-  })
-);
+const useStyles = makeStyles((theme: Theme) => ({
+  navigation: {
+    boxShadow: theme.softShadowUp,
+    zIndex: theme.zIndex.appBar,
+  },
+}));
 
 export const NavBar = () => {
   const classes = useStyles();

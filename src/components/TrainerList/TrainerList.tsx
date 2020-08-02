@@ -1,20 +1,18 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import { TrainerListItem } from "./TrainerListItem/TrainerListItem";
 import { Trainer } from "../../interfaces/trainer";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    list: {
-      display: "flex",
-      flexDirection: "column",
-      padding: theme.spacing(1),
-      "& > :not(:last-child)": {
-        marginBottom: theme.spacing(1),
-      },
+const useStyles = makeStyles((theme: Theme) => ({
+  list: {
+    display: "flex",
+    flexDirection: "column",
+    padding: theme.spacing(1.5, 1),
+    "& > :not(:last-child)": {
+      marginBottom: theme.spacing(1.5),
     },
-  })
-);
+  },
+}));
 
 interface TrainerListProps {
   trainers: Trainer[];
