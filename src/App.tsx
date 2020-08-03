@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     height: "calc(100vh - 56px)",
     display: "flex",
     flexDirection: "column",
-    "& > :nth-child(2)": {
+    "& > main": {
       flexGrow: 1,
       flexBasis: 0,
     },
@@ -33,7 +33,7 @@ export const App = () => {
         <BrowserRouter>
           <div className={classes.layout}>
             <Header />
-            <Container maxWidth="xs" disableGutters>
+            <Container maxWidth="xs" component="main" disableGutters>
               <Switch>
                 <Route exact path="/trainers">
                   <Trainers />
