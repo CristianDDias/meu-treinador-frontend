@@ -12,6 +12,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   navigation: {
     borderTop: theme.border,
     zIndex: theme.zIndex.appBar,
+    position: "fixed",
+    bottom: "0px",
+    left: "0px",
+    right: "0px",
   },
 }));
 

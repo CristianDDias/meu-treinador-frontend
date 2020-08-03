@@ -1,13 +1,13 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { makeStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import BackIcon from "@material-ui/icons/ArrowBack";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles({
   title: {
     width: "100%",
     color: "#ffffff",
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   hidden: {
     display: "none",
   },
-}));
+});
 
 export const Header = () => {
   const classes = useStyles();

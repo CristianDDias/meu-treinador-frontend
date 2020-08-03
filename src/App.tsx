@@ -14,9 +14,13 @@ import { theme } from "./theme";
 
 const useStyles = makeStyles({
   layout: {
-    height: "100vh",
-    display: "grid",
-    gridTemplateRows: "auto 1fr auto",
+    height: "calc(100vh - 56px)",
+    display: "flex",
+    flexDirection: "column",
+    "& > :nth-child(2)": {
+      flexGrow: 1,
+      flexBasis: 0,
+    },
   },
 });
 
