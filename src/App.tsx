@@ -5,7 +5,8 @@ import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Header } from "./components/Header/Header";
 import { NavBar } from "./components/NavBar/NavBar";
-import { Trainers } from "./pages/Trainers/Trainers";
+import { SearchTrainers } from "./pages/SearchTrainers/SearchTrainers";
+import { FavoriteTrainers } from "./pages/FavoriteTrainers/FavoriteTrainers";
 import { TrainerProfile } from "./pages/TrainerProfile/TrainerProfile";
 import { Trainings } from "./pages/Trainings/Trainings";
 import { Calendar } from "./pages/Calendar/Calendar";
@@ -33,12 +34,18 @@ export const App = () => {
         <BrowserRouter>
           <div className={classes.layout}>
             <Header />
-            <Container maxWidth="xs" component="main" disableGutters>
+            <Container maxWidth="sm" component="main" disableGutters>
               <Switch>
-                <Route exact path="/trainers">
-                  <Trainers />
+                <Route path="/trainers" exact>
+                  <SearchTrainers />
                 </Route>
                 <Route path="/trainers/:trainerId">
+                  <TrainerProfile />
+                </Route>
+                <Route path="/favorites" exact>
+                  <FavoriteTrainers />
+                </Route>
+                <Route path="/favorites/:trainerId">
                   <TrainerProfile />
                 </Route>
                 <Route path="/calendar">
@@ -50,7 +57,7 @@ export const App = () => {
                 <Route path="/profile">
                   <Profile />
                 </Route>
-                <Redirect exact from="/" to="/trainers" />
+                <Redirect from="/" to="/trainers" exact />
               </Switch>
             </Container>
             <NavBar />

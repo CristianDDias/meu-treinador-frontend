@@ -1,10 +1,10 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { SearchBar } from "../../components/SearchBar/SearchBar";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import { TrainerList } from "../../components/TrainerList/TrainerList";
 import { Trainer } from "../../interfaces/trainer";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     height: "100%",
     display: "flex",
@@ -15,9 +15,15 @@ const useStyles = makeStyles({
     flexGrow: 1,
     overflow: "auto",
   },
-});
+  label: {
+    background: theme.palette.background.paper,
+    padding: theme.spacing(1),
+    fontWeight: theme.typography.fontWeightMedium,
+    borderBottom: theme.border,
+  },
+}));
 
-const trainers: Trainer[] = Array.from(Array(10), (_, index) => ({
+const trainers: Trainer[] = Array.from(Array(3), (_, index) => ({
   id: `${index}`,
   name: `Trainer Trainer ${index}`,
   description:
@@ -27,11 +33,13 @@ const trainers: Trainer[] = Array.from(Array(10), (_, index) => ({
     "https://assetbucketdevelopment.blob.core.windows.net/testing/15539755273179878-Male_25.jpg",
 }));
 
-export const Trainers = () => {
+export const FavoriteTrainers = () => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <SearchBar placeholder="Buscar Personal Trainer..." />
+      <Typography className={classes.label}>
+        Favoritos ({trainers.length})
+      </Typography>
       <div className={classes.list}>
         <TrainerList trainers={trainers} />
       </div>
