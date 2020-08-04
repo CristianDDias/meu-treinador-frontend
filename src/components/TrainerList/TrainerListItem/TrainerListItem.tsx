@@ -9,11 +9,13 @@ import { Trainer } from "../../../interfaces/trainer";
 
 const useStyles = makeStyles((theme: Theme) => ({
   avatar: {
-    width: theme.spacing(11),
-    height: theme.spacing(11),
+    width: theme.spacing(14),
+    height: theme.spacing(14),
     marginRight: theme.spacing(1),
   },
   info: {
+    flexBasis: 0,
+    flexGrow: 1,
     display: "flex",
     flexDirection: "column",
   },
@@ -22,9 +24,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
   },
+  name: {
+    flexBasis: 0,
+    flexGrow: 1,
+    width: 0,
+    marginRight: theme.spacing(0.5),
+  },
+  price: {
+    fontWeight: theme.typography.fontWeightMedium,
+  },
   rating: {
     display: "flex",
     alignItems: "center",
+    marginBottom: theme.spacing(0.5),
   },
   description: {
     overflow: "hidden",
@@ -38,7 +50,7 @@ interface TrainerListItemProps {
 }
 
 export const TrainerListItem: React.FC<TrainerListItemProps> = ({
-  trainer: { id, name, description, rating, img },
+  trainer: { id, name, description, price, rating, img },
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -52,11 +64,18 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
       <Avatar variant="rounded" src={img} className={classes.avatar} />
       <div className={classes.info}>
         <div className={classes.header}>
-          <Typography>{name}</Typography>
-          <div className={classes.rating}>
-            <Typography variant="caption">{rating}</Typography>
-            <StarIcon color="primary" fontSize="small" />
-          </div>
+          <Typography noWrap className={classes.name}>
+            {name}
+          </Typography>
+          <Typography color="primary" className={classes.price}>
+            R$ {Math.floor(price)}
+          </Typography>
+        </div>
+        <div className={classes.rating}>
+          <StarIcon color="primary" fontSize="small" />
+          <Typography variant="caption">
+            {rating.value} ({rating.reviews})
+          </Typography>
         </div>
         <Typography
           variant="caption"

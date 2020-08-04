@@ -2,7 +2,9 @@ import React from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { TrainerList } from "../../components/TrainerList/TrainerList";
-import { Trainer } from "../../interfaces/trainer";
+
+import { trainers } from "../../__mocks__/trainers";
+const favoriteTrainers = trainers.slice(0, 3);
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -23,25 +25,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const trainers: Trainer[] = Array.from(Array(3), (_, index) => ({
-  id: `${index}`,
-  name: `Trainer Trainer ${index}`,
-  description:
-    "Especializado em treinos de hipertrofia. Pós-graduado em alguma coisa.",
-  rating: 4.5,
-  img:
-    "https://assetbucketdevelopment.blob.core.windows.net/testing/15539755273179878-Male_25.jpg",
-}));
-
 export const FavoriteTrainers = () => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
       <Typography className={classes.label}>
-        Favoritos ({trainers.length})
+        Favoritos ({favoriteTrainers.length})
       </Typography>
       <div className={classes.list}>
-        <TrainerList trainers={trainers} />
+        <TrainerList trainers={favoriteTrainers} />
       </div>
     </div>
   );

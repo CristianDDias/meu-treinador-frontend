@@ -2,6 +2,10 @@ export interface Trainer {
   id: string;
   name: string;
   description: string;
-  rating: number;
+  price: number;
+  rating: {
+    value: number;
+    reviews: number;
+  };
   img: string;
 }
