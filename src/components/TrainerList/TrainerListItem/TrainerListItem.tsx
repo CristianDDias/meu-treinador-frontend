@@ -9,8 +9,8 @@ import { Trainer } from "../../../interfaces/trainer";
 
 const useStyles = makeStyles((theme: Theme) => ({
   avatar: {
-    width: theme.spacing(14),
-    height: theme.spacing(14),
+    width: "104px",
+    height: "104px",
     marginRight: theme.spacing(1),
   },
   info: {
@@ -36,12 +36,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   rating: {
     display: "flex",
     alignItems: "center",
-    marginBottom: theme.spacing(0.5),
+    marginTop: theme.spacing(0.5),
+    marginBottom: theme.spacing(1),
   },
   description: {
     overflow: "hidden",
     lineHeight: "1rem",
-    height: "4rem",
+    height: "3rem",
   },
 }));
 
@@ -74,7 +75,7 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
         <div className={classes.rating}>
           <StarIcon color="primary" fontSize="small" />
           <Typography variant="caption">
-            {rating.value} ({rating.reviews})
+            {rating.value} ({rating.reviews} avaliações)
           </Typography>
         </div>
         <Typography
