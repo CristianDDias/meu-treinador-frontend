@@ -12,7 +12,7 @@ declare module "@material-ui/core/styles/createMuiTheme" {
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#ff824c",
+      main: "#1a91ff",
     },
   },
   border: "1px solid rgba(0, 0, 0, 0.12)",

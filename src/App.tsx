@@ -15,13 +15,14 @@ import { theme } from "./theme";
 
 const useStyles = makeStyles({
   layout: {
-    height: "calc(100vh - 56px)",
+    height: "100vh",
     display: "flex",
     flexDirection: "column",
     background: "#f3f3f3",
     "& > main": {
       flexGrow: 1,
       flexBasis: 0,
+      marginBottom: "56px",
     },
   },
 });
@@ -35,7 +36,7 @@ export const App = () => {
         <BrowserRouter>
           <div className={classes.layout}>
             <Header />
-            <Container maxWidth="sm" component="main" disableGutters>
+            <Container component="main" maxWidth="sm" disableGutters>
               <Switch>
                 <Route path="/trainers" exact>
                   <SearchTrainers />

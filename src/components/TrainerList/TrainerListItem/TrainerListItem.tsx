@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexGrow: 1,
     width: 0,
     marginRight: theme.spacing(0.5),
+    fontWeight: theme.typography.fontWeightMedium,
   },
   price: {
     fontWeight: theme.typography.fontWeightMedium,
