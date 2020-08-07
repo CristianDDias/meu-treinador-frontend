@@ -36,38 +36,38 @@ export const NavBar = () => {
 
   return (
     <BottomNavigation
+      className={classes.navigation}
       value={value}
       onChange={navigateTo}
-      className={classes.navigation}
     >
       <BottomNavigationAction
+        className={classes.button}
         label="Buscar"
         value="trainers"
-        className={classes.button}
         icon={<SearchIcon />}
       />
       <BottomNavigationAction
+        className={classes.button}
         label="Favoritos"
         value="favorites"
-        className={classes.button}
         icon={<FavoriteIcon />}
       />
       <BottomNavigationAction
+        className={classes.button}
         label="Calendário"
         value="calendar"
-        className={classes.button}
         icon={<CalendarIcon />}
       />
       <BottomNavigationAction
+        className={classes.button}
         label="Treinos"
         value="trainings"
-        className={classes.button}
         icon={<TrainingIcon />}
       />
       <BottomNavigationAction
+        className={classes.button}
         label="Perfil"
         value="profile"
-        className={classes.button}
         icon={<ProfileIcon />}
       />
     </BottomNavigation>

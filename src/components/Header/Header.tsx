@@ -36,13 +36,13 @@ export const Header = () => {
     <AppBar position="static" elevation={0}>
       <Toolbar variant="dense">
         <IconButton
-          edge="start"
           className={hideBackButton ? classes.hidden : classes.button}
+          edge="start"
           onClick={navigateBack}
         >
           <BackIcon />
         </IconButton>
-        <Typography variant="h6" align="center" className={classes.title}>
+        <Typography className={classes.title} variant="h6" align="center">
           MEU TREINADOR
         </Typography>
       </Toolbar>

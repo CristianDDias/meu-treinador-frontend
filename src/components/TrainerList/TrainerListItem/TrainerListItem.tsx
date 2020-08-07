@@ -8,6 +8,9 @@ import StarIcon from "@material-ui/icons/StarRate";
 import { Trainer } from "../../../interfaces/trainer";
 
 const useStyles = makeStyles((theme: Theme) => ({
+  item: {
+    padding: theme.spacing(2),
+  },
   avatar: {
     width: "104px",
     height: "104px",
@@ -62,14 +65,14 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
   };
 
   return (
-    <ListItem button onClick={navigateToTrainer}>
-      <Avatar variant="rounded" src={img} className={classes.avatar} />
+    <ListItem className={classes.item} button onClick={navigateToTrainer}>
+      <Avatar className={classes.avatar} variant="rounded" src={img} />
       <div className={classes.info}>
         <div className={classes.header}>
-          <Typography noWrap className={classes.name}>
+          <Typography className={classes.name} noWrap>
             {name}
           </Typography>
-          <Typography color="primary" className={classes.price}>
+          <Typography className={classes.price} color="primary">
             R$ {Math.floor(price)}
           </Typography>
         </div>
@@ -80,10 +83,10 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
           </Typography>
         </div>
         <Typography
+          className={classes.description}
           variant="caption"
           color="textSecondary"
           align="justify"
-          className={classes.description}
         >
           {description}
         </Typography>

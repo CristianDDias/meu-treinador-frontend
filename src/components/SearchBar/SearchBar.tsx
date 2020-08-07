@@ -31,9 +31,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({ placeholder }) => {
   return (
     <div className={classes.container}>
       <OutlinedInput
+        className={classes.input}
         margin="dense"
         placeholder={placeholder}
-        className={classes.input}
         endAdornment={
           <InputAdornment position="end">
             <IconButton size="small" edge="end">

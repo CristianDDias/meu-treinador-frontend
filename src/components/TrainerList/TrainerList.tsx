@@ -18,7 +18,7 @@ interface TrainerListProps {
 export const TrainerList: React.FC<TrainerListProps> = ({ trainers }) => {
   const classes = useStyles();
   return (
-    <List disablePadding className={classes.list}>
+    <List className={classes.list} disablePadding>
       {trainers.map((trainer, index) => (
         <React.Fragment key={trainer.id}>
           <TrainerListItem trainer={trainer} />
