@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: theme.palette.background.paper,
     padding: theme.spacing(1),
     borderBottom: theme.border,
-    zIndex: theme.zIndex.appBar,
   },
   input: {
     flexBasis: 0,

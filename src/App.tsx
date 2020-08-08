@@ -14,16 +14,12 @@ import { Profile } from "./pages/Profile/Profile";
 import { theme } from "./theme";
 
 const useStyles = makeStyles({
-  layout: {
-    height: "100vh",
-    display: "flex",
-    flexDirection: "column",
+  container: {
+    height: "calc(100vh - 48px - 56px)",
+    overflow: "auto",
     background: "#f3f3f3",
-    "& > main": {
-      flexGrow: 1,
-      flexBasis: 0,
-      marginBottom: "56px",
-    },
+    marginTop: "48px",
+    marginBottom: "56px",
   },
 });
 
@@ -34,36 +30,34 @@ export const App = () => {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <div className={classes.layout}>
-            <Header />
-            <Container component="main" maxWidth="sm" disableGutters>
-              <Switch>
-                <Route path="/trainers" exact>
-                  <SearchTrainers />
-                </Route>
-                <Route path="/trainers/:trainerId">
-                  <TrainerProfile />
-                </Route>
-                <Route path="/favorites" exact>
-                  <FavoriteTrainers />
-                </Route>
-                <Route path="/favorites/:trainerId">
-                  <TrainerProfile />
-                </Route>
-                <Route path="/calendar">
-                  <Calendar />
-                </Route>
-                <Route path="/trainings">
-                  <Trainings />
-                </Route>
-                <Route path="/profile">
-                  <Profile />
-                </Route>
-                <Redirect from="/" to="/trainers" exact />
-              </Switch>
-            </Container>
-            <NavBar />
-          </div>
+          <Header />
+          <Container className={classes.container} maxWidth="sm" disableGutters>
+            <Switch>
+              <Route path="/trainers" exact>
+                <SearchTrainers />
+              </Route>
+              <Route path="/trainers/:trainerId">
+                <TrainerProfile />
+              </Route>
+              <Route path="/favorites" exact>
+                <FavoriteTrainers />
+              </Route>
+              <Route path="/favorites/:trainerId">
+                <TrainerProfile />
+              </Route>
+              <Route path="/calendar">
+                <Calendar />
+              </Route>
+              <Route path="/trainings">
+                <Trainings />
+              </Route>
+              <Route path="/profile">
+                <Profile />
+              </Route>
+              <Redirect from="/" to="/trainers" exact />
+            </Switch>
+          </Container>
+          <NavBar />
         </BrowserRouter>
       </ThemeProvider>
     </>

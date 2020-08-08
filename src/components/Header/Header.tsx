@@ -33,7 +33,7 @@ export const Header = () => {
   const hideBackButton = location.pathname.split("/")[2] ? false : true;
 
   return (
-    <AppBar position="static" elevation={0}>
+    <AppBar position="fixed" elevation={0}>
       <Toolbar variant="dense">
         <IconButton
           className={hideBackButton ? classes.hidden : classes.button}
