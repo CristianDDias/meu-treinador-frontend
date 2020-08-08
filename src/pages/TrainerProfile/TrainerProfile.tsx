@@ -39,6 +39,8 @@ export const TrainerProfile = () => {
   const classes = useStyles();
   const { trainerId } = useParams<{ trainerId: string }>();
 
+  console.log(trainerId);
+
   return (
     <div className={classes.container}>
       <Box display="flex" paddingX={2} paddingTop={2}>
