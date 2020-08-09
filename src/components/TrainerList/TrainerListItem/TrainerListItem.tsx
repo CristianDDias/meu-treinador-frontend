@@ -44,9 +44,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(1),
   },
   description: {
+    display: "-webkit-box",
+    boxOrient: "vertical",
+    lineClamp: 3,
+    lineHeight: "1.25rem",
+    height: "3.75rem",
     overflow: "hidden",
-    lineHeight: "1rem",
-    height: "3rem",
   },
 }));
 
@@ -78,13 +81,13 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
         </div>
         <div className={classes.rating}>
           <StarIcon color="primary" fontSize="small" />
-          <Typography variant="caption">
+          <Typography variant="body2">
             {rating.value} ({rating.reviews} avaliações)
           </Typography>
         </div>
         <Typography
           className={classes.description}
-          variant="caption"
+          variant="body2"
           color="textSecondary"
           align="justify"
         >
