@@ -4,52 +4,57 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
-import StarIcon from "@material-ui/icons/StarRate";
+import StarIcon from "@material-ui/icons/Star";
 import { Trainer } from "../../../interfaces/trainer";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  item: {
+  layout: {
+    display: "grid",
+    gridTemplate: `
+      "avatar name   price" 36px
+      "avatar rating price" 36px
+      "info   info   info " auto
+      / auto 1fr auto
+    `,
+    columnGap: theme.spacing(1),
+    background: theme.palette.background.paper,
     padding: theme.spacing(2),
+    borderRadius: theme.shape.borderRadius,
+    width: "100%",
   },
   avatar: {
-    width: "104px",
-    height: "104px",
-    marginRight: theme.spacing(1),
-  },
-  info: {
-    flexBasis: 0,
-    flexGrow: 1,
-    display: "flex",
-    flexDirection: "column",
-  },
-  header: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
+    gridArea: "avatar",
+    width: "72px",
+    height: "72px",
   },
   name: {
-    flexBasis: 0,
-    flexGrow: 1,
-    width: 0,
-    marginRight: theme.spacing(0.5),
-    fontWeight: theme.typography.fontWeightMedium,
-  },
-  price: {
+    gridArea: "name",
+    alignSelf: "flex-end",
     fontWeight: theme.typography.fontWeightMedium,
   },
   rating: {
+    gridArea: "rating",
+    alignSelf: "flex-start",
     display: "flex",
     alignItems: "center",
-    marginTop: theme.spacing(0.5),
-    marginBottom: theme.spacing(1),
+    "& > :not(:last-child)": {
+      marginRight: theme.spacing(0.5),
+    },
   },
-  description: {
+  price: {
+    gridArea: "price",
+    alignSelf: "center",
+    fontWeight: theme.typography.fontWeightMedium,
+  },
+  info: {
+    gridArea: "info",
     display: "-webkit-box",
     boxOrient: "vertical",
     lineClamp: 3,
     lineHeight: "1.25rem",
-    height: "3.75rem",
+    maxHeight: "3.75rem",
     overflow: "hidden",
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -68,25 +73,25 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
   };
 
   return (
-    <ListItem className={classes.item} button onClick={navigateToTrainer}>
-      <Avatar className={classes.avatar} variant="rounded" src={img} />
-      <div className={classes.info}>
-        <div className={classes.header}>
-          <Typography className={classes.name} noWrap>
-            {name}
-          </Typography>
-          <Typography className={classes.price} color="primary">
-            R$ {Math.floor(price)}
-          </Typography>
-        </div>
+    <ListItem button onClick={navigateToTrainer}>
+      <div className={classes.layout}>
+        <Avatar className={classes.avatar} variant="rounded" src={img} />
+
+        <Typography className={classes.name}>{name}</Typography>
+
+        <Typography className={classes.price} color="primary">
+          R$ {Math.floor(price)}
+        </Typography>
+
         <div className={classes.rating}>
           <StarIcon color="primary" fontSize="small" />
           <Typography variant="body2">
             {rating.value} ({rating.reviews} avaliações)
           </Typography>
         </div>
+
         <Typography
-          className={classes.description}
+          className={classes.info}
           variant="body2"
           color="textSecondary"
           align="justify"
