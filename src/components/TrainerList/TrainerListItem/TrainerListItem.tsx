@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     `,
     columnGap: theme.spacing(1),
     background: theme.palette.background.paper,
-    padding: theme.spacing(2),
     borderRadius: theme.shape.borderRadius,
+    padding: theme.spacing(2),
     width: "100%",
   },
   avatar: {

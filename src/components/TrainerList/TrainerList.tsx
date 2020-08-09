@@ -9,7 +9,7 @@ interface TrainerListProps {
 
 export const TrainerList: React.FC<TrainerListProps> = ({ trainers }) => {
   return (
-    <List disablePadding>
+    <List>
       {trainers.map((trainer, index) => (
         <TrainerListItem key={trainer.id} trainer={trainer} />
       ))}

@@ -14,10 +14,14 @@ import { Profile } from "./pages/Profile/Profile";
 import { theme } from "./theme";
 
 const useStyles = makeStyles({
+  "@global": {
+    body: {
+      background: "#f1f1f5",
+    },
+  },
   container: {
     height: "calc(100vh - 48px - 56px)",
     overflow: "auto",
-    background: "#f1f1f5",
     marginTop: "48px",
     marginBottom: "56px",
   },

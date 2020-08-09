@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { TrainerList } from "../../components/TrainerList/TrainerList";
 
-import { trainers } from "../../__mocks__/trainers";
+import trainers from "../../__mocks__/trainers.json";
 
 const useStyles = makeStyles({
   container: {
