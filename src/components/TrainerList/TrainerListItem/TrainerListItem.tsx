@@ -11,9 +11,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   layout: {
     display: "grid",
     gridTemplate: `
-      "avatar name   price" 36px
-      "avatar rating price" 36px
-      "info   info   info " auto
+      "avatar trainer price" 72px
+      "info   info    info " auto
       / auto 1fr auto
     `,
     columnGap: theme.spacing(1),
@@ -27,19 +26,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "72px",
     height: "72px",
   },
-  name: {
-    gridArea: "name",
-    alignSelf: "flex-end",
-    fontWeight: theme.typography.fontWeightMedium,
+  trainer: {
+    gridArea: "trainer",
+    alignSelf: "center",
   },
-  rating: {
-    gridArea: "rating",
-    alignSelf: "flex-start",
-    display: "flex",
-    alignItems: "center",
-    "& > :not(:last-child)": {
-      marginRight: theme.spacing(0.5),
-    },
+  name: {
+    fontWeight: theme.typography.fontWeightMedium,
+    lineHeight: 1.25,
+    marginBottom: theme.spacing(0.5),
   },
   price: {
     gridArea: "price",
@@ -55,6 +49,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxHeight: "3.75rem",
     overflow: "hidden",
     marginTop: theme.spacing(2),
+  },
+  rating: {
+    display: "flex",
+    alignItems: "center",
+    "& > :first-child": {
+      marginRight: theme.spacing(0.5),
+    },
   },
 }));
 
@@ -77,18 +78,19 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
       <div className={classes.layout}>
         <Avatar className={classes.avatar} variant="rounded" src={img} />
 
-        <Typography className={classes.name}>{name}</Typography>
+        <div className={classes.trainer}>
+          <Typography className={classes.name}>{name}</Typography>
+          <div className={classes.rating}>
+            <StarIcon color="primary" fontSize="small" />
+            <Typography variant="body2">
+              {rating.value.toFixed(1)} ({rating.reviews})
+            </Typography>
+          </div>
+        </div>
 
         <Typography className={classes.price} color="primary">
           R$ {Math.floor(price)}
         </Typography>
-
-        <div className={classes.rating}>
-          <StarIcon color="primary" fontSize="small" />
-          <Typography variant="body2">
-            {rating.value} ({rating.reviews} avaliações)
-          </Typography>
-        </div>
 
         <Typography
           className={classes.info}
