@@ -3,11 +3,18 @@ import { useParams } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
+import IconButton from "@material-ui/core/IconButton";
 import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
+import EmailIcon from "@material-ui/icons/Email";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 
+// #MOCK-START
 import trainers from "../../__mocks__/trainers.json";
 import { Trainer } from "../../interfaces/trainer";
+// #MOCK-END
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -23,17 +30,30 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
   },
   avatar: {
-    width: "100px",
-    height: "100px",
-    marginRight: theme.spacing(1),
+    width: "200px",
+    height: "200px",
   },
   name: {
-    fontSize: "1.25rem",
     fontWeight: theme.typography.fontWeightMedium,
+    fontSize: "1.25rem",
+    lineHeight: 1.25,
+    marginBottom: theme.spacing(1),
   },
   title: {
     fontWeight: theme.typography.fontWeightMedium,
     marginBottom: theme.spacing(1),
+  },
+  favoriteButton: {
+    background: "#ffffff",
+    position: "absolute",
+    right: 0,
+    transform: "translateX(50%)",
+    padding: theme.spacing(1),
+    zIndex: theme.zIndex.appBar,
+  },
+  contactButton: {
+    padding: theme.spacing(1),
+    margin: theme.spacing(0, 1),
   },
 }));
 
@@ -41,20 +61,45 @@ export const TrainerProfile = () => {
   const classes = useStyles();
   const { trainerId } = useParams<{ trainerId: string }>();
 
+  // #MOCK-START
   const trainer = trainers.find(
     (trainer) => trainer.id === trainerId
   ) as Trainer;
+  const isFavorite = trainer.rating.value > 4;
+  // #MOCK-END
 
   return (
     <div className={classes.container}>
-      <Box className={classes.card} display="flex">
-        <Avatar
-          className={classes.avatar}
-          variant="rounded"
-          src={trainer.img}
-        />
-        <Box display="flex" flexDirection="column" justifyContent="center">
-          <Typography className={classes.name}>{trainer.name}</Typography>
+      <Box
+        className={classes.card}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+      >
+        <Box position="relative">
+          <IconButton className={classes.favoriteButton} color="primary">
+            {isFavorite ? (
+              <FavoriteIcon fontSize="large" />
+            ) : (
+              <FavoriteBorderIcon fontSize="large" />
+            )}
+          </IconButton>
+          <Avatar
+            className={classes.avatar}
+            variant="rounded"
+            src={trainer.img}
+          />
+        </Box>
+        <Box display="flex">
+          <IconButton className={classes.contactButton} color="primary">
+            <WhatsAppIcon fontSize="large" />
+          </IconButton>
+          <IconButton className={classes.contactButton} color="primary">
+            <EmailIcon fontSize="large" />
+          </IconButton>
+        </Box>
+        <Typography className={classes.name}>{trainer.name}</Typography>
+        <Box display="flex">
           <Rating
             readOnly
             size="small"

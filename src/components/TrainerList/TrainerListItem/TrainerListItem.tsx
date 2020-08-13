@@ -83,7 +83,7 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
           <div className={classes.rating}>
             <StarIcon color="primary" fontSize="small" />
             <Typography variant="body2">
-              {rating.value.toFixed(1)} ({rating.reviews})
+              {rating.value} ({rating.reviews})
             </Typography>
           </div>
         </div>

@@ -1,11 +1,11 @@
 [
   {
     "id": "6a2a1f9f-dd14-442c-9d57-6fb3a39f019a",
-    "name": "Rosalind Breitenberg",
+    "name": "Cristian Daniel Dias",
     "description": "Ratione qui quo sit dolorem aut praesentium quasi recusandae. Neque consequatur modi cum aliquid. Iusto mollitia neque labore mollitia exercitationem dolores voluptatem magni velit.",
     "price": 127,
     "rating": {
-      "value": 4.25,
+      "value": 4.2,
       "reviews": 305
     },
     "img": "https://assetbucketdevelopment.blob.core.windows.net/testing/15539755273179878-Male_25.jpg"
@@ -16,7 +16,7 @@
     "description": "Praesentium officia dolores aut laudantium explicabo itaque ullam ullam ut. Nesciunt voluptas nostrum quasi. Alias ullam iste quos ex officiis. Sit consequatur autem numquam voluptate voluptatibus qui minus. Impedit aut nemo et qui ut cupiditate unde asperiores. Omnis et fuga eum ullam ab in.",
     "price": 76,
     "rating": {
-      "value": 3.25,
+      "value": 3.2,
       "reviews": 358
     },
     "img": "https://assetbucketdevelopment.blob.core.windows.net/testing/7446838120089077-Male_15.jpg"
@@ -27,7 +27,7 @@
     "description": "Sed ad dolor adipisci excepturi eveniet. Enim ducimus doloremque non pariatur culpa cumque. Quia ullam ut occaecati quasi rerum numquam occaecati unde iure.",
     "price": 118,
     "rating": {
-      "value": 3.75,
+      "value": 3.7,
       "reviews": 66
     },
     "img": "https://assetbucketdevelopment.blob.core.windows.net/testing/40013598437633613-Male_18.jpg"
@@ -38,7 +38,7 @@
     "description": "Ut exercitationem accusantium et et. Soluta vero accusantium nobis dolor. Ut magnam soluta similique nisi. Minus hic commodi veniam saepe enim.",
     "price": 145,
     "rating": {
-      "value": 3.25,
+      "value": 3.2,
       "reviews": 366
     },
     "img": "https://assetbucketdevelopment.blob.core.windows.net/testing/3219824028519749-Female_21.jpg"
@@ -60,7 +60,7 @@
     "description": "Quibusdam porro tempora velit voluptas omnis. Qui ut pariatur blanditiis aperiam illum. Fugiat cupiditate voluptate esse numquam consequatur illo non. Suscipit maxime magnam praesentium. Optio quae ex quod excepturi soluta nesciunt nemo.",
     "price": 107,
     "rating": {
-      "value": 3.75,
+      "value": 3.7,
       "reviews": 195
     },
     "img": "https://assetbucketdevelopment.blob.core.windows.net/testing/012235256338216649-Female_19.jpg"
@@ -93,7 +93,7 @@
     "description": "Repudiandae sed quisquam unde est aut consequatur delectus aspernatur. Quae cumque aliquam. Sunt et in. Et similique dicta dolores nesciunt harum odio. Aut quasi ad ad laudantium autem sed perspiciatis sunt.",
     "price": 145,
     "rating": {
-      "value": 4.75,
+      "value": 4.7,
       "reviews": 76
     },
     "img": "https://assetbucketdevelopment.blob.core.windows.net/testing/35796344988312057-Male_17.jpg"

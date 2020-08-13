@@ -3,8 +3,10 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { TrainerList } from "../../components/TrainerList/TrainerList";
 
+// #MOCK-START
 import trainers from "../../__mocks__/trainers.json";
 const favoriteTrainers = trainers.slice(0, 3);
+// #MOCK-END
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
