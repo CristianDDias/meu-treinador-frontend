@@ -91,10 +91,18 @@ export const TrainerProfile = () => {
           />
         </Box>
         <Box display="flex">
-          <IconButton className={classes.contactButton} color="primary">
+          <IconButton
+            className={classes.contactButton}
+            color="primary"
+            href="https://wa.me/5551987654321"
+          >
             <WhatsAppIcon fontSize="large" />
           </IconButton>
-          <IconButton className={classes.contactButton} color="primary">
+          <IconButton
+            className={classes.contactButton}
+            color="primary"
+            href="mailto:name@email.com"
+          >
             <EmailIcon fontSize="large" />
           </IconButton>
         </Box>
