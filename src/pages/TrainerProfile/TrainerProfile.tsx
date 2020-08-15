@@ -1,26 +1,27 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
-import Chip from "@material-ui/core/Chip";
-import IconButton from "@material-ui/core/IconButton";
-import Rating from "@material-ui/lab/Rating";
-import Typography from "@material-ui/core/Typography";
-import EmailIcon from "@material-ui/icons/Email";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import WhatsAppIcon from "@material-ui/icons/WhatsApp";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
+import Chip from '@material-ui/core/Chip';
+import IconButton from '@material-ui/core/IconButton';
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
+import EmailIcon from '@material-ui/icons/Email';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import { formatRatingValue } from '../../utils/formatters';
 
 // #MOCK-START
-import trainers from "../../__mocks__/trainers.json";
-import { Trainer } from "../../interfaces/trainer";
+import trainers from '../../__mocks__/trainers.json';
+import { Trainer } from '../../interfaces/trainer';
 // #MOCK-END
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     padding: theme.spacing(2),
-    "& > :not(:last-child)": {
+    '& > :not(:last-child)': {
       marginBottom: theme.spacing(2),
     },
   },
@@ -28,15 +29,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(2),
-    width: "100%",
+    width: '100%',
   },
   avatar: {
-    width: "200px",
-    height: "200px",
+    width: '200px',
+    height: '200px',
   },
   name: {
     fontWeight: theme.typography.fontWeightMedium,
-    fontSize: "1.25rem",
+    fontSize: '1.25rem',
     lineHeight: 1.25,
     marginBottom: theme.spacing(1),
   },
@@ -45,10 +46,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(1),
   },
   favoriteButton: {
-    background: "#ffffff",
-    position: "absolute",
+    background: '#ffffff',
+    position: 'absolute',
     right: 0,
-    transform: "translateX(50%)",
+    transform: 'translateX(50%)',
     padding: theme.spacing(1),
     zIndex: theme.zIndex.appBar,
   },
@@ -57,10 +58,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(0, 1),
   },
   specialities: {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    "& > *": {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
       margin: theme.spacing(0.5),
       color: theme.palette.primary.main,
       background: `${theme.palette.primary.main}26`,
@@ -73,20 +74,13 @@ export const TrainerProfile = () => {
   const { trainerId } = useParams<{ trainerId: string }>();
 
   // #MOCK-START
-  const trainer = trainers.find(
-    (trainer) => trainer.id === trainerId
-  ) as Trainer;
+  const trainer = trainers.find(({ id }) => id === trainerId) as Trainer;
   const isFavorite = trainer.rating.value > 4;
   // #MOCK-END
 
   return (
     <div className={classes.container}>
-      <Box
-        className={classes.card}
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-      >
+      <Box className={classes.card} display="flex" flexDirection="column" alignItems="center">
         <Box position="relative">
           <IconButton className={classes.favoriteButton} color="primary">
             {isFavorite ? (
@@ -95,11 +89,7 @@ export const TrainerProfile = () => {
               <FavoriteBorderIcon fontSize="large" />
             )}
           </IconButton>
-          <Avatar
-            className={classes.avatar}
-            variant="rounded"
-            src={trainer.img}
-          />
+          <Avatar className={classes.avatar} variant="rounded" src={trainer.img} />
         </Box>
         <Box display="flex">
           <IconButton
@@ -119,14 +109,9 @@ export const TrainerProfile = () => {
         </Box>
         <Typography className={classes.name}>{trainer.name}</Typography>
         <Box display="flex">
-          <Rating
-            readOnly
-            size="small"
-            value={trainer.rating.value}
-            precision={0.5}
-          />
+          <Rating readOnly size="small" value={trainer.rating.value} precision={0.5} />
           <Typography variant="body2">
-            {trainer.rating.value} ({trainer.rating.reviews} avaliações)
+            {formatRatingValue(trainer.rating.value)} ({trainer.rating.reviews} avaliações)
           </Typography>
         </Box>
       </Box>
@@ -206,9 +191,7 @@ export const TrainerProfile = () => {
       </Box>
 
       <Box className={classes.card} display="flex" flexDirection="column">
-        <Typography className={classes.title}>
-          Horários de atendimento
-        </Typography>
+        <Typography className={classes.title}>Horários de atendimento</Typography>
         <Typography variant="body2" align="justify">
           <div>Segunda - 06:00 - 08:00 | 11:00 - 15:00 | 19:00 - 22:00</div>
           <div>Terça - 08:00 - 22:00</div>

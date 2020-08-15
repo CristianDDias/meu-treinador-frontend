@@ -1,15 +1,15 @@
-import React from "react";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import FilterIcon from "@material-ui/icons/Tune";
-import SearchIcon from "@material-ui/icons/Search";
+import React from 'react';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FilterIcon from '@material-ui/icons/Tune';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
     background: theme.palette.background.paper,
     padding: theme.spacing(1),
     borderBottom: theme.border,

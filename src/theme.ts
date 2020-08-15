@@ -1,6 +1,6 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme } from '@material-ui/core/styles';
 
-declare module "@material-ui/core/styles/createMuiTheme" {
+declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
     border: string;
   }
@@ -12,10 +12,10 @@ declare module "@material-ui/core/styles/createMuiTheme" {
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#ef8575",
+      main: '#ef8575',
     },
   },
-  border: "1px solid rgba(0, 0, 0, 0.12)",
+  border: '1px solid rgba(0, 0, 0, 0.12)',
 });
 
 // blue     1a91ff - 007cdc
