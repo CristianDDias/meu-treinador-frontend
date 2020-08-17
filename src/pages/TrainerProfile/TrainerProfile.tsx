@@ -4,10 +4,21 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
+import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import Rating from '@material-ui/lab/Rating';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import EmailIcon from '@material-ui/icons/Email';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
@@ -36,12 +47,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '200px',
   },
   name: {
+    fontSize: '1.5rem',
     fontWeight: theme.typography.fontWeightMedium,
-    fontSize: '1.25rem',
-    lineHeight: 1.25,
-    marginBottom: theme.spacing(1),
   },
   title: {
+    fontSize: '1.125rem',
     fontWeight: theme.typography.fontWeightMedium,
     marginBottom: theme.spacing(1),
   },
@@ -57,6 +67,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(1),
     margin: theme.spacing(0, 1),
   },
+  rating: {
+    marginRight: theme.spacing(1),
+  },
   specialities: {
     display: 'flex',
     justifyContent: 'center',
@@ -67,7 +80,40 @@ const useStyles = makeStyles((theme: Theme) => ({
       background: `${theme.palette.primary.main}26`,
     },
   },
+  nested: {
+    paddingLeft: theme.spacing(5),
+  },
 }));
+
+// --------------------------------------------------
+
+// TODO: Isolate in a component
+
+interface TrainerProfileCardProps {
+  alignItemsCenter?: boolean;
+  title?: string;
+}
+
+const TrainerProfileCard: React.FC<TrainerProfileCardProps> = ({
+  alignItemsCenter,
+  title,
+  children,
+}) => {
+  const classes = useStyles();
+  return (
+    <Box
+      className={classes.card}
+      display="flex"
+      flexDirection="column"
+      alignItems={alignItemsCenter ? 'center' : undefined}
+    >
+      {title && <Typography className={classes.title}>{title}</Typography>}
+      {children}
+    </Box>
+  );
+};
+
+// --------------------------------------------------
 
 export const TrainerProfile = () => {
   const classes = useStyles();
@@ -75,12 +121,31 @@ export const TrainerProfile = () => {
 
   // #MOCK-START
   const trainer = trainers.find(({ id }) => id === trainerId) as Trainer;
+  const trainerEmail = 'name@email.com';
+  const trainerWhatsApp = '5551987654321';
   const isFavorite = trainer.rating.value > 4;
+  const cities = {
+    [`Sapiranga - RS`]: ['Bio Forma', 'Corpus', 'Pro Fit', 'A combinar'],
+    [`Novo Hamburgo - RS`]: ['Arena', 'I9', 'Line'],
+    [`Remoto`]: undefined,
+  };
   // #MOCK-END
+
+  const [openedCities, setOpenedCities] = React.useState(() => {
+    const initialOpenedCities: Record<string, boolean> = {};
+    Object.keys(cities).forEach((city) => {
+      initialOpenedCities[city] = false;
+    });
+    return initialOpenedCities;
+  });
+
+  const handleClickCity = (city: string): void => {
+    setOpenedCities((state) => ({ ...state, [city]: !state[city] }));
+  };
 
   return (
     <div className={classes.container}>
-      <Box className={classes.card} display="flex" flexDirection="column" alignItems="center">
+      <TrainerProfileCard alignItemsCenter>
         <Box position="relative">
           <IconButton className={classes.favoriteButton} color="primary">
             {isFavorite ? (
@@ -95,44 +160,46 @@ export const TrainerProfile = () => {
           <IconButton
             className={classes.contactButton}
             color="primary"
-            href="https://wa.me/5551987654321"
+            href={`https://wa.me/${trainerWhatsApp}`}
           >
             <WhatsAppIcon fontSize="large" />
           </IconButton>
           <IconButton
             className={classes.contactButton}
             color="primary"
-            href="mailto:name@email.com"
+            href={`mailto:${trainerEmail}`}
           >
             <EmailIcon fontSize="large" />
           </IconButton>
         </Box>
         <Typography className={classes.name}>{trainer.name}</Typography>
         <Box display="flex">
-          <Rating readOnly size="small" value={trainer.rating.value} precision={0.5} />
+          <Rating
+            className={classes.rating}
+            value={trainer.rating.value}
+            precision={0.5}
+            size="small"
+            readOnly
+          />
           <Typography variant="body2">
             {formatRatingValue(trainer.rating.value)} ({trainer.rating.reviews} avaliações)
           </Typography>
         </Box>
-      </Box>
+      </TrainerProfileCard>
 
-      <Box className={classes.card} display="flex" flexDirection="column">
-        <Typography className={classes.title}>Sobre mim</Typography>
+      <TrainerProfileCard title="Sobre mim">
         <Typography variant="body2" align="justify">
           {trainer.description}
         </Typography>
-      </Box>
+      </TrainerProfileCard>
 
-      <Box className={classes.card} display="flex" flexDirection="column">
-        <Typography className={classes.title}>Qualificações</Typography>
+      <TrainerProfileCard title="Qualificações">
         <Typography variant="body2" align="justify">
           {trainer.description}
         </Typography>
-      </Box>
+      </TrainerProfileCard>
 
-      <Box className={classes.card} display="flex" flexDirection="column">
-        <Typography className={classes.title}>Especialidades</Typography>
-
+      <TrainerProfileCard title="Especialidades">
         {/* 
 
         yellow
@@ -181,34 +248,139 @@ export const TrainerProfile = () => {
           <Chip label="Wellness" />
           <Chip label="Yoga" />
         </div>
-      </Box>
+      </TrainerProfileCard>
 
-      <Box className={classes.card} display="flex" flexDirection="column">
-        <Typography className={classes.title}>Locais de treinamento</Typography>
-        <Typography variant="body2" align="justify">
-          MAP
-        </Typography>
-      </Box>
+      <TrainerProfileCard title="Locais de atendimento">
+        {/* 
+        Cidades > Locais (academias ou "qualquer lugar (a combinar)")
+        Remoto 
+        */}
 
-      <Box className={classes.card} display="flex" flexDirection="column">
-        <Typography className={classes.title}>Horários de atendimento</Typography>
-        <Typography variant="body2" align="justify">
-          <div>Segunda - 06:00 - 08:00 | 11:00 - 15:00 | 19:00 - 22:00</div>
-          <div>Terça - 08:00 - 22:00</div>
-          <div>Quarta - 06:00 - 21:00</div>
-          <div>Quinta - 06:00 - 08:00 | 11:00 - 15:00</div>
-          <div>Sexta - 07:00 - 21:00</div>
-          <div>Sábado - Informe-se sobre a disponibilidade</div>
-          <div>Domingo - Informe-se sobre a disponibilidade</div>
-        </Typography>
-      </Box>
+        <List disablePadding>
+          {Object.entries(cities).map(([city, places]) => (
+            <React.Fragment key={city}>
+              <ListItem button onClick={() => handleClickCity(city)}>
+                <ListItemText primary={city} />
+                {places !== undefined &&
+                  (openedCities[city] ? <ExpandLessIcon /> : <ExpandMoreIcon />)}
+              </ListItem>
+              {places !== undefined && (
+                <Collapse in={openedCities[city]} timeout="auto" unmountOnExit>
+                  <List disablePadding dense>
+                    {places.map((place) => (
+                      <ListItem className={classes.nested} key={place}>
+                        <ListItemText primary={place} />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Collapse>
+              )}
+            </React.Fragment>
+          ))}
+        </List>
 
-      <Box className={classes.card} display="flex" flexDirection="column">
-        <Typography className={classes.title}>Avaliações</Typography>
+        {/* 
+        <List disablePadding>
+          <ListItem button onClick={() => handleClickCity('Sapiranga')}>
+            <ListItemText primary="Sapiranga" />
+            <ExpandLessIcon />
+          </ListItem>
+          <Collapse in={true} timeout="auto" unmountOnExit>
+            <List disablePadding dense>
+              <ListItem className={classes.nested}>
+                <ListItemText primary="ProFit" />
+              </ListItem>
+              <ListItem className={classes.nested}>
+                <ListItemText primary="Bio Forma" />
+              </ListItem>
+              <ListItem className={classes.nested}>
+                <ListItemText primary="Corpus" />
+              </ListItem>
+              <ListItem className={classes.nested}>
+                <ListItemText primary="A combinar" />
+              </ListItem>
+            </List>
+          </Collapse>
+          <ListItem button onClick={() => handleClickCity('Novo Hamburgo')}>
+            <ListItemText primary="Novo Hamburgo" />
+            <ExpandLessIcon />
+          </ListItem>
+          <Collapse in={true} timeout="auto" unmountOnExit>
+            <List disablePadding dense>
+              <ListItem className={classes.nested}>
+                <ListItemText primary="Arena" />
+              </ListItem>
+              <ListItem className={classes.nested}>
+                <ListItemText primary="I9" />
+              </ListItem>
+              <ListItem className={classes.nested}>
+                <ListItemText primary="Line" />
+              </ListItem>
+              <ListItem className={classes.nested}>
+                <ListItemText primary="A combinar" />
+              </ListItem>
+            </List>
+          </Collapse>
+        </List>
+        */}
+      </TrainerProfileCard>
+
+      <TrainerProfileCard title="Horários de atendimento">
+        <TableContainer>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>Segunda</TableCell>
+                <TableCell align="right">
+                  <Chip label="08:00 - 20:00" size="small" />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Terça</TableCell>
+                <TableCell align="right">
+                  <Chip label="08:00 - 20:00" size="small" />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Quarta</TableCell>
+                <TableCell align="right">
+                  <Chip label="08:00 - 20:00" size="small" />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Quinta</TableCell>
+                <TableCell align="right">
+                  <Chip label="08:00 - 20:00" size="small" />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Sexta</TableCell>
+                <TableCell align="right">
+                  <Chip label="08:00 - 20:00" size="small" />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Sábado</TableCell>
+                <TableCell align="right">
+                  <Chip label="A combinar" size="small" />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Domingo</TableCell>
+                <TableCell align="right">
+                  <Chip label="A combinar" size="small" />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </TrainerProfileCard>
+
+      <TrainerProfileCard title="Avaliações">
         <Typography variant="body2" align="justify">
           Tudo certo!
         </Typography>
-      </Box>
+      </TrainerProfileCard>
     </div>
   );
 };
