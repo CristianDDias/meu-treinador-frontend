@@ -4,11 +4,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
-import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Rating from '@material-ui/lab/Rating';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -17,16 +13,16 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import EmailIcon from '@material-ui/icons/Email';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import { TrainerProfileCard } from './TrainerProfileCard/TrainerProfileCard';
+import { TrainerProfileServiceLocations } from './TrainerProfileServiceLocations/TrainerProfileServiceLocations';
 import { formatRatingValue } from '../../utils/formatters';
 
 // #MOCK-START
 import trainers from '../../__mocks__/trainers.json';
-import { Trainer } from '../../interfaces/trainer';
+import { Trainer, TrainerServiceLocation } from '../../interfaces/trainer';
 // #MOCK-END
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -36,12 +32,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       marginBottom: theme.spacing(2),
     },
   },
-  card: {
-    background: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
-    padding: theme.spacing(2),
-    width: '100%',
-  },
   avatar: {
     width: '200px',
     height: '200px',
@@ -49,11 +39,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   name: {
     fontSize: '1.5rem',
     fontWeight: theme.typography.fontWeightMedium,
-  },
-  title: {
-    fontSize: '1.125rem',
-    fontWeight: theme.typography.fontWeightMedium,
-    marginBottom: theme.spacing(1),
   },
   favoriteButton: {
     background: '#ffffff',
@@ -80,40 +65,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       background: `${theme.palette.primary.main}26`,
     },
   },
-  nested: {
-    paddingLeft: theme.spacing(5),
-  },
 }));
-
-// --------------------------------------------------
-
-// TODO: Isolate in a component
-
-interface TrainerProfileCardProps {
-  alignItemsCenter?: boolean;
-  title?: string;
-}
-
-const TrainerProfileCard: React.FC<TrainerProfileCardProps> = ({
-  alignItemsCenter,
-  title,
-  children,
-}) => {
-  const classes = useStyles();
-  return (
-    <Box
-      className={classes.card}
-      display="flex"
-      flexDirection="column"
-      alignItems={alignItemsCenter ? 'center' : undefined}
-    >
-      {title && <Typography className={classes.title}>{title}</Typography>}
-      {children}
-    </Box>
-  );
-};
-
-// --------------------------------------------------
 
 export const TrainerProfile = () => {
   const classes = useStyles();
@@ -124,24 +76,22 @@ export const TrainerProfile = () => {
   const trainerEmail = 'name@email.com';
   const trainerWhatsApp = '5551987654321';
   const isFavorite = trainer.rating.value > 4;
-  const cities = {
-    [`Sapiranga - RS`]: ['Bio Forma', 'Corpus', 'Pro Fit', 'A combinar'],
-    [`Novo Hamburgo - RS`]: ['Arena', 'I9', 'Line'],
-    [`Remoto`]: undefined,
-  };
+  const trainerLocations: TrainerServiceLocation[] = [
+    {
+      id: '1',
+      city: 'Sapiranga',
+      state: 'RS',
+      places: ['Corpus', 'Physical', 'Pro Fit'],
+    },
+    {
+      id: '2',
+      city: 'Novo Hamburgo',
+      state: 'RS',
+      places: ['Arena', 'Line', 'Platoon'],
+    },
+  ];
+  const trainerAllowRemote = trainer.rating.value > 4;
   // #MOCK-END
-
-  const [openedCities, setOpenedCities] = React.useState(() => {
-    const initialOpenedCities: Record<string, boolean> = {};
-    Object.keys(cities).forEach((city) => {
-      initialOpenedCities[city] = false;
-    });
-    return initialOpenedCities;
-  });
-
-  const handleClickCity = (city: string): void => {
-    setOpenedCities((state) => ({ ...state, [city]: !state[city] }));
-  };
 
   return (
     <div className={classes.container}>
@@ -250,80 +200,10 @@ export const TrainerProfile = () => {
         </div>
       </TrainerProfileCard>
 
-      <TrainerProfileCard title="Locais de atendimento">
-        {/* 
-        Cidades > Locais (academias ou "qualquer lugar (a combinar)")
-        Remoto 
-        */}
-
-        <List disablePadding>
-          {Object.entries(cities).map(([city, places]) => (
-            <React.Fragment key={city}>
-              <ListItem button onClick={() => handleClickCity(city)}>
-                <ListItemText primary={city} />
-                {places !== undefined &&
-                  (openedCities[city] ? <ExpandLessIcon /> : <ExpandMoreIcon />)}
-              </ListItem>
-              {places !== undefined && (
-                <Collapse in={openedCities[city]} timeout="auto" unmountOnExit>
-                  <List disablePadding dense>
-                    {places.map((place) => (
-                      <ListItem className={classes.nested} key={place}>
-                        <ListItemText primary={place} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Collapse>
-              )}
-            </React.Fragment>
-          ))}
-        </List>
-
-        {/* 
-        <List disablePadding>
-          <ListItem button onClick={() => handleClickCity('Sapiranga')}>
-            <ListItemText primary="Sapiranga" />
-            <ExpandLessIcon />
-          </ListItem>
-          <Collapse in={true} timeout="auto" unmountOnExit>
-            <List disablePadding dense>
-              <ListItem className={classes.nested}>
-                <ListItemText primary="ProFit" />
-              </ListItem>
-              <ListItem className={classes.nested}>
-                <ListItemText primary="Bio Forma" />
-              </ListItem>
-              <ListItem className={classes.nested}>
-                <ListItemText primary="Corpus" />
-              </ListItem>
-              <ListItem className={classes.nested}>
-                <ListItemText primary="A combinar" />
-              </ListItem>
-            </List>
-          </Collapse>
-          <ListItem button onClick={() => handleClickCity('Novo Hamburgo')}>
-            <ListItemText primary="Novo Hamburgo" />
-            <ExpandLessIcon />
-          </ListItem>
-          <Collapse in={true} timeout="auto" unmountOnExit>
-            <List disablePadding dense>
-              <ListItem className={classes.nested}>
-                <ListItemText primary="Arena" />
-              </ListItem>
-              <ListItem className={classes.nested}>
-                <ListItemText primary="I9" />
-              </ListItem>
-              <ListItem className={classes.nested}>
-                <ListItemText primary="Line" />
-              </ListItem>
-              <ListItem className={classes.nested}>
-                <ListItemText primary="A combinar" />
-              </ListItem>
-            </List>
-          </Collapse>
-        </List>
-        */}
-      </TrainerProfileCard>
+      <TrainerProfileServiceLocations
+        locations={trainerLocations}
+        allowRemote={trainerAllowRemote}
+      />
 
       <TrainerProfileCard title="Horários de atendimento">
         <TableContainer>

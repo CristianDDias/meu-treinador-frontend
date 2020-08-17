@@ -9,3 +9,10 @@ export interface Trainer {
   };
   img: string;
 }
+
+export interface TrainerServiceLocation {
+  id: string;
+  city: string;
+  state: string;
+  places?: string[];
+}
