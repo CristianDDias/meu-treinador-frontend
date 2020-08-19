@@ -16,3 +16,10 @@ export interface TrainerServiceLocation {
   state: string;
   places?: string[];
 }
+
+export type TrainerServiceSchedules = {
+  [day in 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday']?: {
+    startTime: string;
+    endTime: string;
+  };
+};

@@ -6,11 +6,6 @@ import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
 import Rating from '@material-ui/lab/Rating';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import EmailIcon from '@material-ui/icons/Email';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -18,11 +13,12 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import { TrainerProfileCard } from './TrainerProfileCard/TrainerProfileCard';
 import { TrainerProfileServiceLocations } from './TrainerProfileServiceLocations/TrainerProfileServiceLocations';
+import { TrainerProfileServiceSchedules } from './TrainerProfileServiceSchedules/TrainerProfileServiceSchedules';
 import { formatRatingValue } from '../../utils/formatters';
 
 // #MOCK-START
 import trainers from '../../__mocks__/trainers.json';
-import { Trainer, TrainerServiceLocation } from '../../interfaces/trainer';
+import { Trainer, TrainerServiceLocation, TrainerServiceSchedules } from '../../interfaces/trainer';
 // #MOCK-END
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -91,6 +87,36 @@ export const TrainerProfile = () => {
     },
   ];
   const trainerAllowRemote = trainer.rating.value > 4;
+  const trainerSchedules: TrainerServiceSchedules = {
+    monday: {
+      startTime: '08:00',
+      endTime: '22:00',
+    },
+    tuesday: {
+      startTime: '08:00',
+      endTime: '22:00',
+    },
+    wednesday: {
+      startTime: '08:00',
+      endTime: '22:00',
+    },
+    thursday: {
+      startTime: '08:00',
+      endTime: '22:00',
+    },
+    friday: {
+      startTime: '08:00',
+      endTime: '22:00',
+    },
+    saturday: {
+      startTime: '09:00',
+      endTime: '12:00',
+    },
+    sunday: {
+      startTime: '09:00',
+      endTime: '12:00',
+    },
+  };
   // #MOCK-END
 
   return (
@@ -205,56 +231,7 @@ export const TrainerProfile = () => {
         allowRemote={trainerAllowRemote}
       />
 
-      <TrainerProfileCard title="Horários de atendimento">
-        <TableContainer>
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell>Segunda</TableCell>
-                <TableCell align="right">
-                  <Chip label="08:00 - 20:00" size="small" />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Terça</TableCell>
-                <TableCell align="right">
-                  <Chip label="08:00 - 20:00" size="small" />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Quarta</TableCell>
-                <TableCell align="right">
-                  <Chip label="08:00 - 20:00" size="small" />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Quinta</TableCell>
-                <TableCell align="right">
-                  <Chip label="08:00 - 20:00" size="small" />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Sexta</TableCell>
-                <TableCell align="right">
-                  <Chip label="08:00 - 20:00" size="small" />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Sábado</TableCell>
-                <TableCell align="right">
-                  <Chip label="A combinar" size="small" />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Domingo</TableCell>
-                <TableCell align="right">
-                  <Chip label="A combinar" size="small" />
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </TrainerProfileCard>
+      <TrainerProfileServiceSchedules schedules={trainerSchedules} />
 
       <TrainerProfileCard title="Avaliações">
         <Typography variant="body2" align="justify">
