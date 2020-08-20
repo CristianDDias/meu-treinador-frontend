@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,12 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import { TrainerProfileCard } from '../TrainerProfileCard/TrainerProfileCard';
 import { TrainerServiceSchedules } from '../../../interfaces/trainer';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  cell: {
-    padding: theme.spacing(2, 0),
-  },
-}));
+import { useStyles } from './TrainerProfileServiceSchedules.jss';
 
 interface TrainerProfileServiceSchedulesProps {
   schedules: TrainerServiceSchedules;

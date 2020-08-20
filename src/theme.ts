@@ -18,7 +18,7 @@ export const theme = createMuiTheme({
   border: '1px solid rgba(0, 0, 0, 0.12)',
 });
 
-// blue     1a91ff - 007cdc
+// blue     1a91ff - 007cdc - 0077b5
 // green    28b873 - 26d367
 // red      ff3d57 - ef8575
 // orange   ff824c - ff9900

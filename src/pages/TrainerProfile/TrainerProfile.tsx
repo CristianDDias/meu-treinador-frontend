@@ -1,9 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
@@ -12,56 +10,17 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import { TrainerProfileCard } from './TrainerProfileCard/TrainerProfileCard';
+import { TrainerProfileSpecialties } from './TrainerProfileSpecialties/TrainerProfileSpecialties';
 import { TrainerProfileServiceLocations } from './TrainerProfileServiceLocations/TrainerProfileServiceLocations';
 import { TrainerProfileServiceSchedules } from './TrainerProfileServiceSchedules/TrainerProfileServiceSchedules';
+import { TrainerProfileReviews } from './TrainerProfileReviews/TrainerProfileReviews';
 import { formatRatingValue } from '../../utils/formatters';
+import { useStyles } from './TrainerProfile.jss';
 
 // #MOCK-START
 import trainers from '../../__mocks__/trainers.json';
 import { Trainer, TrainerServiceLocation, TrainerServiceSchedules } from '../../interfaces/trainer';
 // #MOCK-END
-
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    padding: theme.spacing(2),
-    '& > :not(:last-child)': {
-      marginBottom: theme.spacing(2),
-    },
-  },
-  avatar: {
-    width: '200px',
-    height: '200px',
-  },
-  name: {
-    fontSize: '1.5rem',
-    fontWeight: theme.typography.fontWeightMedium,
-  },
-  favoriteButton: {
-    background: '#ffffff',
-    position: 'absolute',
-    right: 0,
-    transform: 'translateX(50%)',
-    padding: theme.spacing(1),
-    zIndex: theme.zIndex.appBar,
-  },
-  contactButton: {
-    padding: theme.spacing(1),
-    margin: theme.spacing(0, 1),
-  },
-  rating: {
-    marginRight: theme.spacing(1),
-  },
-  specialities: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    '& > *': {
-      margin: theme.spacing(0.5),
-      color: theme.palette.primary.main,
-      background: `${theme.palette.primary.main}26`,
-    },
-  },
-}));
 
 export const TrainerProfile = () => {
   const classes = useStyles();
@@ -70,9 +29,9 @@ export const TrainerProfile = () => {
   // #MOCK-START
   const trainer = trainers.find(({ id }) => id === trainerId) as Trainer;
   const trainerEmail = 'name@email.com';
-  const trainerWhatsApp = '5551987654321';
+  const trainerWhatsApp = '5551983104940';
   const isFavorite = trainer.rating.value > 4;
-  const trainerLocations: TrainerServiceLocation[] = [
+  const locations: TrainerServiceLocation[] = [
     {
       id: '1',
       city: 'Sapiranga',
@@ -86,8 +45,8 @@ export const TrainerProfile = () => {
       places: ['Arena', 'Line', 'Platoon'],
     },
   ];
-  const trainerAllowRemote = trainer.rating.value > 4;
-  const trainerSchedules: TrainerServiceSchedules = {
+  const allowRemote = trainer.rating.value > 4;
+  const schedules: TrainerServiceSchedules = {
     monday: {
       startTime: '08:00',
       endTime: '22:00',
@@ -117,10 +76,44 @@ export const TrainerProfile = () => {
       endTime: '12:00',
     },
   };
+  const specialties = [
+    'Body Building',
+    'Body Composition',
+    'Body Sculpting',
+    'Body Transformation',
+    'Boxing',
+    'Calisthenics',
+    'Core Strength',
+    'Cross Training',
+    'Cycling',
+    'Functional Training',
+    'Gymnastics',
+    'HIIT',
+    'Metafit',
+    'Muscular Hypertrophy',
+    'Olympic Lifting',
+    'Performance',
+    'Pilates',
+    'Pre-Post Natal',
+    'Rehabilitation',
+    'Running',
+    'Seniors Specific',
+    'Sports Specific',
+    'Strength and Conditioning',
+    'Weight Loss',
+    'Wellness',
+    'Yoga',
+  ];
   // #MOCK-END
 
   return (
     <div className={classes.container}>
+      {/* 
+      TrainerProfileBio
+      TrainerProfileAvatar
+      TrainerProfileName
+      */}
+
       <TrainerProfileCard alignItemsCenter>
         <Box position="relative">
           <IconButton className={classes.favoriteButton} color="primary">
@@ -175,69 +168,13 @@ export const TrainerProfile = () => {
         </Typography>
       </TrainerProfileCard>
 
-      <TrainerProfileCard title="Especialidades">
-        {/* 
+      <TrainerProfileSpecialties specialties={specialties} />
 
-        yellow
-          background-color: rgb(255, 244, 229);
-          color: #ff9800;
+      <TrainerProfileServiceLocations locations={locations} allowRemote={allowRemote} />
 
-        red
-          background-color: #fdecea;
-          color: #f44336;
+      <TrainerProfileServiceSchedules schedules={schedules} />
 
-        blue
-          background-color: rgb(232, 244, 253);
-          color: #2196f3;
-
-        green
-          background-color: rgb(237, 247, 237);
-          color: #4caf50;
-
-        */}
-
-        <div className={classes.specialities}>
-          <Chip label="Body Building" />
-          <Chip label="Body Composition" />
-          <Chip label="Body Sculpting" />
-          <Chip label="Body Transformation" />
-          <Chip label="Boxing" />
-          <Chip label="Calisthenics" />
-          <Chip label="Core Strength" />
-          <Chip label="Cross Training" />
-          <Chip label="Cycling" />
-          <Chip label="Functional Training" />
-          <Chip label="Gymnastics" />
-          <Chip label="HIIT" />
-          <Chip label="Metafit" />
-          <Chip label="Muscular Hypertrophy" />
-          <Chip label="Olympic Lifting" />
-          <Chip label="Performance" />
-          <Chip label="Pilates" />
-          <Chip label="Pre-Post Natal" />
-          <Chip label="Rehabilitation" />
-          <Chip label="Running" />
-          <Chip label="Seniors Specific" />
-          <Chip label="Sports Specific" />
-          <Chip label="Strength and Conditioning" />
-          <Chip label="Weight Loss" />
-          <Chip label="Wellness" />
-          <Chip label="Yoga" />
-        </div>
-      </TrainerProfileCard>
-
-      <TrainerProfileServiceLocations
-        locations={trainerLocations}
-        allowRemote={trainerAllowRemote}
-      />
-
-      <TrainerProfileServiceSchedules schedules={trainerSchedules} />
-
-      <TrainerProfileCard title="Avaliações">
-        <Typography variant="body2" align="justify">
-          Tudo certo!
-        </Typography>
-      </TrainerProfileCard>
+      <TrainerProfileReviews />
     </div>
   );
 };

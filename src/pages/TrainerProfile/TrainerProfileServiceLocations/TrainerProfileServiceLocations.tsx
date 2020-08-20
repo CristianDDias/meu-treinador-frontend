@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,14 +7,9 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { TrainerProfileCard } from '../TrainerProfileCard/TrainerProfileCard';
 import { TrainerServiceLocation } from '../../../interfaces/trainer';
+import { useStyles } from './TrainerProfileServiceLocations.jss';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-}));
-
-type ExpandedCities = Record<string, boolean>;
+type ExpandedItems = Record<string, boolean>;
 
 interface TrainerProfileServiceLocationsProps {
   locations: TrainerServiceLocation[];
@@ -27,34 +21,50 @@ export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocat
   allowRemote,
 }) => {
   const classes = useStyles();
-  const [expandedCities, setExpandedCities] = useState<ExpandedCities>({});
+  const [expandedItems, setExpandedItems] = useState<ExpandedItems>({});
 
   useEffect(() => {
-    const initialState: ExpandedCities = {};
+    const initialState: ExpandedItems = {};
     locations.forEach((location) => {
-      initialState[location.id] = false;
+      if (location.places) {
+        initialState[location.id] = false;
+      }
     });
-    setExpandedCities(initialState);
+    setExpandedItems(initialState);
   }, [locations]);
 
-  const handleToggleExpandedCity = (id: string): void => {
-    setExpandedCities((state) => ({ ...state, [id]: !state[id] }));
+  const handleToggleExpandedItem = (id: string): void => {
+    if (id in expandedItems) {
+      setExpandedItems((state) => ({ ...state, [id]: !state[id] }));
+    }
   };
+
+  const displayLocations = locations.map((location) => ({
+    id: location.id,
+    name: `${location.city} - ${location.state}`,
+    places: location.places,
+  }));
+  if (allowRemote) {
+    displayLocations.push({
+      id: 'Remoto / Online',
+      name: 'Remoto / Online',
+      places: undefined,
+    });
+  }
 
   return (
     <TrainerProfileCard title="Locais de atendimento">
       <List disablePadding>
-        {locations.map((location) => (
+        {displayLocations.map((location) => (
           <React.Fragment key={location.id}>
-            <ListItem button disableGutters onClick={() => handleToggleExpandedCity(location.id)}>
-              <ListItemText primary={`${location.city} - ${location.state}`} />
+            <ListItem button disableGutters onClick={() => handleToggleExpandedItem(location.id)}>
+              <ListItemText primary={location.name} />
               {location.places !== undefined &&
-                (expandedCities[location.id] ? <ExpandLessIcon /> : <ExpandMoreIcon />)}
+                (expandedItems[location.id] ? <ExpandLessIcon /> : <ExpandMoreIcon />)}
             </ListItem>
-
             {location.places !== undefined && (
-              <Collapse in={expandedCities[location.id]} timeout="auto" unmountOnExit>
-                <List disablePadding dense>
+              <Collapse in={expandedItems[location.id]} timeout="auto" unmountOnExit>
+                <List disablePadding>
                   {location.places.map((place) => (
                     <ListItem className={classes.nested} disableGutters key={place}>
                       <ListItemText primary={place} />
@@ -65,12 +75,6 @@ export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocat
             )}
           </React.Fragment>
         ))}
-
-        {allowRemote && (
-          <ListItem button disableGutters>
-            <ListItemText primary="Remoto / Online" />
-          </ListItem>
-        )}
       </List>
     </TrainerProfileCard>
   );

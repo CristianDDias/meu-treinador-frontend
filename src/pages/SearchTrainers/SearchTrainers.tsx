@@ -1,24 +1,11 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { TrainerList } from '../../components/TrainerList/TrainerList';
+import { useStyles } from './SearchTrainers.jss';
 
 // #MOCK-START
 import trainers from '../../__mocks__/trainers.json';
 // #MOCK-END
-
-const useStyles = makeStyles({
-  container: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  list: {
-    flexBasis: 0,
-    flexGrow: 1,
-    overflow: 'auto',
-  },
-});
 
 export const SearchTrainers = () => {
   const classes = useStyles();
