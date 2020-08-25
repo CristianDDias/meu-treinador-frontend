@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { TrainerProfileCard } from '../TrainerProfileCard/TrainerProfileCard';
+import { Card } from '../../../components/Card/Card';
 import { TrainerServiceLocation } from '../../../interfaces/trainer';
 import { useStyles } from './TrainerProfileServiceLocations.jss';
 
@@ -53,7 +53,7 @@ export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocat
   }
 
   return (
-    <TrainerProfileCard title="Locais de atendimento">
+    <Card title="Locais de atendimento">
       <List disablePadding>
         {displayLocations.map((location) => (
           <React.Fragment key={location.id}>
@@ -76,6 +76,6 @@ export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocat
           </React.Fragment>
         ))}
       </List>
-    </TrainerProfileCard>
+    </Card>
   );
 };

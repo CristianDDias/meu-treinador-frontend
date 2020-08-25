@@ -38,7 +38,7 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
         </div>
 
         <Typography className={classes.price} color="primary">
-          R$ {Math.floor(price)}
+          R$ {price}
         </Typography>
 
         <Typography className={classes.info} variant="body2" color="textSecondary" align="justify">

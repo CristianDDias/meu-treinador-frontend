@@ -1,6 +1,6 @@
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
-import { TrainerProfileCard } from '../TrainerProfileCard/TrainerProfileCard';
+import { Card } from '../../../components/Card/Card';
 import { useStyles } from './TrainerProfileSpecialties.jss';
 
 interface TrainerProfileSpecialtiesProps {
@@ -12,12 +12,12 @@ export const TrainerProfileSpecialties: React.FC<TrainerProfileSpecialtiesProps>
 }) => {
   const classes = useStyles();
   return (
-    <TrainerProfileCard title="Especialidades">
+    <Card title="Especialidades">
       <div className={classes.container}>
         {specialties.map((specialty) => (
           <Chip label={specialty} key={specialty} />
         ))}
       </div>
-    </TrainerProfileCard>
+    </Card>
   );
 };

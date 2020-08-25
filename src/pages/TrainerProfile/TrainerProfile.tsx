@@ -9,11 +9,11 @@ import EmailIcon from '@material-ui/icons/Email';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
-import { TrainerProfileCard } from './TrainerProfileCard/TrainerProfileCard';
 import { TrainerProfileSpecialties } from './TrainerProfileSpecialties/TrainerProfileSpecialties';
 import { TrainerProfileServiceLocations } from './TrainerProfileServiceLocations/TrainerProfileServiceLocations';
 import { TrainerProfileServiceSchedules } from './TrainerProfileServiceSchedules/TrainerProfileServiceSchedules';
 import { TrainerProfileReviews } from './TrainerProfileReviews/TrainerProfileReviews';
+import { Card } from '../../components/Card/Card';
 import { formatRatingValue } from '../../utils/formatters';
 import { useStyles } from './TrainerProfile.jss';
 
@@ -29,7 +29,7 @@ export const TrainerProfile = () => {
   // #MOCK-START
   const trainer = trainers.find(({ id }) => id === trainerId) as Trainer;
   const trainerEmail = 'name@email.com';
-  const trainerWhatsApp = '5551983104940';
+  const trainerWhatsApp = '51983104940';
   const isFavorite = trainer.rating.value > 4;
   const locations: TrainerServiceLocation[] = [
     {
@@ -114,59 +114,62 @@ export const TrainerProfile = () => {
       TrainerProfileName
       */}
 
-      <TrainerProfileCard alignItemsCenter>
-        <Box position="relative">
-          <IconButton className={classes.favoriteButton} color="primary">
-            {isFavorite ? (
-              <FavoriteIcon fontSize="large" />
-            ) : (
-              <FavoriteBorderIcon fontSize="large" />
-            )}
-          </IconButton>
-          <Avatar className={classes.avatar} variant="rounded" src={trainer.img} />
+      <Card>
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Box position="relative">
+            <IconButton className={classes.favoriteButton} color="primary">
+              {isFavorite ? (
+                <FavoriteIcon fontSize="large" />
+              ) : (
+                <FavoriteBorderIcon fontSize="large" />
+              )}
+            </IconButton>
+            <Avatar className={classes.avatar} variant="rounded" src={trainer.img} />
+            <Typography className={classes.price}>A partir de R$ {trainer.price}</Typography>
+          </Box>
+          <Box display="flex">
+            <IconButton
+              className={classes.contactButton}
+              color="primary"
+              href={`https://wa.me/${trainerWhatsApp}`}
+            >
+              <WhatsAppIcon fontSize="large" />
+            </IconButton>
+            <IconButton
+              className={classes.contactButton}
+              color="primary"
+              href={`mailto:${trainerEmail}`}
+            >
+              <EmailIcon fontSize="large" />
+            </IconButton>
+          </Box>
+          <Typography className={classes.name}>{trainer.name}</Typography>
+          <Box display="flex">
+            <Rating
+              className={classes.rating}
+              value={trainer.rating.value}
+              precision={0.5}
+              size="small"
+              readOnly
+            />
+            <Typography variant="body2">
+              {formatRatingValue(trainer.rating.value)} ({trainer.rating.reviews} avaliações)
+            </Typography>
+          </Box>
         </Box>
-        <Box display="flex">
-          <IconButton
-            className={classes.contactButton}
-            color="primary"
-            href={`https://wa.me/${trainerWhatsApp}`}
-          >
-            <WhatsAppIcon fontSize="large" />
-          </IconButton>
-          <IconButton
-            className={classes.contactButton}
-            color="primary"
-            href={`mailto:${trainerEmail}`}
-          >
-            <EmailIcon fontSize="large" />
-          </IconButton>
-        </Box>
-        <Typography className={classes.name}>{trainer.name}</Typography>
-        <Box display="flex">
-          <Rating
-            className={classes.rating}
-            value={trainer.rating.value}
-            precision={0.5}
-            size="small"
-            readOnly
-          />
-          <Typography variant="body2">
-            {formatRatingValue(trainer.rating.value)} ({trainer.rating.reviews} avaliações)
-          </Typography>
-        </Box>
-      </TrainerProfileCard>
+      </Card>
 
-      <TrainerProfileCard title="Sobre mim">
+      <Card title="Sobre mim">
         <Typography variant="body2" align="justify">
           {trainer.description}
         </Typography>
-      </TrainerProfileCard>
+      </Card>
 
-      <TrainerProfileCard title="Qualificações">
+      <Card title="Qualificações">
         <Typography variant="body2" align="justify">
           {trainer.description}
         </Typography>
-      </TrainerProfileCard>
+      </Card>
 
       <TrainerProfileSpecialties specialties={specialties} />
 

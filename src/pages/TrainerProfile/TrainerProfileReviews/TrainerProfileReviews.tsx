@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrainerProfileCard } from '../TrainerProfileCard/TrainerProfileCard';
+import { Card } from '../../../components/Card/Card';
 import { useStyles } from './TrainerProfileReviews.jss';
 
 interface TrainerProfileReviewsProps {
@@ -9,8 +9,8 @@ interface TrainerProfileReviewsProps {
 export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = () => {
   const classes = useStyles();
   return (
-    <TrainerProfileCard title="Avaliações">
+    <Card title="Avaliações">
       <div className={classes.container}>Tudo Certo</div>
-    </TrainerProfileCard>
+    </Card>
   );
 };

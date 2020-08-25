@@ -5,7 +5,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
-import { TrainerProfileCard } from '../TrainerProfileCard/TrainerProfileCard';
+import { Card } from '../../../components/Card/Card';
 import { TrainerServiceSchedules } from '../../../interfaces/trainer';
 import { useStyles } from './TrainerProfileServiceSchedules.jss';
 
@@ -29,7 +29,7 @@ export const TrainerProfileServiceSchedules: React.FC<TrainerProfileServiceSched
   };
 
   return (
-    <TrainerProfileCard title="Horários de atendimento">
+    <Card title="Horários de atendimento">
       <TableContainer>
         <Table>
           <TableBody>
@@ -47,6 +47,6 @@ export const TrainerProfileServiceSchedules: React.FC<TrainerProfileServiceSched
           </TableBody>
         </Table>
       </TableContainer>
-    </TrainerProfileCard>
+    </Card>
   );
 };
