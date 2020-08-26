@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   layout: {
     display: 'grid',
     gridTemplate: `
-      "avatar trainer price" 72px
+      "avatar trainer price" 88px
       "info   info    info " auto
       / auto 1fr auto
     `,
@@ -16,8 +16,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   avatar: {
     gridArea: 'avatar',
-    width: '72px',
-    height: '72px',
+    width: '88px',
+    height: '88px',
   },
   trainer: {
     gridArea: 'trainer',
@@ -38,10 +38,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: '-webkit-box',
     boxOrient: 'vertical',
     lineClamp: 3,
-    lineHeight: '1.25rem',
-    maxHeight: '3.75rem',
+    lineHeight: '1.125rem',
+    maxHeight: '3.375rem',
     overflow: 'hidden',
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(1),
   },
   rating: {
     display: 'flex',
