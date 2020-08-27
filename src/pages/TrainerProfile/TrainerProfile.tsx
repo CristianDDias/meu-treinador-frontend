@@ -10,7 +10,12 @@ import { useStyles } from './TrainerProfile.jss';
 
 // #MOCK-START
 import trainers from '../../__mocks__/trainers.json';
-import { Trainer, TrainerServiceLocation, TrainerServiceSchedules } from '../../interfaces/trainer';
+import {
+  Trainer,
+  TrainerServiceLocation,
+  TrainerServiceSchedules,
+  TrainerReview,
+} from '../../interfaces/trainer';
 // #MOCK-END
 
 export const TrainerProfile = () => {
@@ -92,6 +97,28 @@ export const TrainerProfile = () => {
     'Wellness',
     'Yoga',
   ];
+  const reviews: TrainerReview[] = [
+    {
+      id: '1',
+      name: 'Cristian Dias',
+      rating: 4.5,
+      description:
+        'Ratione qui quo sit dolorem aut praesentium quasi recusandae. Neque consequatur modi cum aliquid. Iusto mollitia neque labore mollitia exercitationem dolores voluptatem magni velit.',
+    },
+    {
+      id: '2',
+      name: 'Daniel Zad',
+      rating: 4.0,
+      description: 'Sed ad dolor adipisci excepturi eveniet. ',
+    },
+    {
+      id: '3',
+      name: 'Fulano da Silva',
+      rating: 3.5,
+      description:
+        'Praesentium officia dolores aut laudantium explicabo itaque ullam ullam ut. Nesciunt voluptas nostrum quasi.',
+    },
+  ];
   // #MOCK-END
 
   return (
@@ -108,7 +135,7 @@ export const TrainerProfile = () => {
 
       <TrainerProfileServiceSchedules schedules={schedules} />
 
-      <TrainerProfileReviews />
+      <TrainerProfileReviews reviews={reviews} />
     </div>
   );
 };

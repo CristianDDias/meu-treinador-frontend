@@ -28,3 +28,10 @@ export type TrainerServiceSchedules = {
     endTime: string;
   };
 };
+
+export interface TrainerReview {
+  id: string;
+  name: string;
+  rating: number;
+  description: string;
+}
