@@ -2,12 +2,17 @@ export interface Trainer {
   id: string;
   name: string;
   description: string;
+  img: string;
   price: number;
   rating: {
     value: number;
     reviews: number;
   };
-  img: string;
+  contact: {
+    email: string;
+    whatsapp: string;
+  };
+  isFavorite: boolean;
 }
 
 export interface TrainerServiceLocation {

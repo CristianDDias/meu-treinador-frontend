@@ -6,7 +6,7 @@ import { useStyles } from './FavoriteTrainers.jss';
 // #MOCK-START
 import trainers from '../../__mocks__/trainers.json';
 
-const favoriteTrainers = trainers.slice(0, 3);
+const favoriteTrainers = trainers.filter((trainer) => trainer.isFavorite);
 // #MOCK-END
 
 export const FavoriteTrainers = () => {

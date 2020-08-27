@@ -1,20 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
-import IconButton from '@material-ui/core/IconButton';
-import Rating from '@material-ui/lab/Rating';
-import Typography from '@material-ui/core/Typography';
-import EmailIcon from '@material-ui/icons/Email';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import { TrainerProfileAvatar } from './TrainerProfileAvatar/TrainerProfileAvatar';
+import { TrainerProfileInfo } from './TrainerProfileInfo/TrainerProfileInfo';
 import { TrainerProfileSpecialties } from './TrainerProfileSpecialties/TrainerProfileSpecialties';
 import { TrainerProfileServiceLocations } from './TrainerProfileServiceLocations/TrainerProfileServiceLocations';
 import { TrainerProfileServiceSchedules } from './TrainerProfileServiceSchedules/TrainerProfileServiceSchedules';
 import { TrainerProfileReviews } from './TrainerProfileReviews/TrainerProfileReviews';
-import { Card } from '../../components/Card/Card';
-import { formatRatingValue } from '../../utils/formatters';
 import { useStyles } from './TrainerProfile.jss';
 
 // #MOCK-START
@@ -28,9 +19,6 @@ export const TrainerProfile = () => {
 
   // #MOCK-START
   const trainer = trainers.find(({ id }) => id === trainerId) as Trainer;
-  const trainerEmail = 'name@email.com';
-  const trainerWhatsApp = '51983104940';
-  const isFavorite = trainer.rating.value > 4;
   const locations: TrainerServiceLocation[] = [
     {
       id: '1',
@@ -108,68 +96,11 @@ export const TrainerProfile = () => {
 
   return (
     <div className={classes.container}>
-      {/* 
-      TrainerProfileBio
-      TrainerProfileAvatar
-      TrainerProfileName
-      */}
+      <TrainerProfileAvatar trainer={trainer} />
 
-      <Card>
-        <Box display="flex" flexDirection="column" alignItems="center">
-          <Box position="relative">
-            <IconButton className={classes.favoriteButton} color="primary">
-              {isFavorite ? (
-                <FavoriteIcon fontSize="large" />
-              ) : (
-                <FavoriteBorderIcon fontSize="large" />
-              )}
-            </IconButton>
-            <Avatar className={classes.avatar} variant="rounded" src={trainer.img} />
-            <Typography className={classes.price}>A partir de R$ {trainer.price}</Typography>
-          </Box>
-          <Box display="flex">
-            <IconButton
-              className={classes.contactButton}
-              color="primary"
-              href={`https://wa.me/${trainerWhatsApp}`}
-            >
-              <WhatsAppIcon fontSize="large" />
-            </IconButton>
-            <IconButton
-              className={classes.contactButton}
-              color="primary"
-              href={`mailto:${trainerEmail}`}
-            >
-              <EmailIcon fontSize="large" />
-            </IconButton>
-          </Box>
-          <Typography className={classes.name}>{trainer.name}</Typography>
-          <Box display="flex">
-            <Rating
-              className={classes.rating}
-              value={trainer.rating.value}
-              precision={0.5}
-              size="small"
-              readOnly
-            />
-            <Typography variant="body2">
-              {formatRatingValue(trainer.rating.value)} ({trainer.rating.reviews} avaliações)
-            </Typography>
-          </Box>
-        </Box>
-      </Card>
+      <TrainerProfileInfo title="Sobre mim" text={trainer.description} />
 
-      <Card title="Sobre mim">
-        <Typography variant="body2" align="justify">
-          {trainer.description}
-        </Typography>
-      </Card>
-
-      <Card title="Qualificações">
-        <Typography variant="body2" align="justify">
-          {trainer.description}
-        </Typography>
-      </Card>
+      <TrainerProfileInfo title="Qualificações" text={trainer.description} />
 
       <TrainerProfileSpecialties specialties={specialties} />
 
