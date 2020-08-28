@@ -28,18 +28,20 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
         <Avatar className={classes.avatar} variant="rounded" src={img} />
 
         <div className={classes.trainer}>
-          <Typography className={classes.name}>{name}</Typography>
+          <Typography className={classes.name} noWrap>
+            {name}
+          </Typography>
           <div className={classes.rating}>
             <StarIcon color="primary" fontSize="small" />
-            <Typography variant="body2">
-              {formatRatingValue(rating.value)} ({rating.reviews})
+            <Typography variant="body2">{formatRatingValue(rating.value)}</Typography>
+            <Typography variant="body2" color="textSecondary">
+              ({rating.reviews} avaliações)
             </Typography>
           </div>
+          <Typography className={classes.price} color="primary">
+            R$ {price}
+          </Typography>
         </div>
-
-        <Typography className={classes.price} color="primary">
-          R$ {price}
-        </Typography>
 
         <Typography className={classes.info} variant="body2" color="textSecondary" align="justify">
           {description}

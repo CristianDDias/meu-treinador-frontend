@@ -4,34 +4,26 @@ export const useStyles = makeStyles((theme: Theme) => ({
   layout: {
     display: 'grid',
     gridTemplate: `
-      "avatar trainer price" 88px
-      "info   info    info " auto
-      / auto 1fr auto
+      "avatar trainer" 100px
+      "info   info   " auto
+      / auto 1fr
     `,
-    columnGap: theme.spacing(1),
+    width: '100%',
+    gap: theme.spacing(2, 2),
     background: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(2),
-    width: '100%',
   },
   avatar: {
     gridArea: 'avatar',
-    width: '88px',
-    height: '88px',
+    width: '100px',
+    height: '100px',
   },
   trainer: {
     gridArea: 'trainer',
-    alignSelf: 'center',
-  },
-  name: {
-    fontWeight: theme.typography.fontWeightMedium,
-    lineHeight: 1.25,
-    marginBottom: theme.spacing(0.5),
-  },
-  price: {
-    gridArea: 'price',
-    alignSelf: 'center',
-    fontWeight: theme.typography.fontWeightMedium,
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: 0,
   },
   info: {
     gridArea: 'info',
@@ -41,12 +33,20 @@ export const useStyles = makeStyles((theme: Theme) => ({
     lineHeight: '1.125rem',
     maxHeight: '3.375rem',
     overflow: 'hidden',
-    marginTop: theme.spacing(1),
+  },
+  name: {
+    fontSize: '1.125rem',
+    fontWeight: theme.typography.fontWeightMedium,
+  },
+  price: {
+    fontWeight: theme.typography.fontWeightBold,
+    marginTop: 'auto',
   },
   rating: {
     display: 'flex',
     alignItems: 'center',
-    '& > :first-child': {
+    marginBottom: theme.spacing(1),
+    '& > :not(:last-child)': {
       marginRight: theme.spacing(0.5),
     },
   },
