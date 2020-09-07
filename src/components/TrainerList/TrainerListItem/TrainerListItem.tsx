@@ -12,8 +12,15 @@ interface TrainerListItemProps {
   trainer: Trainer;
 }
 
+/*
+
+#TODO:
+- Change the layout so that it does not display too much blank spaces.
+
+*/
+
 export const TrainerListItem: React.FC<TrainerListItemProps> = ({
-  trainer: { id, name, description, price, rating, img },
+  trainer: { id, name, description, rating, img },
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -38,12 +45,9 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
               ({rating.reviews} avaliações)
             </Typography>
           </div>
-          <Typography className={classes.price} color="primary">
-            R$ {price}
-          </Typography>
         </div>
 
-        <Typography className={classes.info} variant="body2" color="textSecondary" align="justify">
+        <Typography className={classes.info} variant="body2" color="textSecondary">
           {description}
         </Typography>
       </div>

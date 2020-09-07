@@ -10,9 +10,7 @@ interface TrainerProfileInfoProps {
 export const TrainerProfileInfo: React.FC<TrainerProfileInfoProps> = ({ title, text }) => {
   return (
     <Card title={title}>
-      <Typography variant="body2" align="justify">
-        {text}
-      </Typography>
+      <Typography variant="body2">{text}</Typography>
     </Card>
   );
 };

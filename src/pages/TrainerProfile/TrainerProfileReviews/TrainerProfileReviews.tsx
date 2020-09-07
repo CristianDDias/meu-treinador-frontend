@@ -13,18 +13,20 @@ interface TrainerProfileReviewsProps {
 export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = ({ reviews }) => {
   const classes = useStyles();
   return (
-    <Card title="Avaliações">
+    <Card title={`Avaliações (${reviews.length})`}>
       <div className={classes.container}>
         {reviews.map((review) => (
           <div className={classes.review} key={review.id}>
             <div className={classes.user}>
-              <Typography>{review.name}</Typography>
+              <Typography className={classes.name} variant="body2">
+                {review.name}
+              </Typography>
               <div className={classes.rating}>
                 <Rating value={review.rating} precision={0.5} size="small" readOnly />
                 <Typography variant="body2">{formatRatingValue(review.rating)}</Typography>
               </div>
             </div>
-            <Typography variant="body2" color="textSecondary" align="justify">
+            <Typography variant="body2" color="textSecondary">
               {review.description}
             </Typography>
           </div>

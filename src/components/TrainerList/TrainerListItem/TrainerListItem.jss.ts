@@ -23,6 +23,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     gridArea: 'trainer',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
     minWidth: 0,
   },
   info: {
@@ -38,14 +39,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     fontSize: '1.125rem',
     fontWeight: theme.typography.fontWeightMedium,
   },
-  price: {
-    fontWeight: theme.typography.fontWeightBold,
-    marginTop: 'auto',
-  },
   rating: {
     display: 'flex',
     alignItems: 'center',
-    marginBottom: theme.spacing(1),
     '& > :not(:last-child)': {
       marginRight: theme.spacing(0.5),
     },

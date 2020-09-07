@@ -8,7 +8,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     '& > *': {
       margin: theme.spacing(0.5),
       color: theme.palette.primary.main,
-      background: `${theme.palette.primary.main}26`,
+      background: `${theme.palette.primary.main}1a`,
     },
   },
 }));

@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { TrainerProfileAvatar } from './TrainerProfileAvatar/TrainerProfileAvatar';
 import { TrainerProfileInfo } from './TrainerProfileInfo/TrainerProfileInfo';
+import { TrainerProfileContacts } from './TrainerProfileContacts/TrainerProfileContacts';
 import { TrainerProfileSpecialties } from './TrainerProfileSpecialties/TrainerProfileSpecialties';
 import { TrainerProfileServiceLocations } from './TrainerProfileServiceLocations/TrainerProfileServiceLocations';
 import { TrainerProfileServiceSchedules } from './TrainerProfileServiceSchedules/TrainerProfileServiceSchedules';
@@ -124,6 +125,8 @@ export const TrainerProfile = () => {
   return (
     <div className={classes.container}>
       <TrainerProfileAvatar trainer={trainer} />
+
+      <TrainerProfileContacts email={trainer.contact.email} whatsapp={trainer.contact.whatsapp} />
 
       <TrainerProfileInfo title="Sobre mim" text={trainer.description} />
 

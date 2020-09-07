@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
   },
   title: {
-    fontSize: '1.125rem',
+    fontSize: '1.25rem',
     fontWeight: theme.typography.fontWeightMedium,
     marginBottom: theme.spacing(1),
   },

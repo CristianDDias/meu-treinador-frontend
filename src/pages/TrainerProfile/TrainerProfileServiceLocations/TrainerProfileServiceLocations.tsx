@@ -58,7 +58,7 @@ export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocat
         {displayLocations.map((location) => (
           <React.Fragment key={location.id}>
             <ListItem button disableGutters onClick={() => handleToggleExpandedItem(location.id)}>
-              <ListItemText primary={location.name} />
+              <ListItemText primary={location.name} primaryTypographyProps={{ variant: 'body2' }} />
               {location.places !== undefined &&
                 (expandedItems[location.id] ? <ExpandLessIcon /> : <ExpandMoreIcon />)}
             </ListItem>
@@ -67,7 +67,7 @@ export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocat
                 <List disablePadding>
                   {location.places.map((place) => (
                     <ListItem className={classes.nested} disableGutters key={place}>
-                      <ListItemText primary={place} />
+                      <ListItemText primary={place} primaryTypographyProps={{ variant: 'body2' }} />
                     </ListItem>
                   ))}
                 </List>

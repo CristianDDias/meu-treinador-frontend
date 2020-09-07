@@ -4,10 +4,8 @@ import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
-import EmailIcon from '@material-ui/icons/Email';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import { Card } from '../../../components/Card/Card';
 import { Trainer } from '../../../interfaces/trainer';
 import { formatRatingValue } from '../../../utils/formatters';
@@ -31,23 +29,6 @@ export const TrainerProfileAvatar: React.FC<TrainerProfileAvatarProps> = ({ trai
             )}
           </IconButton>
           <Avatar className={classes.avatar} variant="rounded" src={trainer.img} />
-          <Typography className={classes.price}>A partir de R$ {trainer.price}</Typography>
-        </Box>
-        <Box display="flex">
-          <IconButton
-            className={classes.contactButton}
-            color="primary"
-            href={`https://wa.me/${trainer.contact.whatsapp}`}
-          >
-            <WhatsAppIcon fontSize="large" />
-          </IconButton>
-          <IconButton
-            className={classes.contactButton}
-            color="primary"
-            href={`mailto:${trainer.contact.email}`}
-          >
-            <EmailIcon fontSize="large" />
-          </IconButton>
         </Box>
         <Typography className={classes.name}>{trainer.name}</Typography>
         <Box display="flex">
