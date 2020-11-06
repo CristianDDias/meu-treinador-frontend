@@ -1,19 +1,41 @@
 import React from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { TrainerList } from '../../components/TrainerList/TrainerList';
+import { useTrainerList } from '../../hooks/useTrainerList';
 import { useStyles } from './SearchTrainers.jss';
 
-// #MOCK-START
-import trainers from '../../__mocks__/trainers.json';
-// #MOCK-END
-
-export const SearchTrainers = () => {
+export const SearchTrainers: React.FC = () => {
   const classes = useStyles();
+  const { trainers, isLoading, isSuccess, isError } = useTrainerList();
+
   return (
     <div className={classes.container}>
       <SearchBar placeholder="Buscar Personal Trainer..." />
+
       <div className={classes.list}>
-        <TrainerList trainers={trainers} />
+        {isSuccess && trainers.length > 0 && <TrainerList trainers={trainers} />}
+
+        {isSuccess && trainers.length === 0 && (
+          <div className={classes.indicator}>
+            <Typography align="center">Nenhum Personal Trainer encontrado.</Typography>
+          </div>
+        )}
+
+        {isError && (
+          <div className={classes.indicator}>
+            <Typography align="center">
+              Não foi possível carregar a lista de Personal Trainers.
+            </Typography>
+          </div>
+        )}
+
+        {isLoading && (
+          <div className={classes.indicator}>
+            <CircularProgress color="primary" />
+          </div>
+        )}
       </div>
     </div>
   );

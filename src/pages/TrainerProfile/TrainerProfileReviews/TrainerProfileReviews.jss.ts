@@ -1,26 +1,17 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: theme.spacing(0.5),
-    '& > :not(:last-child)': {
-      marginBottom: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
-      borderBottom: `1px solid ${theme.palette.divider}`,
-    },
-  },
-  review: {
+  item: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
+    margin: theme.spacing(0.5, 0),
   },
-  user: {
+  author: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: theme.spacing(0.5),
+    marginBottom: theme.spacing(1),
   },
   name: {
     fontWeight: theme.typography.fontWeightMedium,
@@ -29,7 +20,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     '& > :first-child': {
-      marginRight: theme.spacing(0.5),
+      marginRight: theme.spacing(1),
     },
   },
 }));

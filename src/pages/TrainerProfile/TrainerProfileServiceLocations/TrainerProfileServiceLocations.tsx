@@ -6,66 +6,75 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Card } from '../../../components/Card/Card';
-import { TrainerServiceLocation } from '../../../interfaces/trainer';
+import { TrainerLocations } from '../../../interfaces/trainer';
 import { useStyles } from './TrainerProfileServiceLocations.jss';
 
-type ExpandedItems = Record<string, boolean>;
+interface Location {
+  name: string;
+  places: string[];
+  isExpanded: boolean;
+}
 
 interface TrainerProfileServiceLocationsProps {
-  locations: TrainerServiceLocation[];
-  allowRemote: boolean;
+  locations: TrainerLocations;
 }
 
 export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocationsProps> = ({
-  locations,
-  allowRemote,
+  locations: { cities, isAttendingHome, isAttendingOnline },
 }) => {
   const classes = useStyles();
-  const [expandedItems, setExpandedItems] = useState<ExpandedItems>({});
+  const [locations, setLocations] = useState<Location[]>([]);
 
   useEffect(() => {
-    const initialState: ExpandedItems = {};
-    locations.forEach((location) => {
-      if (location.places) {
-        initialState[location.id] = false;
-      }
-    });
-    setExpandedItems(initialState);
-  }, [locations]);
-
-  const handleToggleExpandedItem = (id: string): void => {
-    if (id in expandedItems) {
-      setExpandedItems((state) => ({ ...state, [id]: !state[id] }));
+    const initialState: Location[] = cities.map(({ city, state, places }) => ({
+      name: `${city} - ${state}`,
+      places,
+      isExpanded: places.length > 0,
+    }));
+    if (isAttendingOnline) {
+      initialState.push({
+        name: 'Remoto / Online',
+        places: [],
+        isExpanded: false,
+      });
     }
-  };
+    if (isAttendingHome) {
+      initialState.push({
+        name: 'Domicílio',
+        places: [],
+        isExpanded: false,
+      });
+    }
+    setLocations(initialState);
+  }, [cities, isAttendingHome, isAttendingOnline]);
 
-  const displayLocations = locations.map((location) => ({
-    id: location.id,
-    name: `${location.city} - ${location.state}`,
-    places: location.places,
-  }));
-  if (allowRemote) {
-    displayLocations.push({
-      id: 'Remoto / Online',
-      name: 'Remoto / Online',
-      places: undefined,
-    });
-  }
+  const handleToggleExpanded = (locationName: string): void => {
+    setLocations((state) =>
+      state.map((location) => {
+        if (location.name === locationName) {
+          return {
+            ...location,
+            isExpanded: !location.isExpanded,
+          };
+        }
+        return location;
+      })
+    );
+  };
 
   return (
     <Card title="Locais de atendimento">
       <List disablePadding>
-        {displayLocations.map((location) => (
-          <React.Fragment key={location.id}>
-            <ListItem button disableGutters onClick={() => handleToggleExpandedItem(location.id)}>
-              <ListItemText primary={location.name} primaryTypographyProps={{ variant: 'body2' }} />
-              {location.places !== undefined &&
-                (expandedItems[location.id] ? <ExpandLessIcon /> : <ExpandMoreIcon />)}
+        {locations.map(({ name, places, isExpanded }) => (
+          <React.Fragment key={name}>
+            <ListItem button disableGutters onClick={() => handleToggleExpanded(name)}>
+              <ListItemText primary={name} primaryTypographyProps={{ variant: 'body2' }} />
+              {places.length > 0 && (isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />)}
             </ListItem>
-            {location.places !== undefined && (
-              <Collapse in={expandedItems[location.id]} timeout="auto" unmountOnExit>
+            {places.length > 0 && (
+              <Collapse in={isExpanded} timeout="auto" unmountOnExit>
                 <List disablePadding>
-                  {location.places.map((place) => (
+                  {places.map((place) => (
                     <ListItem className={classes.nested} disableGutters key={place}>
                       <ListItemText primary={place} primaryTypographyProps={{ variant: 'body2' }} />
                     </ListItem>

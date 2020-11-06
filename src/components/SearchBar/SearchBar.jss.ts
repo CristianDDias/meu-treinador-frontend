@@ -4,9 +4,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
-    background: theme.palette.background.paper,
     padding: theme.spacing(1),
-    borderBottom: theme.border,
+    background: theme.palette.background.paper,
+    boxShadow: theme.shadow,
+    zIndex: theme.zIndex.appBar,
   },
   input: {
     flexBasis: 0,

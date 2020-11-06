@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import BackIcon from '@material-ui/icons/ArrowBackIos';
 import { useStyles } from './Header.jss';
 
-export const Header = () => {
+export const Header: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
@@ -19,7 +19,7 @@ export const Header = () => {
   const hideBackButton = !location.pathname.split('/')[2];
 
   return (
-    <AppBar position="fixed" elevation={0}>
+    <AppBar className={classes.header} position="fixed">
       <Toolbar variant="dense">
         <IconButton
           className={hideBackButton ? classes.hidden : classes.button}

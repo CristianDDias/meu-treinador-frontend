@@ -2,7 +2,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   navigation: {
-    borderTop: theme.border,
+    boxShadow: theme.shadow,
     zIndex: theme.zIndex.appBar,
     position: 'fixed',
     bottom: '0px',

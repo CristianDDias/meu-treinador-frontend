@@ -9,7 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import TrainingIcon from '@material-ui/icons/DirectionsRun';
 import { useStyles } from './NavBar.jss';
 
-export const NavBar = () => {
+export const NavBar: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();

@@ -7,14 +7,25 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'column',
   },
   list: {
+    display: 'flex',
+    flexDirection: 'column',
     flexBasis: 0,
     flexGrow: 1,
     overflow: 'auto',
   },
+  indicator: {
+    display: 'flex',
+    flexBasis: 0,
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: theme.spacing(2, 2, 4),
+  },
   label: {
-    background: theme.palette.background.paper,
     padding: theme.spacing(1),
+    background: theme.palette.background.paper,
     fontWeight: theme.typography.fontWeightMedium,
-    borderBottom: theme.border,
+    boxShadow: theme.shadow,
+    zIndex: theme.zIndex.appBar,
   },
 }));

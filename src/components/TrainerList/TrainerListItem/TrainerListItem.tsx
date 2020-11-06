@@ -12,15 +12,8 @@ interface TrainerListItemProps {
   trainer: Trainer;
 }
 
-/*
-
-#TODO:
-- Change the layout so that it does not display too much blank spaces.
-
-*/
-
 export const TrainerListItem: React.FC<TrainerListItemProps> = ({
-  trainer: { id, name, description, rating, img },
+  trainer: { id, name, description, rating, image },
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -32,7 +25,7 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
   return (
     <ListItem button onClick={navigateToTrainer}>
       <div className={classes.layout}>
-        <Avatar className={classes.avatar} variant="rounded" src={img} />
+        <Avatar className={classes.avatar} variant="rounded" src={image} />
 
         <div className={classes.trainer}>
           <Typography className={classes.name} noWrap>

@@ -3,28 +3,19 @@ import Button from '@material-ui/core/Button';
 import EmailIcon from '@material-ui/icons/Email';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import { Card } from '../../../components/Card/Card';
+import { TrainerContacts } from '../../../interfaces/trainer';
 import { useStyles } from './TrainerProfileContacts.jss';
 
 interface TrainerProfileContactsProps {
-  email: string;
-  whatsapp: string;
+  contacts: TrainerContacts;
 }
 
-/*
-
-#TODO:
-- Add a standard message for each contact.
-  - Whatsapp: https://wa.me/XXXXXXXXXXX?text=Olá%20Fulano!
-
-*/
-
 export const TrainerProfileContacts: React.FC<TrainerProfileContactsProps> = ({
-  email,
-  whatsapp,
+  contacts: { email, whatsapp },
 }) => {
   const classes = useStyles();
   return (
-    <Card title="Solicite um orçamento">
+    <Card title="Contatos">
       <div className={classes.container}>
         <Button
           className={classes.button}

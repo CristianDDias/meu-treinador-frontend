@@ -1,6 +1,9 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles((theme: Theme) => ({
+  header: {
+    boxShadow: theme.shadow,
+  },
   title: {
     width: '100%',
     color: '#ffffff',
@@ -12,4 +15,4 @@ export const useStyles = makeStyles({
   hidden: {
     display: 'none',
   },
-});
+}));

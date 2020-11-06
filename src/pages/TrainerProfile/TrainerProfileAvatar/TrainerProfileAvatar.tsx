@@ -22,13 +22,14 @@ export const TrainerProfileAvatar: React.FC<TrainerProfileAvatarProps> = ({ trai
       <Box display="flex" flexDirection="column" alignItems="center">
         <Box position="relative">
           <IconButton className={classes.favoriteButton} color="primary">
-            {trainer.isFavorite ? (
+            {/* TODO: Alterar para "trainer.isFavorite" quando auth estiver implementada */}
+            {trainer.rating.value > 4 ? (
               <FavoriteIcon fontSize="large" />
             ) : (
               <FavoriteBorderIcon fontSize="large" />
             )}
           </IconButton>
-          <Avatar className={classes.avatar} variant="rounded" src={trainer.img} />
+          <Avatar className={classes.avatar} variant="rounded" src={trainer.image} />
         </Box>
         <Typography className={classes.name}>{trainer.name}</Typography>
         <Box display="flex">

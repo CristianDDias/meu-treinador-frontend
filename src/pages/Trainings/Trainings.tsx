@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const Trainings = () => {
+export const Trainings: React.FC = () => {
   return <div>Trainings</div>;
 };
