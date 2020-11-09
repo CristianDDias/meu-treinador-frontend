@@ -9,21 +9,36 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { Card } from '../../../components/Card/Card';
 import { Trainer } from '../../../interfaces/trainer';
 import { formatRatingValue } from '../../../utils/formatters';
+import { useUser, useMutateUserFavoriteTrainer } from '../../../hooks/useUser';
 import { useStyles } from './TrainerProfileAvatar.jss';
 
 interface TrainerProfileAvatarProps {
   trainer: Trainer;
 }
 
+// TODO: Ajustar componente para não utilizar hooks e receber dados de isFavorite por props
+
 export const TrainerProfileAvatar: React.FC<TrainerProfileAvatarProps> = ({ trainer }) => {
   const classes = useStyles();
+  const { user, isSuccess } = useUser();
+  const mutateUserFavoriteTrainer = useMutateUserFavoriteTrainer();
+
+  const isFavorite = isSuccess ? user.favoriteTrainers.some(({ id }) => id === trainer.id) : false;
+
+  const handleClickFavorite = () => {
+    mutateUserFavoriteTrainer({ trainer, isFavorite: !isFavorite });
+  };
+
   return (
     <Card>
       <Box display="flex" flexDirection="column" alignItems="center">
         <Box position="relative">
-          <IconButton className={classes.favoriteButton} color="primary">
-            {/* TODO: Alterar para "trainer.isFavorite" quando auth estiver implementada */}
-            {trainer.rating.value > 4 ? (
+          <IconButton
+            className={classes.favoriteButton}
+            color="primary"
+            onClick={handleClickFavorite}
+          >
+            {isFavorite ? (
               <FavoriteIcon fontSize="large" />
             ) : (
               <FavoriteBorderIcon fontSize="large" />

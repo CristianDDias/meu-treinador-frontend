@@ -2,16 +2,20 @@ import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { TrainerList } from '../../components/TrainerList/TrainerList';
-import { useTrainerFavoriteList } from '../../hooks/useTrainerFavoriteList';
+import { useUser } from '../../hooks/useUser';
 import { useStyles } from './FavoriteTrainers.jss';
 
 export const FavoriteTrainers: React.FC = () => {
   const classes = useStyles();
-  const { trainers, isLoading, isSuccess, isError } = useTrainerFavoriteList();
+  const { user, isLoading, isSuccess, isError } = useUser();
+
+  const trainers = isSuccess ? user.favoriteTrainers : [];
 
   return (
     <div className={classes.container}>
-      <Typography className={classes.label}>Favoritos ({trainers.length})</Typography>
+      <Typography className={classes.label}>
+        Favoritos ({isSuccess ? trainers.length : 0})
+      </Typography>
 
       <div className={classes.list}>
         {isSuccess && trainers.length > 0 && <TrainerList trainers={trainers} />}

@@ -3,12 +3,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { TrainerList } from '../../components/TrainerList/TrainerList';
-import { useTrainerList } from '../../hooks/useTrainerList';
+import { useTrainers } from '../../hooks/useTrainers';
 import { useStyles } from './SearchTrainers.jss';
 
 export const SearchTrainers: React.FC = () => {
   const classes = useStyles();
-  const { trainers, isLoading, isSuccess, isError } = useTrainerList();
+  const { trainers, isLoading, isSuccess, isError } = useTrainers();
 
   return (
     <div className={classes.container}>
