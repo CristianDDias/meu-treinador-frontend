@@ -17,30 +17,34 @@ export const TrainerProfile: React.FC = () => {
   const { trainerId } = useParams<{ trainerId: string }>();
   const { trainer, isLoading, isSuccess, isError } = useTrainerDetails(trainerId);
 
-  return (
-    <div className={classes.container}>
-      {isSuccess && (
-        <>
-          <TrainerProfileAvatar trainer={trainer} />
-          <TrainerProfileContacts contacts={trainer.details.contacts} />
-          <TrainerProfileInfo title="Sobre mim" text={trainer.description} />
-          <TrainerProfileInfo title="Qualificações" text={trainer.details.qualifications} />
-          <TrainerProfileSpecialties specialties={trainer.details.specialties} />
-          <TrainerProfileServiceLocations locations={trainer.details.locations} />
-          <TrainerProfileServiceSchedules schedules={trainer.details.schedules} />
-          <TrainerProfileReviews trainerId={trainerId} />
-        </>
-      )}
+  if (isLoading) {
+    return <TrainerProfileSkeleton />;
+  }
 
-      {isError && (
-        <div className={classes.message}>
-          <Typography align="center">
-            Não foi possível carregar o perfil do Personal Trainer.
-          </Typography>
-        </div>
-      )}
+  if (isError) {
+    return (
+      <div className={classes.message}>
+        <Typography align="center">
+          Não foi possível carregar o perfil do Personal Trainer.
+        </Typography>
+      </div>
+    );
+  }
 
-      {isLoading && <TrainerProfileSkeleton />}
-    </div>
-  );
+  if (isSuccess) {
+    return (
+      <div className={classes.container}>
+        <TrainerProfileAvatar trainer={trainer} />
+        <TrainerProfileContacts contacts={trainer.details.contacts} />
+        <TrainerProfileInfo title="Sobre mim" text={trainer.description} />
+        <TrainerProfileInfo title="Qualificações" text={trainer.details.qualifications} />
+        <TrainerProfileSpecialties specialties={trainer.details.specialties} />
+        <TrainerProfileServiceLocations locations={trainer.details.locations} />
+        <TrainerProfileServiceSchedules schedules={trainer.details.schedules} />
+        <TrainerProfileReviews trainerId={trainerId} />
+      </div>
+    );
+  }
+
+  return null;
 };

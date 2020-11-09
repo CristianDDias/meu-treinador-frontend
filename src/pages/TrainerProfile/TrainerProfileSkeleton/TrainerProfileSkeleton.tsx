@@ -6,23 +6,23 @@ import { useStyles } from './TrainerProfileSkeleton.jss';
 export const TrainerProfileSkeleton: React.FC = () => {
   const classes = useStyles();
   return (
-    <>
+    <div className={classes.container}>
       <Card>
-        <div className={classes.container} style={{ alignItems: 'center' }}>
+        <div className={classes.content} style={{ alignItems: 'center' }}>
           <Skeleton variant="rect" width={200} height={200} />
           <Skeleton variant="rect" width={215} height="1.5rem" />
           <Skeleton variant="rect" width={225} height="1.125rem" />
         </div>
       </Card>
       <Card>
-        <div className={classes.container}>
+        <div className={classes.content}>
           <Skeleton variant="rect" width={215} height="1.5rem" />
           <Skeleton variant="rect" width="100%" height={36} />
           <Skeleton variant="rect" width="100%" height={36} />
         </div>
       </Card>
       <Card>
-        <div className={classes.container}>
+        <div className={classes.content}>
           <Skeleton variant="rect" width={215} height="1.5rem" />
           <Skeleton variant="rect" width="100%" height="0.875rem" />
           <Skeleton variant="rect" width="100%" height="0.875rem" />
@@ -30,13 +30,13 @@ export const TrainerProfileSkeleton: React.FC = () => {
         </div>
       </Card>
       <Card>
-        <div className={classes.container}>
+        <div className={classes.content}>
           <Skeleton variant="rect" width={215} height="1.5rem" />
           <Skeleton variant="rect" width="100%" height="0.875rem" />
           <Skeleton variant="rect" width="100%" height="0.875rem" />
           <Skeleton variant="rect" width="100%" height="0.875rem" />
         </div>
       </Card>
-    </>
+    </div>
   );
 };
