@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
@@ -8,11 +8,16 @@ import { useStyles } from './SearchTrainers.jss';
 
 export const SearchTrainers: React.FC = () => {
   const classes = useStyles();
-  const { trainers, isLoading, isSuccess, isError } = useTrainers();
+  const [search, setSearch] = useState('');
+  const { trainers, isLoading, isSuccess, isError } = useTrainers({ name: search });
+
+  const handleSearch = useCallback((text: string) => {
+    setSearch(text);
+  }, []);
 
   return (
     <div className={classes.container}>
-      <SearchBar placeholder="Buscar Personal Trainer..." />
+      <SearchBar placeholder="Buscar Personal Trainer..." onSearch={handleSearch} />
 
       <div className={classes.list}>
         {isSuccess && trainers.length > 0 && <TrainerList trainers={trainers} />}

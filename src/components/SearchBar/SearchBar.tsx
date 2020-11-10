@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -8,19 +8,32 @@ import { useStyles } from './SearchBar.jss';
 
 interface SearchBarProps {
   placeholder: string;
+  onSearch: (search: string) => void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ placeholder }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch }) => {
   const classes = useStyles();
+  const [search, setSearch] = useState('');
+
+  const handleSearch = () => {
+    onSearch(search);
+  };
+
+  const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
   return (
     <div className={classes.container}>
       <OutlinedInput
         className={classes.input}
         margin="dense"
+        value={search}
         placeholder={placeholder}
+        onChange={handleChangeSearch}
         endAdornment={
           <InputAdornment position="end">
-            <IconButton size="small" edge="end">
+            <IconButton size="small" edge="end" onClick={handleSearch}>
               <SearchIcon />
             </IconButton>
           </InputAdornment>

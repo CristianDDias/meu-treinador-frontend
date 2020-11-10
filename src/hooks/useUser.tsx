@@ -17,17 +17,17 @@ export const useUser = () => {
   return { user: data as User, isLoading, isSuccess, isError };
 };
 
-interface UserFavoriteTrainerDto {
+interface UserFavoriteTrainer {
   trainer: Trainer;
   isFavorite: boolean;
 }
 
 export const useMutateUserFavoriteTrainer = () => {
   const [mutate] = useMutation(
-    (userFavoriteTrainerDto: UserFavoriteTrainerDto) => {
+    (userFavoriteTrainer: UserFavoriteTrainer) => {
       return api.put('users/5f7674b15777701bce294dca/favorite-trainer', {
-        trainerId: userFavoriteTrainerDto.trainer.id,
-        isFavorite: userFavoriteTrainerDto.isFavorite,
+        trainerId: userFavoriteTrainer.trainer.id,
+        isFavorite: userFavoriteTrainer.isFavorite,
       });
     },
     {
