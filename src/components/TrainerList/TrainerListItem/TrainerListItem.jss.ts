@@ -13,6 +13,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     background: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(2),
+    boxShadow: theme.shadow.card,
   },
   avatar: {
     gridArea: 'avatar',
