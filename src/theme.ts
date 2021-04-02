@@ -2,10 +2,16 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
-    shadow: string;
+    shadow: {
+      border: string;
+      card: string;
+    }
   }
   interface ThemeOptions {
-    shadow?: string;
+    shadow?: {
+      border?: string;
+      card?: string;
+    }
   }
 }
 
@@ -15,10 +21,13 @@ export const theme = createMuiTheme({
       main: '#30cc99',
     },
     background: {
-      default: '#ececf0',
+      default: '#f9f9f9',
     },
   },
-  shadow: '0px 0px 2px 1px rgba(0,0,0,0.1)',
+  shadow: {
+    border: '0px 0px 4px 1px rgba(0,0,0,0.1)',
+    card: '0px 1px 4px 0px rgb(0,0,0,0.1)',
+  },
 });
 
 // blue     1a91ff - 007cdc

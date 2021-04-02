@@ -25,7 +25,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(1),
     background: theme.palette.background.paper,
     fontWeight: theme.typography.fontWeightMedium,
-    boxShadow: theme.shadow,
+    boxShadow: theme.shadow.border,
     zIndex: theme.zIndex.appBar,
   },
 }));

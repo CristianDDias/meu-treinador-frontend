@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     padding: theme.spacing(1),
     background: theme.palette.background.paper,
-    boxShadow: theme.shadow,
+    boxShadow: theme.shadow.border,
     zIndex: theme.zIndex.appBar,
   },
   input: {
