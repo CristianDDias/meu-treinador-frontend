@@ -5,13 +5,13 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     shadow: {
       border: string;
       card: string;
-    }
+    };
   }
   interface ThemeOptions {
     shadow?: {
       border?: string;
       card?: string;
-    }
+    };
   }
 }
 
