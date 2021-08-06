@@ -5,10 +5,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    '& > *': {
-      margin: theme.spacing(0.5),
-      color: theme.palette.primary.main,
-      background: `${theme.palette.primary.main}1a`,
-    },
+  },
+  chip: {
+    margin: theme.spacing(0.5),
+    color: theme.palette.primary.main,
+    background: `${theme.palette.primary.main}1a`,
   },
 }));

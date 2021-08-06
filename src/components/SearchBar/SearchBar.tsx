@@ -19,8 +19,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch }) =
     onSearch(search);
   };
 
-  const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      onSearch(search);
+    }
   };
 
   return (
@@ -30,7 +36,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch }) =
         margin="dense"
         value={search}
         placeholder={placeholder}
-        onChange={handleChangeSearch}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
         endAdornment={
           <InputAdornment position="end">
             <IconButton size="small" edge="end" onClick={handleSearch}>

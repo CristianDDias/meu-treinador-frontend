@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
-import StarIcon from '@material-ui/icons/Star';
+import StarIcon from '@material-ui/icons/StarRounded';
 import { Trainer } from '../../../interfaces/trainer';
 import { formatRatingValue } from '../../../utils/formatters';
 import { useStyles } from './TrainerListItem.jss';

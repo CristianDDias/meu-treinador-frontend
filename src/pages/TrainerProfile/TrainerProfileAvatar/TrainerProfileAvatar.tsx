@@ -6,43 +6,35 @@ import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import StarIcon from '@material-ui/icons/StarRounded';
 import { Card } from '../../../components/Card/Card';
 import { Trainer } from '../../../interfaces/trainer';
 import { formatRatingValue } from '../../../utils/formatters';
-import { useUser, useMutateUserFavoriteTrainer } from '../../../hooks/useUser';
+import { useFavoriteTrainers } from '../../../hooks/useFavoriteTrainers';
+import { useSetFavoriteTrainer } from '../../../hooks/useSetFavoriteTrainer';
 import { useStyles } from './TrainerProfileAvatar.jss';
 
 interface TrainerProfileAvatarProps {
   trainer: Trainer;
 }
 
-// TODO: Ajustar componente para não utilizar hooks e receber dados de isFavorite por props
-
 export const TrainerProfileAvatar: React.FC<TrainerProfileAvatarProps> = ({ trainer }) => {
   const classes = useStyles();
-  const { user, isSuccess } = useUser();
-  const mutateUserFavoriteTrainer = useMutateUserFavoriteTrainer();
+  const { favoriteTrainers, isSuccess } = useFavoriteTrainers();
+  const { setFavoriteTrainer } = useSetFavoriteTrainer();
 
-  const isFavorite = isSuccess ? user.favoriteTrainers.some(({ id }) => id === trainer.id) : false;
+  const isFavorite = isSuccess ? favoriteTrainers.some(({ id }) => id === trainer.id) : false;
 
   const handleClickFavorite = () => {
-    mutateUserFavoriteTrainer({ trainer, isFavorite: !isFavorite });
+    setFavoriteTrainer({ trainer, isFavorite: !isFavorite });
   };
 
   return (
     <Card>
       <Box display="flex" flexDirection="column" alignItems="center">
         <Box position="relative">
-          <IconButton
-            className={classes.favoriteButton}
-            color="primary"
-            onClick={handleClickFavorite}
-          >
-            {isFavorite ? (
-              <FavoriteIcon fontSize="large" />
-            ) : (
-              <FavoriteBorderIcon fontSize="large" />
-            )}
+          <IconButton className={classes.favoriteButton} color="primary" onClick={handleClickFavorite}>
+            {isFavorite ? <FavoriteIcon fontSize="large" /> : <FavoriteBorderIcon fontSize="large" />}
           </IconButton>
           <Avatar className={classes.avatar} variant="rounded" src={trainer.image} />
         </Box>
@@ -50,9 +42,9 @@ export const TrainerProfileAvatar: React.FC<TrainerProfileAvatarProps> = ({ trai
         <Box display="flex">
           <Rating
             className={classes.rating}
+            icon={<StarIcon fontSize="small" />}
             value={trainer.rating.value}
-            precision={0.5}
-            size="small"
+            precision={0.1}
             readOnly
           />
           <Typography variant="body2">

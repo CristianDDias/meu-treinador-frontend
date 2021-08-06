@@ -20,7 +20,7 @@ interface TrainerProfileServiceLocationsProps {
 }
 
 export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocationsProps> = ({
-  locations: { cities, isAttendingHome, isAttendingOnline },
+  locations: { cities, isProvidingInHomeService, isProvidingOnlineService },
 }) => {
   const classes = useStyles();
   const [locations, setLocations] = useState<Location[]>([]);
@@ -31,14 +31,14 @@ export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocat
       places,
       isExpanded: places.length > 0,
     }));
-    if (isAttendingOnline) {
+    if (isProvidingOnlineService) {
       initialState.push({
         name: 'Remoto / Online',
         places: [],
         isExpanded: false,
       });
     }
-    if (isAttendingHome) {
+    if (isProvidingInHomeService) {
       initialState.push({
         name: 'Domicílio',
         places: [],
@@ -46,7 +46,7 @@ export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocat
       });
     }
     setLocations(initialState);
-  }, [cities, isAttendingHome, isAttendingOnline]);
+  }, [cities, isProvidingInHomeService, isProvidingOnlineService]);
 
   const handleToggleExpanded = (locationName: string): void => {
     setLocations((state) =>

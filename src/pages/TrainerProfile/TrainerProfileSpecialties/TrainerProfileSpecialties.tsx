@@ -7,15 +7,13 @@ interface TrainerProfileSpecialtiesProps {
   specialties: string[];
 }
 
-export const TrainerProfileSpecialties: React.FC<TrainerProfileSpecialtiesProps> = ({
-  specialties,
-}) => {
+export const TrainerProfileSpecialties: React.FC<TrainerProfileSpecialtiesProps> = ({ specialties }) => {
   const classes = useStyles();
   return (
     <Card title="Especialidades">
       <div className={classes.container}>
         {specialties.map((specialty) => (
-          <Chip label={specialty} key={specialty} />
+          <Chip className={classes.chip} label={specialty} key={specialty} />
         ))}
       </div>
     </Card>

@@ -28,10 +28,7 @@ export const TrainerProfileServiceSchedules: React.FC<TrainerProfileServiceSched
       <List disablePadding>
         {schedules.map(({ weekday, startTime, endTime }, index) => (
           <ListItem key={weekday} disableGutters divider={index !== schedules.length - 1}>
-            <ListItemText
-              primary={displayDay[weekday]}
-              primaryTypographyProps={{ variant: 'body2' }}
-            />
+            <ListItemText primary={displayDay[weekday]} primaryTypographyProps={{ variant: 'body2' }} />
             <Chip label={`${startTime} - ${endTime}`} size="small" />
           </ListItem>
         ))}

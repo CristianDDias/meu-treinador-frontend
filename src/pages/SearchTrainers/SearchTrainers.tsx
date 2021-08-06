@@ -30,9 +30,7 @@ export const SearchTrainers: React.FC = () => {
 
         {isError && (
           <div className={classes.indicator}>
-            <Typography align="center">
-              Não foi possível carregar a lista de Personal Trainers.
-            </Typography>
+            <Typography align="center">Não foi possível carregar a lista de Personal Trainers.</Typography>
           </div>
         )}
 

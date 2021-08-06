@@ -24,23 +24,28 @@ export const TrainerProfile: React.FC = () => {
   if (isError) {
     return (
       <div className={classes.message}>
-        <Typography align="center">
-          Não foi possível carregar o perfil do Personal Trainer.
-        </Typography>
+        <Typography align="center">Não foi possível carregar o perfil do Personal Trainer.</Typography>
       </div>
     );
   }
+
+  // #TODO: Substituir botões de contato? Opções:
+  // - Enviar mensagem
+  // - Agendar
+  // - Avaliar
+
+  // #TODO: Criar card para exibir fotos adicionais
 
   if (isSuccess) {
     return (
       <div className={classes.container}>
         <TrainerProfileAvatar trainer={trainer} />
-        <TrainerProfileContacts contacts={trainer.details.contacts} />
+        <TrainerProfileContacts contacts={trainer.contacts} />
         <TrainerProfileInfo title="Sobre mim" text={trainer.description} />
-        <TrainerProfileInfo title="Qualificações" text={trainer.details.qualifications} />
-        <TrainerProfileSpecialties specialties={trainer.details.specialties} />
-        <TrainerProfileServiceLocations locations={trainer.details.locations} />
-        <TrainerProfileServiceSchedules schedules={trainer.details.schedules} />
+        <TrainerProfileInfo title="Qualificações" text={trainer.qualifications} />
+        <TrainerProfileSpecialties specialties={trainer.specialties} />
+        <TrainerProfileServiceLocations locations={trainer.locations} />
+        <TrainerProfileServiceSchedules schedules={trainer.schedules} />
         <TrainerProfileReviews trainerId={trainerId} />
       </div>
     );

@@ -11,7 +11,7 @@ interface TrainerProfileContactsProps {
 }
 
 export const TrainerProfileContacts: React.FC<TrainerProfileContactsProps> = ({
-  contacts: { email, whatsapp },
+  contacts: { email, phone },
 }) => {
   const classes = useStyles();
   return (
@@ -32,7 +32,7 @@ export const TrainerProfileContacts: React.FC<TrainerProfileContactsProps> = ({
           variant="contained"
           color="primary"
           disableElevation
-          href={`https://wa.me/55${whatsapp}`}
+          href={`https://wa.me/55${phone}`}
           startIcon={<WhatsAppIcon />}
         >
           WhatsApp

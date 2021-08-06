@@ -6,16 +6,7 @@ export interface Trainer {
   rating: TrainerRating;
 }
 
-export interface TrainerWithDetails extends Trainer {
-  details: TrainerDetails;
-}
-
-export interface TrainerRating {
-  value: number;
-  reviews: number;
-}
-
-export interface TrainerDetails {
+export interface TrainerDetails extends Trainer {
   qualifications: string;
   specialties: string[];
   contacts: TrainerContacts;
@@ -23,14 +14,19 @@ export interface TrainerDetails {
   schedules: TrainerSchedule[];
 }
 
+export interface TrainerRating {
+  value: number;
+  reviews: number;
+}
+
 export interface TrainerContacts {
   email: string;
-  whatsapp: string;
+  phone: string;
 }
 
 export interface TrainerLocations {
-  isAttendingOnline: boolean;
-  isAttendingHome: boolean;
+  isProvidingOnlineService: boolean;
+  isProvidingInHomeService: boolean;
   cities: TrainerCity[];
 }
 
@@ -54,12 +50,4 @@ export interface TrainerReview {
   createdAt: Date;
 }
 
-export enum Weekday {
-  monday = 'monday',
-  tuesday = 'tuesday',
-  wednesday = 'wednesday',
-  thursday = 'thursday',
-  friday = 'friday',
-  saturday = 'saturday',
-  sunday = 'sunday',
-}
+export type Weekday = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';

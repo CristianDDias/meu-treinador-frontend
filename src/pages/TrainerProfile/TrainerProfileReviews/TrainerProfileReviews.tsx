@@ -20,7 +20,7 @@ export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = ({ tr
   return (
     <Card title={`Avaliações (${reviews.length})`}>
       {isSuccess && reviews.length > 0 && (
-        // TODO: Criar componentes "ReviewList" e "ReviewListItem"
+        // #TODO: Criar componentes "ReviewList" e "ReviewListItem"
         <List disablePadding>
           {reviews.map((review, index) => (
             <ListItem key={review.id} disableGutters divider={index !== reviews.length - 1}>
@@ -30,7 +30,7 @@ export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = ({ tr
                     {review.author}
                   </Typography>
                   <div className={classes.rating}>
-                    <Rating value={review.rating} precision={0.5} size="small" readOnly />
+                    <Rating value={review.rating} precision={0.1} size="small" readOnly />
                     <Typography variant="body2">{formatRatingValue(review.rating)}</Typography>
                   </div>
                 </div>
@@ -48,9 +48,7 @@ export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = ({ tr
       )}
 
       {isError && (
-        <Typography variant="body2">
-          Não foi possível carregar as avaliações do Personal Trainer.
-        </Typography>
+        <Typography variant="body2">Não foi possível carregar as avaliações do Personal Trainer.</Typography>
       )}
 
       {isLoading && <CircularProgress color="primary" style={{ alignSelf: 'center' }} />}
