@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Collapse from '@material-ui/core/Collapse';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Collapse from '@mui/material/Collapse';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Card } from '../../../components/Card/Card';
 import { TrainerLocations } from '../../../interfaces/trainer';
-import { useStyles } from './TrainerProfileServiceLocations.jss';
+import { styles } from './TrainerProfileServiceLocations.jss';
 
 interface Location {
   name: string;
@@ -22,7 +22,6 @@ interface TrainerProfileServiceLocationsProps {
 export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocationsProps> = ({
   locations: { cities, isProvidingInHomeService, isProvidingOnlineService },
 }) => {
-  const classes = useStyles();
   const [locations, setLocations] = useState<Location[]>([]);
 
   useEffect(() => {
@@ -33,7 +32,7 @@ export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocat
     }));
     if (isProvidingOnlineService) {
       initialState.push({
-        name: 'Remoto / Online',
+        name: 'Online / Remoto',
         places: [],
         isExpanded: false,
       });
@@ -75,7 +74,7 @@ export const TrainerProfileServiceLocations: React.FC<TrainerProfileServiceLocat
               <Collapse in={isExpanded} timeout="auto" unmountOnExit>
                 <List disablePadding>
                   {places.map((place) => (
-                    <ListItem className={classes.nested} disableGutters key={place}>
+                    <ListItem sx={styles.nested} disableGutters key={place}>
                       <ListItemText primary={place} primaryTypographyProps={{ variant: 'body2' }} />
                     </ListItem>
                   ))}

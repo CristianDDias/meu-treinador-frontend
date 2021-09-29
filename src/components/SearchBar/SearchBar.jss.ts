@@ -1,17 +1,21 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { SxProps } from '@mui/system/styleFunctionSx';
+import { Theme } from '@mui/material/styles';
 
-export const useStyles = makeStyles((theme: Theme) => ({
+export const styles = {
   container: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(1),
-    background: theme.palette.background.paper,
-    boxShadow: theme.shadow.border,
-    zIndex: theme.zIndex.appBar,
-  },
+    padding: (theme) => theme.spacing(1),
+    background: (theme) => theme.palette.background.paper,
+    boxShadow: (theme) => theme.shadow.border,
+    zIndex: (theme) => theme.zIndex.appBar,
+    borderBottomLeftRadius: (theme) => theme.shape.borderRadius,
+    borderBottomRightRadius: (theme) => theme.shape.borderRadius,
+  } as SxProps<Theme>,
+
   input: {
     flexBasis: 0,
     flexGrow: 1,
-    marginRight: theme.spacing(1),
-  },
-}));
+    marginRight: (theme) => theme.spacing(1),
+  } as SxProps<Theme>,
+};

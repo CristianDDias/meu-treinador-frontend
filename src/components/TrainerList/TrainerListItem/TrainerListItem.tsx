@@ -1,12 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Avatar from '@material-ui/core/Avatar';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
-import StarIcon from '@material-ui/icons/StarRounded';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
+import StarIcon from '@mui/icons-material/Star';
 import { Trainer } from '../../../interfaces/trainer';
 import { formatRatingValue } from '../../../utils/formatters';
-import { useStyles } from './TrainerListItem.jss';
+import { styles } from './TrainerListItem.jss';
 
 interface TrainerListItemProps {
   trainer: Trainer;
@@ -15,7 +16,6 @@ interface TrainerListItemProps {
 export const TrainerListItem: React.FC<TrainerListItemProps> = ({
   trainer: { id, name, description, rating, image },
 }) => {
-  const classes = useStyles();
   const history = useHistory();
 
   const navigateToTrainer = (): void => {
@@ -24,26 +24,26 @@ export const TrainerListItem: React.FC<TrainerListItemProps> = ({
 
   return (
     <ListItem button onClick={navigateToTrainer}>
-      <div className={classes.layout}>
-        <Avatar className={classes.avatar} variant="rounded" src={image} />
+      <Box sx={styles.layout}>
+        <Avatar sx={styles.avatar} variant="rounded" src={image} />
 
-        <div className={classes.trainer}>
-          <Typography className={classes.name} noWrap>
+        <Box sx={styles.trainer}>
+          <Typography sx={styles.name} noWrap>
             {name}
           </Typography>
-          <div className={classes.rating}>
+          <Box sx={styles.rating}>
             <StarIcon color="primary" fontSize="small" />
-            <Typography variant="body2">{formatRatingValue(rating.value)}</Typography>
+            <Typography variant="body2">{formatRatingValue(rating?.value ?? 0)}</Typography>
             <Typography variant="body2" color="textSecondary">
-              ({rating.reviews} avaliações)
+              ({rating?.reviews ?? 0} avaliações)
             </Typography>
-          </div>
-        </div>
+          </Box>
+        </Box>
 
-        <Typography className={classes.info} variant="body2" color="textSecondary">
+        <Typography sx={styles.info} variant="body2" color="textSecondary">
           {description}
         </Typography>
-      </div>
+      </Box>
     </ListItem>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
+import Container from '@mui/material/Container';
 import { Header } from './components/Header/Header';
 import { NavBar } from './components/NavBar/NavBar';
 import { SearchTrainers } from './pages/SearchTrainers/SearchTrainers';
@@ -9,14 +9,13 @@ import { TrainerProfile } from './pages/TrainerProfile/TrainerProfile';
 import { Trainings } from './pages/Trainings/Trainings';
 import { Calendar } from './pages/Calendar/Calendar';
 import { Profile } from './pages/Profile/Profile';
-import { useStyles } from './App.jss';
+import { styles } from './App.jss';
 
 export const App: React.FC = () => {
-  const classes = useStyles();
   return (
     <>
       <Header />
-      <Container className={classes.container} maxWidth="sm" disableGutters>
+      <Container sx={styles.container} maxWidth="sm">
         <Switch>
           <Route path="/trainers" exact>
             <SearchTrainers />

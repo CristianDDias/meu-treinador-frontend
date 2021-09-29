@@ -1,21 +1,21 @@
 import React from 'react';
-import Chip from '@material-ui/core/Chip';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 import { Card } from '../../../components/Card/Card';
-import { useStyles } from './TrainerProfileSpecialties.jss';
+import { styles } from './TrainerProfileSpecialties.jss';
 
 interface TrainerProfileSpecialtiesProps {
   specialties: string[];
 }
 
 export const TrainerProfileSpecialties: React.FC<TrainerProfileSpecialtiesProps> = ({ specialties }) => {
-  const classes = useStyles();
   return (
     <Card title="Especialidades">
-      <div className={classes.container}>
+      <Box sx={styles.container}>
         {specialties.map((specialty) => (
-          <Chip className={classes.chip} label={specialty} key={specialty} />
+          <Chip sx={styles.chip} label={specialty} key={specialty} />
         ))}
-      </div>
+      </Box>
     </Card>
   );
 };

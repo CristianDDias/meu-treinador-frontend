@@ -1,25 +1,23 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
-import IconButton from '@material-ui/core/IconButton';
-import Rating from '@material-ui/lab/Rating';
-import Typography from '@material-ui/core/Typography';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import StarIcon from '@material-ui/icons/StarRounded';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Card } from '../../../components/Card/Card';
 import { Trainer } from '../../../interfaces/trainer';
 import { formatRatingValue } from '../../../utils/formatters';
 import { useFavoriteTrainers } from '../../../hooks/useFavoriteTrainers';
 import { useSetFavoriteTrainer } from '../../../hooks/useSetFavoriteTrainer';
-import { useStyles } from './TrainerProfileAvatar.jss';
+import { styles } from './TrainerProfileAvatar.jss';
 
 interface TrainerProfileAvatarProps {
   trainer: Trainer;
 }
 
 export const TrainerProfileAvatar: React.FC<TrainerProfileAvatarProps> = ({ trainer }) => {
-  const classes = useStyles();
   const { favoriteTrainers, isSuccess } = useFavoriteTrainers();
   const { setFavoriteTrainer } = useSetFavoriteTrainer();
 
@@ -33,22 +31,22 @@ export const TrainerProfileAvatar: React.FC<TrainerProfileAvatarProps> = ({ trai
     <Card>
       <Box display="flex" flexDirection="column" alignItems="center">
         <Box position="relative">
-          <IconButton className={classes.favoriteButton} color="primary" onClick={handleClickFavorite}>
+          <IconButton sx={styles.favoriteButton} color="primary" onClick={handleClickFavorite}>
             {isFavorite ? <FavoriteIcon fontSize="large" /> : <FavoriteBorderIcon fontSize="large" />}
           </IconButton>
-          <Avatar className={classes.avatar} variant="rounded" src={trainer.image} />
+          <Avatar sx={styles.avatar} variant="rounded" src={trainer.image} />
         </Box>
-        <Typography className={classes.name}>{trainer.name}</Typography>
+        <Typography sx={styles.name}>{trainer.name}</Typography>
         <Box display="flex">
           <Rating
-            className={classes.rating}
-            icon={<StarIcon fontSize="small" />}
-            value={trainer.rating.value}
+            sx={styles.rating}
+            value={trainer.rating?.value ?? 0}
             precision={0.1}
+            size="small"
             readOnly
           />
           <Typography variant="body2">
-            {formatRatingValue(trainer.rating.value)} ({trainer.rating.reviews} avaliações)
+            {formatRatingValue(trainer.rating?.value ?? 0)} ({trainer.rating?.reviews ?? 0} avaliações)
           </Typography>
         </Box>
       </Box>

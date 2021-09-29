@@ -4,10 +4,10 @@ import { App } from './App';
 import { AppProvider } from './contexts/AppContext';
 import { reportWebVitals } from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import { mockServer } from './mock-server/mock-server';
+// import { mockServer } from './mock-server/mock-server';
 
 async function bootstrap() {
-  await mockServer.start();
+  // await mockServer.start();
 
   ReactDOM.render(
     <React.StrictMode>

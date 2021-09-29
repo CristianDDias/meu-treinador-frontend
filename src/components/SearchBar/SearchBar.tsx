@@ -1,54 +1,81 @@
 import React, { useState } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilterIcon from '@material-ui/icons/Tune';
-import SearchIcon from '@material-ui/icons/Search';
-import { useStyles } from './SearchBar.jss';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import FilterIcon from '@mui/icons-material/Tune';
+import SearchIcon from '@mui/icons-material/Search';
+import { TrainerFilter } from '../TrainerFilter/TrainerFilter';
+import { styles } from './SearchBar.jss';
+import { TrainersFilters } from '../../hooks/useTrainers';
 
 interface SearchBarProps {
-  placeholder: string;
-  onSearch: (search: string) => void;
+  onSearch: (filters?: TrainersFilters) => void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch }) => {
-  const classes = useStyles();
-  const [search, setSearch] = useState('');
+// #TODO: Melhorar organização dos componentes de filtros
+//        - SearchTrainers, SearchBar, TrainerFilter
+
+export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+  const [open, setOpen] = useState(false);
+  const [filters, setFilters] = useState<TrainersFilters>();
 
   const handleSearch = () => {
-    onSearch(search);
+    onSearch(filters);
+  };
+
+  const handleFilter = (newFilters?: Omit<TrainersFilters, 'name'>) => {
+    onSearch({ ...newFilters, name: filters?.name });
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
+    setFilters((state) => ({
+      ...state,
+      name: event.target.value.length ? event.target.value : undefined,
+    }));
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      onSearch(search);
+      onSearch(filters);
     }
   };
 
   return (
-    <div className={classes.container}>
-      <OutlinedInput
-        className={classes.input}
-        margin="dense"
-        value={search}
-        placeholder={placeholder}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton size="small" edge="end" onClick={handleSearch}>
-              <SearchIcon />
-            </IconButton>
-          </InputAdornment>
-        }
-      />
-      <IconButton size="small">
-        <FilterIcon />
-      </IconButton>
-    </div>
+    <>
+      <Box sx={styles.container}>
+        <TextField
+          sx={styles.input}
+          value={filters?.name || ''}
+          size="small"
+          placeholder="Buscar Personal Trainer..."
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton size="small" edge="end" onClick={handleSearch}>
+                  <SearchIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <IconButton size="small" onClick={handleOpen}>
+          <FilterIcon />
+        </IconButton>
+      </Box>
+
+      <TrainerFilter open={open} onFilter={handleFilter} onClose={handleClose} />
+    </>
   );
 };

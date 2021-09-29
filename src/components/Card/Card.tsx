@@ -1,17 +1,17 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import { useStyles } from './Card.jss';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { styles } from './Card.jss';
 
 interface CardProps {
   title?: string;
 }
 
 export const Card: React.FC<CardProps> = ({ title, children }) => {
-  const classes = useStyles();
   return (
-    <div className={classes.card}>
-      {title && <Typography className={classes.title}>{title}</Typography>}
+    <Box sx={styles.card}>
+      {title && <Typography sx={styles.title}>{title}</Typography>}
       {children}
-    </div>
+    </Box>
   );
 };

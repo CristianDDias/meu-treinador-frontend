@@ -1,45 +1,48 @@
 import React, { useCallback, useState } from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Typography from '@material-ui/core/Typography';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { TrainerList } from '../../components/TrainerList/TrainerList';
-import { useTrainers } from '../../hooks/useTrainers';
-import { useStyles } from './SearchTrainers.jss';
+import { useTrainers, TrainersFilters } from '../../hooks/useTrainers';
+import { styles } from './SearchTrainers.jss';
+
+// #TODO: Melhorar organização dos componentes de filtros
+//        - SearchTrainers, SearchBar, TrainerFilter
 
 export const SearchTrainers: React.FC = () => {
-  const classes = useStyles();
-  const [search, setSearch] = useState('');
-  const { trainers, isLoading, isSuccess, isError } = useTrainers({ name: search });
+  const [filters, setFilters] = useState<TrainersFilters>();
+  const { trainers, isLoading, isSuccess, isError } = useTrainers(filters);
 
-  const handleSearch = useCallback((text: string) => {
-    setSearch(text);
+  const handleSearch = useCallback((newFilters?: TrainersFilters) => {
+    setFilters(newFilters);
   }, []);
 
   return (
-    <div className={classes.container}>
-      <SearchBar placeholder="Buscar Personal Trainer..." onSearch={handleSearch} />
+    <Box sx={styles.container}>
+      <SearchBar onSearch={handleSearch} />
 
-      <div className={classes.list}>
+      <Box sx={styles.list}>
         {isSuccess && trainers.length > 0 && <TrainerList trainers={trainers} />}
 
         {isSuccess && trainers.length === 0 && (
-          <div className={classes.indicator}>
+          <Box sx={styles.indicator}>
             <Typography align="center">Nenhum Personal Trainer encontrado.</Typography>
-          </div>
+          </Box>
         )}
 
         {isError && (
-          <div className={classes.indicator}>
+          <Box sx={styles.indicator}>
             <Typography align="center">Não foi possível carregar a lista de Personal Trainers.</Typography>
-          </div>
+          </Box>
         )}
 
         {isLoading && (
-          <div className={classes.indicator}>
+          <Box sx={styles.indicator}>
             <CircularProgress color="primary" />
-          </div>
+          </Box>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };

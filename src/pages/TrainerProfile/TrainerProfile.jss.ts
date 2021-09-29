@@ -1,19 +1,21 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { SxProps } from '@mui/system/styleFunctionSx';
+import { Theme } from '@mui/material/styles';
 
-export const useStyles = makeStyles((theme: Theme) => ({
+export const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing(2),
+    padding: (theme) => theme.spacing(2),
     '& > :not(:last-child)': {
-      marginBottom: theme.spacing(2),
+      marginBottom: (theme) => theme.spacing(2),
     },
-  },
+  } as SxProps<Theme>,
+
   message: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
-    padding: theme.spacing(2),
-  },
-}));
+    padding: (theme) => theme.spacing(2),
+  } as SxProps<Theme>,
+};

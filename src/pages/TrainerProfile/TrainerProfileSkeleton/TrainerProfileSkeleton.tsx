@@ -1,42 +1,42 @@
 import React from 'react';
-import Skeleton from '@material-ui/lab/Skeleton';
+import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 import { Card } from '../../../components/Card/Card';
-import { useStyles } from './TrainerProfileSkeleton.jss';
+import { styles } from './TrainerProfileSkeleton.jss';
 
 export const TrainerProfileSkeleton: React.FC = () => {
-  const classes = useStyles();
   return (
-    <div className={classes.container}>
+    <Box sx={styles.container}>
       <Card>
-        <div className={classes.content} style={{ alignItems: 'center' }}>
-          <Skeleton variant="rect" width={200} height={200} />
-          <Skeleton variant="rect" width={215} height="1.5rem" />
-          <Skeleton variant="rect" width={225} height="1.125rem" />
-        </div>
+        <Box sx={styles.content} style={{ alignItems: 'center' }}>
+          <Skeleton variant="rectangular" width={200} height={200} />
+          <Skeleton variant="rectangular" width={215} height="1.5rem" />
+          <Skeleton variant="rectangular" width={225} height="1.125rem" />
+        </Box>
       </Card>
       <Card>
-        <div className={classes.content}>
-          <Skeleton variant="rect" width={215} height="1.5rem" />
-          <Skeleton variant="rect" width="100%" height={36} />
-          <Skeleton variant="rect" width="100%" height={36} />
-        </div>
+        <Box sx={styles.content}>
+          <Skeleton variant="rectangular" width={215} height="1.5rem" />
+          <Skeleton variant="rectangular" width="100%" height={36} />
+          <Skeleton variant="rectangular" width="100%" height={36} />
+        </Box>
       </Card>
       <Card>
-        <div className={classes.content}>
-          <Skeleton variant="rect" width={215} height="1.5rem" />
-          <Skeleton variant="rect" width="100%" height="0.875rem" />
-          <Skeleton variant="rect" width="100%" height="0.875rem" />
-          <Skeleton variant="rect" width="100%" height="0.875rem" />
-        </div>
+        <Box sx={styles.content}>
+          <Skeleton variant="rectangular" width={215} height="1.5rem" />
+          <Skeleton variant="rectangular" width="100%" height="0.875rem" />
+          <Skeleton variant="rectangular" width="100%" height="0.875rem" />
+          <Skeleton variant="rectangular" width="100%" height="0.875rem" />
+        </Box>
       </Card>
       <Card>
-        <div className={classes.content}>
-          <Skeleton variant="rect" width={215} height="1.5rem" />
-          <Skeleton variant="rect" width="100%" height="0.875rem" />
-          <Skeleton variant="rect" width="100%" height="0.875rem" />
-          <Skeleton variant="rect" width="100%" height="0.875rem" />
-        </div>
+        <Box sx={styles.content}>
+          <Skeleton variant="rectangular" width={215} height="1.5rem" />
+          <Skeleton variant="rectangular" width="100%" height="0.875rem" />
+          <Skeleton variant="rectangular" width="100%" height="0.875rem" />
+          <Skeleton variant="rectangular" width="100%" height="0.875rem" />
+        </Box>
       </Card>
-    </div>
+    </Box>
   );
 };

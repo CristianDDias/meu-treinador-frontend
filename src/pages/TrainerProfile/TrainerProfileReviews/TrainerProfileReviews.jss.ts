@@ -1,26 +1,30 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { SxProps } from '@mui/system/styleFunctionSx';
+import { Theme } from '@mui/material/styles';
 
-export const useStyles = makeStyles((theme: Theme) => ({
+export const styles = {
   item: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    margin: theme.spacing(0.5, 0),
-  },
+    margin: (theme) => theme.spacing(0.5, 0),
+  } as SxProps<Theme>,
+
   author: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: theme.spacing(1),
-  },
+    marginBottom: (theme) => theme.spacing(1),
+  } as SxProps<Theme>,
+
   name: {
-    fontWeight: theme.typography.fontWeightMedium,
-  },
+    fontWeight: (theme) => theme.typography.fontWeightMedium,
+  } as SxProps<Theme>,
+
   rating: {
     display: 'flex',
     alignItems: 'center',
     '& > :first-child': {
-      marginRight: theme.spacing(1),
+      marginRight: (theme) => theme.spacing(1),
     },
-  },
-}));
+  } as SxProps<Theme>,
+};

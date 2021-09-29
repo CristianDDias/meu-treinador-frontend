@@ -3,7 +3,9 @@ import { api } from '../services/api';
 import { Trainer } from '../interfaces/trainer';
 
 const getFavoriteTrainers = async () => {
-  const { data } = await api.get<Trainer[]>('users/123/favorite-trainers');
+  const { data } = await api.get<Trainer[]>(
+    `customers/${process.env.REACT_APP_CUSTOMER_ID}/favorite-trainers`
+  );
   return data;
 };
 

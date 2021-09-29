@@ -8,7 +8,7 @@ interface Params {
 }
 
 const putFavoriteTrainer = async (params: Params) => {
-  await api.put('users/123/favorite-trainers', {
+  await api.put(`customers/${process.env.REACT_APP_CUSTOMER_ID}/favorite-trainers`, {
     trainerId: params.trainer.id,
     isFavorite: params.isFavorite,
   });

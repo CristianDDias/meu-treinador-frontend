@@ -1,16 +1,15 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import CalendarIcon from '@material-ui/icons/DateRange';
-import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
-import ProfileIcon from '@material-ui/icons/AccountCircle';
-import SearchIcon from '@material-ui/icons/Search';
-import TrainingIcon from '@material-ui/icons/DirectionsRun';
-import { useStyles } from './NavBar.jss';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import CalendarIcon from '@mui/icons-material/DateRange';
+import FavoriteIcon from '@mui/icons-material/FavoriteBorder';
+import ProfileIcon from '@mui/icons-material/AccountCircle';
+import SearchIcon from '@mui/icons-material/Search';
+import TrainingIcon from '@mui/icons-material/DirectionsRun';
+import { styles } from './NavBar.jss';
 
 export const NavBar: React.FC = () => {
-  const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
 
@@ -21,37 +20,22 @@ export const NavBar: React.FC = () => {
   const value = location.pathname.split('/')[1];
 
   return (
-    <BottomNavigation className={classes.navigation} value={value} onChange={navigateTo}>
+    <BottomNavigation sx={styles.navigation} value={value} onChange={navigateTo}>
+      <BottomNavigationAction sx={styles.button} label="Buscar" value="trainers" icon={<SearchIcon />} />
       <BottomNavigationAction
-        className={classes.button}
-        label="Buscar"
-        value="trainers"
-        icon={<SearchIcon />}
-      />
-      <BottomNavigationAction
-        className={classes.button}
+        sx={styles.button}
         label="Favoritos"
         value="favorites"
         icon={<FavoriteIcon />}
       />
       <BottomNavigationAction
-        className={classes.button}
+        sx={styles.button}
         label="Calendário"
         value="calendar"
         icon={<CalendarIcon />}
       />
-      <BottomNavigationAction
-        className={classes.button}
-        label="Treinos"
-        value="trainings"
-        icon={<TrainingIcon />}
-      />
-      <BottomNavigationAction
-        className={classes.button}
-        label="Perfil"
-        value="profile"
-        icon={<ProfileIcon />}
-      />
+      <BottomNavigationAction sx={styles.button} label="Treinos" value="trainings" icon={<TrainingIcon />} />
+      <BottomNavigationAction sx={styles.button} label="Perfil" value="profile" icon={<ProfileIcon />} />
     </BottomNavigation>
   );
 };

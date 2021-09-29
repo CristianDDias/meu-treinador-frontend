@@ -1,14 +1,13 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import BackIcon from '@material-ui/icons/ArrowBackIos';
-import { useStyles } from './Header.jss';
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import BackIcon from '@mui/icons-material/ArrowBackIos';
+import { styles } from './Header.jss';
 
 export const Header: React.FC = () => {
-  const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
 
@@ -19,16 +18,12 @@ export const Header: React.FC = () => {
   const hideBackButton = !location.pathname.split('/')[2];
 
   return (
-    <AppBar className={classes.header} position="fixed">
+    <AppBar sx={styles.header} position="fixed">
       <Toolbar variant="dense">
-        <IconButton
-          className={hideBackButton ? classes.hidden : classes.button}
-          edge="start"
-          onClick={navigateBack}
-        >
+        <IconButton sx={hideBackButton ? styles.hidden : styles.button} edge="start" onClick={navigateBack}>
           <BackIcon />
         </IconButton>
-        <Typography className={classes.title} variant="h6" align="center">
+        <Typography sx={styles.title} variant="h6" align="center">
           MEU TREINADOR
         </Typography>
       </Toolbar>

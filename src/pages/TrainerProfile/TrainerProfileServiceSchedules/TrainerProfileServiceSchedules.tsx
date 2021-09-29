@@ -1,8 +1,8 @@
 import React from 'react';
-import Chip from '@material-ui/core/Chip';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Chip from '@mui/material/Chip';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import { Card } from '../../../components/Card/Card';
 import { TrainerSchedule, Weekday } from '../../../interfaces/trainer';
 
@@ -36,3 +36,5 @@ export const TrainerProfileServiceSchedules: React.FC<TrainerProfileServiceSched
     </Card>
   );
 };
+
+// #TODO: Criar opção "Informe-se sobre a disponibilidade"

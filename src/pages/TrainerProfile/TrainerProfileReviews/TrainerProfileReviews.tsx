@@ -1,20 +1,20 @@
 import React from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Rating from '@material-ui/lab/Rating';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Typography from '@material-ui/core/Typography';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Rating from '@mui/material/Rating';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
 import { Card } from '../../../components/Card/Card';
 import { formatRatingValue } from '../../../utils/formatters';
 import { useTrainerReviews } from '../../../hooks/useTrainerReviews';
-import { useStyles } from './TrainerProfileReviews.jss';
+import { styles } from './TrainerProfileReviews.jss';
 
 interface TrainerProfileReviewsProps {
   trainerId: string;
 }
 
 export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = ({ trainerId }) => {
-  const classes = useStyles();
   const { reviews, isLoading, isSuccess, isError } = useTrainerReviews(trainerId);
 
   return (
@@ -24,20 +24,20 @@ export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = ({ tr
         <List disablePadding>
           {reviews.map((review, index) => (
             <ListItem key={review.id} disableGutters divider={index !== reviews.length - 1}>
-              <div className={classes.item} key={review.id}>
-                <div className={classes.author}>
-                  <Typography className={classes.name} variant="body2">
+              <Box sx={styles.item} key={review.id}>
+                <Box sx={styles.author}>
+                  <Typography sx={styles.name} variant="body2">
                     {review.author}
                   </Typography>
-                  <div className={classes.rating}>
+                  <Box sx={styles.rating}>
                     <Rating value={review.rating} precision={0.1} size="small" readOnly />
                     <Typography variant="body2">{formatRatingValue(review.rating)}</Typography>
-                  </div>
-                </div>
+                  </Box>
+                </Box>
                 <Typography variant="body2" color="textSecondary">
                   {review.description}
                 </Typography>
-              </div>
+              </Box>
             </ListItem>
           ))}
         </List>

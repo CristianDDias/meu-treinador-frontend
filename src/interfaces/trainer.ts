@@ -3,7 +3,7 @@ export interface Trainer {
   name: string;
   description: string;
   image: string;
-  rating: TrainerRating;
+  rating?: TrainerRating;
 }
 
 export interface TrainerDetails extends Trainer {
