@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import { Card } from '../../../components/Card/Card';
 import { formatRatingValue } from '../../../utils/formatters';
-import { useTrainerReviews } from '../../../hooks/useTrainerReviews';
+import { useGetTrainerReviewsQuery } from '../../../redux/api';
 import { styles } from './TrainerProfileReviews.jss';
 
 interface TrainerProfileReviewsProps {
@@ -15,15 +15,15 @@ interface TrainerProfileReviewsProps {
 }
 
 export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = ({ trainerId }) => {
-  const { reviews, isLoading, isSuccess, isError } = useTrainerReviews(trainerId);
+  const { data = [], isLoading, isSuccess, isError } = useGetTrainerReviewsQuery({ trainerId });
 
   return (
-    <Card title={`Avaliações (${reviews.length})`}>
-      {isSuccess && reviews.length > 0 && (
+    <Card title={`Avaliações (${data.length})`}>
+      {isSuccess && data.length > 0 && (
         // #TODO: Criar componentes "ReviewList" e "ReviewListItem"
         <List disablePadding>
-          {reviews.map((review, index) => (
-            <ListItem key={review.id} disableGutters divider={index !== reviews.length - 1}>
+          {data.map((review, index) => (
+            <ListItem key={review.id} disableGutters divider={index !== data.length - 1}>
               <Box sx={styles.item} key={review.id}>
                 <Box sx={styles.author}>
                   <Typography sx={styles.name} variant="body2">
@@ -43,7 +43,7 @@ export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = ({ tr
         </List>
       )}
 
-      {isSuccess && reviews.length === 0 && (
+      {isSuccess && data.length === 0 && (
         <Typography variant="body2">Personal Trainer não possui avaliações.</Typography>
       )}
 

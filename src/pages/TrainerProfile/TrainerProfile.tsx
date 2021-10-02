@@ -11,18 +11,18 @@ import { TrainerProfileServiceLocations } from './TrainerProfileServiceLocations
 import { TrainerProfileServiceSchedules } from './TrainerProfileServiceSchedules/TrainerProfileServiceSchedules';
 import { TrainerProfileReviews } from './TrainerProfileReviews/TrainerProfileReviews';
 import { TrainerProfileSkeleton } from './TrainerProfileSkeleton/TrainerProfileSkeleton';
-import { useTrainerDetails } from '../../hooks/useTrainerDetails';
+import { useGetTrainerDetailsQuery } from '../../redux/api';
 import { styles } from './TrainerProfile.jss';
 
 export const TrainerProfile: React.FC = () => {
   const { trainerId } = useParams<{ trainerId: string }>();
-  const { trainer, isLoading, isSuccess, isError } = useTrainerDetails(trainerId);
+  const { data, isLoading, isSuccess, isError } = useGetTrainerDetailsQuery({ trainerId });
 
   if (isLoading) {
     return <TrainerProfileSkeleton />;
   }
 
-  if (isError) {
+  if (isError || !data) {
     return (
       <Box sx={styles.message}>
         <Typography align="center">Não foi possível carregar o perfil do Personal Trainer.</Typography>
@@ -40,14 +40,14 @@ export const TrainerProfile: React.FC = () => {
   if (isSuccess) {
     return (
       <Box sx={styles.container}>
-        <TrainerProfileAvatar trainer={trainer} />
-        <TrainerProfileActions phone={trainer.contacts.phone} />
+        <TrainerProfileAvatar trainer={data} />
+        <TrainerProfileActions phone={data.contacts.phone} />
         <TrainerProfileSocialMedia />
-        <TrainerProfileInfo title="Sobre mim" text={trainer.description} />
-        <TrainerProfileInfo title="Qualificações" text={trainer.qualifications} />
-        <TrainerProfileSpecialties specialties={trainer.specialties} />
-        <TrainerProfileServiceLocations locations={trainer.locations} />
-        <TrainerProfileServiceSchedules schedules={trainer.schedules} />
+        <TrainerProfileInfo title="Sobre mim" text={data.description} />
+        <TrainerProfileInfo title="Qualificações" text={data.qualifications} />
+        <TrainerProfileSpecialties specialties={data.specialties} />
+        <TrainerProfileServiceLocations locations={data.locations} />
+        <TrainerProfileServiceSchedules schedules={data.schedules} />
         <TrainerProfileReviews trainerId={trainerId} />
       </Box>
     );

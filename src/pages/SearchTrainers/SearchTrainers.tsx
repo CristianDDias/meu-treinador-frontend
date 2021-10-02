@@ -1,31 +1,25 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
-import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { TrainerList } from '../../components/TrainerList/TrainerList';
-import { useTrainers, TrainersFilters } from '../../hooks/useTrainers';
+import { TrainerSearchBar } from './TrainerSearchBar/TrainerSearchBar';
 import { styles } from './SearchTrainers.jss';
-
-// #TODO: Melhorar organização dos componentes de filtros
-//        - SearchTrainers, SearchBar, TrainerFilter
+import { useAppSelector } from '../../redux/hooks';
+import { useGetTrainersQuery } from '../../redux/api';
 
 export const SearchTrainers: React.FC = () => {
-  const [filters, setFilters] = useState<TrainersFilters>();
-  const { trainers, isLoading, isSuccess, isError } = useTrainers(filters);
-
-  const handleSearch = useCallback((newFilters?: TrainersFilters) => {
-    setFilters(newFilters);
-  }, []);
+  const filter = useAppSelector((state) => state.filter);
+  const { data, isLoading, isSuccess, isError } = useGetTrainersQuery({ filter });
 
   return (
     <Box sx={styles.container}>
-      <SearchBar onSearch={handleSearch} />
+      <TrainerSearchBar />
 
       <Box sx={styles.list}>
-        {isSuccess && trainers.length > 0 && <TrainerList trainers={trainers} />}
+        {isSuccess && data?.results && data.results.length > 0 && <TrainerList trainers={data.results} />}
 
-        {isSuccess && trainers.length === 0 && (
+        {isSuccess && data?.results && data.results.length === 0 && (
           <Box sx={styles.indicator}>
             <Typography align="center">Nenhum Personal Trainer encontrado.</Typography>
           </Box>

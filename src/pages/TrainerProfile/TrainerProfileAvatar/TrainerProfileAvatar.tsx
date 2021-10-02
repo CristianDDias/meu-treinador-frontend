@@ -9,8 +9,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Card } from '../../../components/Card/Card';
 import { Trainer } from '../../../interfaces/trainer';
 import { formatRatingValue } from '../../../utils/formatters';
-import { useFavoriteTrainers } from '../../../hooks/useFavoriteTrainers';
-import { useSetFavoriteTrainer } from '../../../hooks/useSetFavoriteTrainer';
+import { useGetFavoriteTrainersQuery, usePatchFavoriteTrainersMutation } from '../../../redux/api';
 import { styles } from './TrainerProfileAvatar.jss';
 
 interface TrainerProfileAvatarProps {
@@ -18,13 +17,13 @@ interface TrainerProfileAvatarProps {
 }
 
 export const TrainerProfileAvatar: React.FC<TrainerProfileAvatarProps> = ({ trainer }) => {
-  const { favoriteTrainers, isSuccess } = useFavoriteTrainers();
-  const { setFavoriteTrainer } = useSetFavoriteTrainer();
+  const { data = [], isSuccess } = useGetFavoriteTrainersQuery({});
+  const [patchFavoriteTrainers] = usePatchFavoriteTrainersMutation();
 
-  const isFavorite = isSuccess ? favoriteTrainers.some(({ id }) => id === trainer.id) : false;
+  const isFavorite = isSuccess ? data.some(({ id }) => id === trainer.id) : false;
 
   const handleClickFavorite = () => {
-    setFavoriteTrainer({ trainer, isFavorite: !isFavorite });
+    patchFavoriteTrainers({ trainer, isFavorite: !isFavorite });
   };
 
   return (

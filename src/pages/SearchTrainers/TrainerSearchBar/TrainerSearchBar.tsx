@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import FilterIcon from '@mui/icons-material/Tune';
 import SearchIcon from '@mui/icons-material/Search';
-import { TrainerFilter } from '../TrainerFilter/TrainerFilter';
-import { styles } from './SearchBar.jss';
-import { TrainersFilters } from '../../hooks/useTrainers';
+import { TrainerFilter } from './TrainerFilter/TrainerFilter';
+import { styles } from './TrainerSearchBar.jss';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { setFilter, FilterState } from '../../../redux/filter/slice';
 
-interface SearchBarProps {
-  onSearch: (filters?: TrainersFilters) => void;
-}
-
-// #TODO: Melhorar organização dos componentes de filtros
-//        - SearchTrainers, SearchBar, TrainerFilter
-
-export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+export const TrainerSearchBar: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const filter = useAppSelector((state) => state.filter);
+  const [localFilter, setLocalFilter] = useState<FilterState>(filter);
   const [open, setOpen] = useState(false);
-  const [filters, setFilters] = useState<TrainersFilters>();
+
+  useEffect(() => {
+    setLocalFilter(filter);
+  }, [filter]);
 
   const handleSearch = () => {
-    onSearch(filters);
+    dispatch(setFilter(localFilter));
   };
 
-  const handleFilter = (newFilters?: Omit<TrainersFilters, 'name'>) => {
-    onSearch({ ...newFilters, name: filters?.name });
+  const handleFilter = (updatedFilter: Omit<FilterState, 'name'>) => {
+    dispatch(setFilter({ name: localFilter.name, ...updatedFilter }));
     setOpen(false);
   };
 
@@ -38,7 +38,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters((state) => ({
+    setLocalFilter((state) => ({
       ...state,
       name: event.target.value.length ? event.target.value : undefined,
     }));
@@ -46,7 +46,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      onSearch(filters);
+      handleSearch();
     }
   };
 
@@ -55,7 +55,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       <Box sx={styles.container}>
         <TextField
           sx={styles.input}
-          value={filters?.name || ''}
+          value={localFilter?.name || ''}
           size="small"
           placeholder="Buscar Personal Trainer..."
           onChange={handleChange}
@@ -75,7 +75,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         </IconButton>
       </Box>
 
-      <TrainerFilter open={open} onFilter={handleFilter} onClose={handleClose} />
+      <TrainerFilter open={open} filter={localFilter} onFilter={handleFilter} onClose={handleClose} />
     </>
   );
 };
