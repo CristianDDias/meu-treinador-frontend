@@ -164,7 +164,8 @@ interface TrainerFilterProps {
   onClose: () => void;
 }
 
-// #TODO: Aplicar https://react-hook-form.com/ para controlar formulário?
+// #TODO: Aplicar https://react-hook-form.com/ para controlar formulário
+//        - Ver TrainerHiringForm.tsx
 
 export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFilter, onClose }) => {
   const [localFilter, setLocalFilter] = useState<FilterFields>(toFields(filter));

@@ -7,20 +7,27 @@ import { alpha } from '@mui/material/styles';
 interface SelectAutocompleteProps<T> {
   options: T[];
   value?: T[];
+  error?: boolean;
+  helperText?: React.ReactNode;
   onChange: (value: T[]) => void;
   groupBy?: (option: T) => string;
   getOptionLabel?: (option: T) => string;
   getOptionLabelList?: (option: T) => string;
 }
 
-export function SelectAutocomplete<T>({
-  options,
-  value,
-  onChange,
-  groupBy,
-  getOptionLabel,
-  getOptionLabelList,
-}: SelectAutocompleteProps<T>) {
+function SelectAutocompleteInner<T>(
+  {
+    options,
+    value,
+    error,
+    helperText,
+    onChange,
+    groupBy,
+    getOptionLabel,
+    getOptionLabelList,
+  }: SelectAutocompleteProps<T>,
+  ref?: React.ForwardedRef<unknown>
+) {
   const handleChange = (_: any, newValue: T[]) => {
     onChange(newValue);
   };
@@ -31,15 +38,18 @@ export function SelectAutocomplete<T>({
       multiple
       disableCloseOnSelect
       size="small"
+      ref={ref}
       value={value}
       options={options}
       groupBy={groupBy}
       getOptionLabel={getOptionLabel}
-      renderInput={(params) => <TextField {...params} placeholder="Selecione" />}
+      renderInput={(params) => (
+        <TextField {...params} placeholder="Selecione" error={error} helperText={helperText} />
+      )}
       renderGroup={(params) => params}
       renderOption={(props, option, { selected }) => (
         <li {...props}>
-          <Checkbox checked={selected} sx={{ marginRight: (theme) => theme.spacing(1) }} />
+          <Checkbox checked={selected} sx={{ padding: 0, marginRight: (theme) => theme.spacing(2) }} />
           {getOptionLabelList ? getOptionLabelList(option) : option}
         </li>
       )}
@@ -53,9 +63,6 @@ export function SelectAutocomplete<T>({
   );
 }
 
-SelectAutocomplete.defaultProps = {
-  value: undefined,
-  groupBy: undefined,
-  getOptionLabel: undefined,
-  getOptionLabelList: undefined,
-};
+export const SelectAutocomplete = React.forwardRef(SelectAutocompleteInner) as <T>(
+  props: SelectAutocompleteProps<T> & { ref?: React.ForwardedRef<unknown> }
+) => ReturnType<typeof SelectAutocompleteInner>;

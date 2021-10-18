@@ -1,5 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Trainer, TrainerDetails, TrainerReview } from '../interfaces/trainer';
+import {
+  Trainer,
+  TrainerDetails,
+  TrainerFormAnswer,
+  TrainerFormTemplate,
+  TrainerRequest,
+  TrainerReview,
+} from '../interfaces/trainer';
 
 type GetTrainersRequest = {
   pagination?: {
@@ -52,7 +59,26 @@ type GetTrainerReviewsRequest = {
 
 type GetTrainerReviewsResponse = TrainerReview[];
 
-type GetFavoriteTrainersRequest = Record<string, never>;
+type GetTrainerHiringFormTemplateRequest = {
+  trainerId: string;
+};
+
+type GetTrainerHiringFormTemplateResponse = TrainerFormTemplate;
+
+type GetTrainerRequestRequest = {
+  trainerId: string;
+};
+
+type GetTrainerRequestResponse = TrainerRequest | undefined;
+
+type PostTrainerRequestRequest = {
+  trainerId: string;
+  form: TrainerFormAnswer[];
+};
+
+type PostTrainerRequestResponse = void;
+
+type GetFavoriteTrainersRequest = void;
 
 type GetFavoriteTrainersResponse = Trainer[];
 
@@ -72,11 +98,12 @@ export const api = createApi({
       return headers;
     },
   }),
+  tagTypes: ['TrainerRequest'],
   endpoints: (builder) => ({
     getTrainers: builder.query<GetTrainersResponse, GetTrainersRequest>({
       query: (body) => ({
-        url: '/trainers',
-        method: 'PATCH',
+        url: '/trainers/list',
+        method: 'POST',
         body,
       }),
     }),
@@ -92,6 +119,30 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
+    getTrainerHiringFormTemplate: builder.query<
+      GetTrainerHiringFormTemplateResponse,
+      GetTrainerHiringFormTemplateRequest
+    >({
+      query: ({ trainerId }) => ({
+        url: `trainers/${trainerId}/hiring-form-template`,
+        method: 'GET',
+      }),
+    }),
+    getTrainerRequest: builder.query<GetTrainerRequestResponse, GetTrainerRequestRequest>({
+      query: ({ trainerId }) => ({
+        url: `trainers/${trainerId}/request/${process.env.REACT_APP_CUSTOMER_ID}`,
+        method: 'GET',
+      }),
+      providesTags: ['TrainerRequest'],
+    }),
+    postTrainerRequest: builder.mutation<PostTrainerRequestResponse, PostTrainerRequestRequest>({
+      query: ({ trainerId, form }) => ({
+        url: `trainers/${trainerId}/request/${process.env.REACT_APP_CUSTOMER_ID}`,
+        method: 'POST',
+        body: { form },
+      }),
+      invalidatesTags: ['TrainerRequest'],
+    }),
     getFavoriteTrainers: builder.query<GetFavoriteTrainersResponse, GetFavoriteTrainersRequest>({
       query: () => ({
         url: `customers/${process.env.REACT_APP_CUSTOMER_ID}/favorite-trainers`,
@@ -106,7 +157,7 @@ export const api = createApi({
       }),
       onQueryStarted({ trainer, isFavorite }, { dispatch, queryFulfilled }) {
         const result = dispatch(
-          api.util.updateQueryData('getFavoriteTrainers', {}, (draft) => {
+          api.util.updateQueryData('getFavoriteTrainers', undefined, (draft) => {
             return isFavorite ? draft.concat(trainer) : draft.filter(({ id }) => id !== trainer.id);
           })
         );
@@ -120,6 +171,9 @@ export const {
   useGetTrainersQuery,
   useGetTrainerDetailsQuery,
   useGetTrainerReviewsQuery,
+  useGetTrainerRequestQuery,
+  useGetTrainerHiringFormTemplateQuery,
   useGetFavoriteTrainersQuery,
+  usePostTrainerRequestMutation,
   usePatchFavoriteTrainersMutation,
 } = api;

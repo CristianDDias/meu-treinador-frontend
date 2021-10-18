@@ -27,4 +27,11 @@ export const styles = {
       marginRight: (theme) => theme.spacing(1),
     },
   } as SxProps<Theme>,
+
+  loading: {
+    padding: (theme) => theme.spacing(1, 0),
+    '& > :not(:last-child)': {
+      marginBottom: (theme) => theme.spacing(1),
+    },
+  } as SxProps<Theme>,
 };

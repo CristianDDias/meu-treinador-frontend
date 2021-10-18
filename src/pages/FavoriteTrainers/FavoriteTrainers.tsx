@@ -7,7 +7,7 @@ import { useGetFavoriteTrainersQuery } from '../../redux/api';
 import { styles } from './FavoriteTrainers.jss';
 
 export const FavoriteTrainers: React.FC = () => {
-  const { data = [], isLoading, isSuccess, isError } = useGetFavoriteTrainersQuery({});
+  const { data = [], isLoading, isSuccess, isError } = useGetFavoriteTrainersQuery();
 
   return (
     <Box sx={styles.container}>

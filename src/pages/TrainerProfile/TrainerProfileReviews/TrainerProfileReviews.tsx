@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Rating from '@mui/material/Rating';
-import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
+import Skeleton from '@mui/material/Skeleton';
 import { Card } from '../../../components/Card/Card';
 import { formatRatingValue } from '../../../utils/formatters';
 import { useGetTrainerReviewsQuery } from '../../../redux/api';
@@ -51,7 +51,15 @@ export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = ({ tr
         <Typography variant="body2">Não foi possível carregar as avaliações do Personal Trainer.</Typography>
       )}
 
-      {isLoading && <CircularProgress color="primary" style={{ alignSelf: 'center' }} />}
+      {isLoading && (
+        <Box sx={styles.loading}>
+          <Box display="flex" justifyContent="space-between">
+            <Skeleton variant="rectangular" width="100px" height="0.875rem" />
+            <Skeleton variant="rectangular" width="120px" height="0.875rem" />
+          </Box>
+          <Skeleton variant="rectangular" width="100%" height="0.875rem" />
+        </Box>
+      )}
     </Card>
   );
 };

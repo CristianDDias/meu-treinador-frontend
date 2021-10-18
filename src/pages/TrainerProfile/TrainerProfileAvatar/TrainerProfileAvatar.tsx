@@ -17,7 +17,7 @@ interface TrainerProfileAvatarProps {
 }
 
 export const TrainerProfileAvatar: React.FC<TrainerProfileAvatarProps> = ({ trainer }) => {
-  const { data = [], isSuccess } = useGetFavoriteTrainersQuery({});
+  const { data = [], isSuccess } = useGetFavoriteTrainersQuery();
   const [patchFavoriteTrainers] = usePatchFavoriteTrainersMutation();
 
   const isFavorite = isSuccess ? data.some(({ id }) => id === trainer.id) : false;

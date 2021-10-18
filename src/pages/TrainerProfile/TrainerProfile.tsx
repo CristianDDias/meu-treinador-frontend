@@ -41,7 +41,7 @@ export const TrainerProfile: React.FC = () => {
     return (
       <Box sx={styles.container}>
         <TrainerProfileAvatar trainer={data} />
-        <TrainerProfileActions phone={data.contacts.phone} />
+        <TrainerProfileActions trainerId={trainerId} phone={data.contacts.phone} />
         <TrainerProfileSocialMedia />
         <TrainerProfileInfo title="Sobre mim" text={data.description} />
         <TrainerProfileInfo title="Qualificações" text={data.qualifications} />

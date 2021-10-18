@@ -34,7 +34,7 @@ const ListboxComponent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<H
       itemData.push(...(item.children || []));
     });
     const itemCount = itemData.length;
-    const itemSize = 50;
+    const itemSize = 48;
     const height = itemCount > 8 ? 8 * itemSize : itemCount * itemSize;
     return (
       <div ref={ref}>
@@ -64,7 +64,10 @@ const ListboxComponent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<H
               }
               return (
                 <li {...props} style={inlineStyle}>
-                  <Checkbox checked={selected} sx={{ marginRight: (theme) => theme.spacing(1) }} />
+                  <Checkbox
+                    checked={selected}
+                    sx={{ padding: 0, marginRight: (theme) => theme.spacing(2) }}
+                  />
                   {label}
                 </li>
               );
@@ -79,20 +82,27 @@ const ListboxComponent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<H
 interface SelectAutocompleteVirtualizedProps<T> {
   options: T[];
   value?: T[];
+  error?: boolean;
+  helperText?: React.ReactNode;
   onChange: (value: T[]) => void;
   groupBy?: (option: T) => string;
   getOptionLabel?: (option: T) => string;
   getOptionLabelList?: (option: T) => string;
 }
 
-export function SelectAutocompleteVirtualized<T>({
-  options,
-  value,
-  onChange,
-  groupBy,
-  getOptionLabel,
-  getOptionLabelList,
-}: SelectAutocompleteVirtualizedProps<T>) {
+function SelectAutocompleteVirtualizedInner<T>(
+  {
+    options,
+    value,
+    error,
+    helperText,
+    onChange,
+    groupBy,
+    getOptionLabel,
+    getOptionLabelList,
+  }: SelectAutocompleteVirtualizedProps<T>,
+  ref?: React.ForwardedRef<unknown>
+) {
   const handleChange = (_: any, newValue: T[]) => {
     onChange(newValue);
   };
@@ -105,11 +115,14 @@ export function SelectAutocompleteVirtualized<T>({
       size="small"
       ListboxComponent={ListboxComponent}
       PopperComponent={PopperComponent}
+      ref={ref}
       value={value}
       options={options}
       groupBy={groupBy}
       getOptionLabel={getOptionLabel}
-      renderInput={(params) => <TextField {...params} placeholder="Selecione" />}
+      renderInput={(params) => (
+        <TextField {...params} placeholder="Selecione" error={error} helperText={helperText} />
+      )}
       renderGroup={(params) => params}
       renderOption={(props, option, { selected }) => ({
         props,
@@ -126,9 +139,6 @@ export function SelectAutocompleteVirtualized<T>({
   );
 }
 
-SelectAutocompleteVirtualized.defaultProps = {
-  value: undefined,
-  groupBy: undefined,
-  getOptionLabel: undefined,
-  getOptionLabelList: undefined,
-};
+export const SelectAutocompleteVirtualized = React.forwardRef(SelectAutocompleteVirtualizedInner) as <T>(
+  props: SelectAutocompleteVirtualizedProps<T> & { ref?: React.ForwardedRef<unknown> }
+) => ReturnType<typeof SelectAutocompleteVirtualizedInner>;
