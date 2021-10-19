@@ -12,10 +12,10 @@ import Divider from '@mui/material/Divider';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import IconButton from '@mui/material/IconButton';
+import MobileTimePicker from '@mui/lab/MobileTimePicker';
 import Slide from '@mui/material/Slide';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import TimePicker from '@mui/lab/TimePicker';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Theme } from '@mui/material/styles';
@@ -34,6 +34,27 @@ import { FilterState } from '../../../../redux/filter/slice';
 const Transition = React.forwardRef((props: any, ref: any) => {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+const TimePicker = (props: {
+  label: string;
+  ref: React.Ref<HTMLDivElement>;
+  value: any;
+  onAccept: (date: any) => void;
+}) => {
+  const { label, ...rest } = props;
+  return (
+    <MobileTimePicker
+      {...rest}
+      renderInput={(params) => <TextField {...params} fullWidth size="small" label={label} />}
+      cancelText="Cancelar"
+      okText="OK"
+      toolbarTitle={null}
+      ampm={false}
+      ampmInClock={false}
+      onChange={() => {}}
+    />
+  );
+};
 
 const toDate = (time: string): Date => {
   return dayjs(`2021-01-01 ${time}`, 'YYYY-MM-DD HH:mm').toDate();
@@ -305,36 +326,14 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
                 control={control}
                 name="schedules.startTime"
                 render={({ field }) => (
-                  <TimePicker
-                    renderInput={(params) => <TextField {...params} fullWidth size="small" label="Inicial" />}
-                    cancelText="Cancelar"
-                    okText="OK"
-                    toolbarTitle="Horário inicial"
-                    ampm={false}
-                    ampmInClock={false}
-                    ref={field.ref}
-                    value={field.value}
-                    onAccept={field.onChange}
-                    onChange={() => {}}
-                  />
+                  <TimePicker label="Inicial" ref={field.ref} value={field.value} onAccept={field.onChange} />
                 )}
               />
               <Controller
                 control={control}
                 name="schedules.endTime"
                 render={({ field }) => (
-                  <TimePicker
-                    renderInput={(params) => <TextField {...params} fullWidth size="small" label="Final" />}
-                    cancelText="Cancelar"
-                    okText="OK"
-                    toolbarTitle="Horário final"
-                    ampm={false}
-                    ampmInClock={false}
-                    ref={field.ref}
-                    value={field.value}
-                    onAccept={field.onChange}
-                    onChange={() => {}}
-                  />
+                  <TimePicker label="Final" ref={field.ref} value={field.value} onAccept={field.onChange} />
                 )}
               />
             </Stack>

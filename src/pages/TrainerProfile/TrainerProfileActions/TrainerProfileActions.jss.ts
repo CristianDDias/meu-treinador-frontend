@@ -1,5 +1,6 @@
 import { SxProps } from '@mui/system/styleFunctionSx';
 import { Theme } from '@mui/material/styles';
+import { alertClasses } from '@mui/material/Alert';
 
 export const styles = {
   container: {
@@ -11,7 +12,7 @@ export const styles = {
   } as SxProps<Theme>,
 
   alert: {
-    '& .MuiAlert-message': {
+    [`& .${alertClasses.message}`]: {
       width: '100%',
       display: 'flex',
       flexDirection: 'column',

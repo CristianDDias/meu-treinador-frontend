@@ -48,7 +48,7 @@ function SelectAutocompleteInner<T>(
       )}
       renderGroup={(params) => params}
       renderOption={(props, option, { selected }) => (
-        <li {...props}>
+        <li {...props} style={{ minHeight: 48 }}>
           <Checkbox checked={selected} sx={{ padding: 0, marginRight: (theme) => theme.spacing(2) }} />
           {getOptionLabelList ? getOptionLabelList(option) : option}
         </li>
