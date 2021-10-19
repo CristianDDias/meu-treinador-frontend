@@ -59,23 +59,21 @@ export const TrainerHiringForm: React.FC<TrainerHiringFormProps> = ({
       TransitionComponent={Transition}
       onClose={onClose}
     >
-      {result.isSuccess && (
-        <DialogTitle>
-          {result.data.name}
-          <IconButton
-            aria-label="close"
-            sx={{
-              position: 'absolute',
-              right: (theme) => theme.spacing(2),
-              top: (theme) => theme.spacing(2),
-              color: (theme) => theme.palette.grey[500],
-            }}
-            onClick={onClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-      )}
+      <DialogTitle>
+        {result.isSuccess ? result.data.name : '...'}
+        <IconButton
+          aria-label="close"
+          sx={{
+            position: 'absolute',
+            right: (theme) => theme.spacing(2),
+            top: (theme) => theme.spacing(2),
+            color: (theme) => theme.palette.grey[500],
+          }}
+          onClick={onClose}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
 
       <DialogContent dividers>
         {result.isLoading && (
@@ -97,13 +95,15 @@ export const TrainerHiringForm: React.FC<TrainerHiringFormProps> = ({
         )}
       </DialogContent>
 
-      {result.isSuccess && (
-        <DialogActions>
-          <Button variant="contained" onClick={formMethods.handleSubmit(handleSubmit)}>
-            Enviar
-          </Button>
-        </DialogActions>
-      )}
+      <DialogActions>
+        <Button
+          variant="contained"
+          onClick={formMethods.handleSubmit(handleSubmit)}
+          disabled={!result.isSuccess}
+        >
+          Enviar
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 };

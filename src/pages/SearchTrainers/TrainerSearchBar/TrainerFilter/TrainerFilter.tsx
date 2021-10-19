@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import React, { useCallback, useEffect } from 'react';
+import dayjs from 'dayjs';
+import { Controller, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import CloseIcon from '@mui/icons-material/Close';
@@ -34,100 +35,100 @@ const Transition = React.forwardRef((props: any, ref: any) => {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const toDate = (time: string): Dayjs => {
-  return dayjs(`2021-01-01 ${time}`, 'YYYY-MM-DD HH:mm');
+const toDate = (time: string): Date => {
+  return dayjs(`2021-01-01 ${time}`, 'YYYY-MM-DD HH:mm').toDate();
 };
 
-const toString = (date: Dayjs): string => {
-  return date.format('HH:mm');
+const toString = (date: Date): string => {
+  return dayjs(date).format('HH:mm');
 };
 
-const toFields = (filter: Omit<FilterState, 'name'>): FilterFields => {
+const toFilterFields = (filterState: Omit<FilterState, 'name'>): FilterFields => {
   return {
-    specialties: filter.specialties || [],
+    specialties: filterState.specialties || [],
     locations: {
-      cities: filter.locations?.cities ?? [],
-      isProvidingOnlineService: filter.locations?.isProvidingOnlineService || false,
-      isProvidingInHomeService: filter.locations?.isProvidingInHomeService || false,
+      cities: filterState.locations?.cities ?? [],
+      isProvidingOnlineService: filterState.locations?.isProvidingOnlineService || false,
+      isProvidingInHomeService: filterState.locations?.isProvidingInHomeService || false,
     },
     schedules: {
-      weekdays: filter.schedules?.weekdays ?? [],
-      startTime: toDate(filter.schedules?.startTime ?? '00:00'),
-      endTime: toDate(filter.schedules?.endTime ?? '23:59'),
+      weekdays: filterState.schedules?.weekdays ?? [],
+      startTime: toDate(filterState.schedules?.startTime ?? '00:00'),
+      endTime: toDate(filterState.schedules?.endTime ?? '23:59'),
     },
     rating: {
-      min: filter.rating?.min?.toString() || '',
-      max: filter.rating?.max?.toString() || '',
+      min: filterState.rating?.min?.toString() || '',
+      max: filterState.rating?.max?.toString() || '',
     },
     price: {
-      min: filter.price?.min?.toString() || '',
-      max: filter.price?.max?.toString() || '',
+      min: filterState.price?.min?.toString() || '',
+      max: filterState.price?.max?.toString() || '',
     },
-    ethnicities: filter.ethnicities || [],
-    genders: filter.genders || [],
-    paymentMethods: filter.paymentMethods || [],
+    ethnicities: filterState.ethnicities || [],
+    genders: filterState.genders || [],
+    paymentMethods: filterState.paymentMethods || [],
   };
 };
 
-const toFilter = (fields: FilterFields): Omit<FilterState, 'name'> => {
+const toFilterState = (filterFields: FilterFields): Omit<FilterState, 'name'> => {
   const filter: Omit<FilterState, 'name'> = {};
-  if (fields.specialties.length) {
-    filter.specialties = fields.specialties;
+  if (filterFields.specialties.length) {
+    filter.specialties = filterFields.specialties;
   }
-  if (fields.locations.cities.length) {
+  if (filterFields.locations.cities.length) {
     filter.locations = filter.locations ?? {};
-    filter.locations.cities = fields.locations.cities;
+    filter.locations.cities = filterFields.locations.cities;
   }
-  if (fields.locations.isProvidingOnlineService) {
+  if (filterFields.locations.isProvidingOnlineService) {
     filter.locations = filter.locations ?? {};
-    filter.locations.isProvidingOnlineService = fields.locations.isProvidingOnlineService;
+    filter.locations.isProvidingOnlineService = filterFields.locations.isProvidingOnlineService;
   }
-  if (fields.locations.isProvidingInHomeService) {
+  if (filterFields.locations.isProvidingInHomeService) {
     filter.locations = filter.locations ?? {};
-    filter.locations.isProvidingInHomeService = fields.locations.isProvidingInHomeService;
+    filter.locations.isProvidingInHomeService = filterFields.locations.isProvidingInHomeService;
   }
-  if (fields.schedules.weekdays.length) {
+  if (filterFields.schedules.weekdays.length) {
     filter.schedules = filter.schedules ?? {};
-    filter.schedules.weekdays = fields.schedules.weekdays;
+    filter.schedules.weekdays = filterFields.schedules.weekdays;
   }
-  if (fields.schedules.startTime) {
-    const time = toString(fields.schedules.startTime);
+  if (filterFields.schedules.startTime) {
+    const time = toString(filterFields.schedules.startTime);
     if (time !== '00:00') {
       filter.schedules = filter.schedules ?? {};
       filter.schedules.startTime = time;
     }
   }
-  if (fields.schedules.endTime) {
-    const time = toString(fields.schedules.endTime);
+  if (filterFields.schedules.endTime) {
+    const time = toString(filterFields.schedules.endTime);
     if (time !== '23:59') {
       filter.schedules = filter.schedules ?? {};
       filter.schedules.endTime = time;
     }
   }
-  if (fields.rating.min) {
+  if (filterFields.rating.min) {
     filter.rating = filter.rating ?? {};
-    filter.rating.min = Number(fields.rating.min);
+    filter.rating.min = Number(filterFields.rating.min);
   }
-  if (fields.rating.max) {
+  if (filterFields.rating.max) {
     filter.rating = filter.rating ?? {};
-    filter.rating.max = Number(fields.rating.max);
+    filter.rating.max = Number(filterFields.rating.max);
   }
-  if (fields.price.min) {
+  if (filterFields.price.min) {
     filter.price = filter.price ?? {};
-    filter.price.min = Number(fields.price.min);
+    filter.price.min = Number(filterFields.price.min);
   }
-  if (fields.price.max) {
+  if (filterFields.price.max) {
     filter.price = filter.price ?? {};
-    filter.price.max = Number(fields.price.max);
+    filter.price.max = Number(filterFields.price.max);
   }
-  if (fields.ethnicities.length) {
-    filter.ethnicities = fields.ethnicities;
+  if (filterFields.ethnicities.length) {
+    filter.ethnicities = filterFields.ethnicities;
   }
-  if (fields.genders.length) {
-    filter.genders = fields.genders;
+  if (filterFields.genders.length) {
+    filter.genders = filterFields.genders;
   }
-  if (fields.paymentMethods.length) {
-    filter.paymentMethods = fields.paymentMethods;
+  if (filterFields.paymentMethods.length) {
+    filter.paymentMethods = filterFields.paymentMethods;
   }
   return filter;
 };
@@ -141,8 +142,8 @@ interface FilterFields {
   };
   schedules: {
     weekdays: string[];
-    startTime: Dayjs | null;
-    endTime: Dayjs | null;
+    startTime: Date;
+    endTime: Date;
   };
   rating: {
     min: string;
@@ -164,88 +165,46 @@ interface TrainerFilterProps {
   onClose: () => void;
 }
 
-// #TODO: Aplicar https://react-hook-form.com/ para controlar formulário
-//        - Ver TrainerHiringForm.tsx
-
 export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFilter, onClose }) => {
-  const [localFilter, setLocalFilter] = useState<FilterFields>(toFields(filter));
+  const { control, handleSubmit, setValue } = useForm({
+    defaultValues: toFilterFields(filter),
+  });
+
+  const setValues = useCallback(
+    (filterState: Omit<FilterState, 'name'>): void => {
+      const filterFields = toFilterFields(filterState);
+      setValue('specialties', filterFields.specialties);
+      setValue('locations.cities', filterFields.locations.cities);
+      setValue('locations.isProvidingOnlineService', filterFields.locations.isProvidingOnlineService);
+      setValue('locations.isProvidingInHomeService', filterFields.locations.isProvidingInHomeService);
+      setValue('schedules.weekdays', filterFields.schedules.weekdays);
+      setValue('schedules.startTime', filterFields.schedules.startTime);
+      setValue('schedules.endTime', filterFields.schedules.endTime);
+      setValue('rating.min', filterFields.rating.min);
+      setValue('rating.max', filterFields.rating.max);
+      setValue('price.min', filterFields.price.min);
+      setValue('price.max', filterFields.price.max);
+      setValue('ethnicities', filterFields.ethnicities);
+      setValue('genders', filterFields.genders);
+      setValue('paymentMethods', filterFields.paymentMethods);
+    },
+    [setValue]
+  );
 
   useEffect(() => {
     if (open) {
-      setLocalFilter(toFields(filter));
+      setValues(filter);
     }
-  }, [open, filter]);
+  }, [open, filter, setValues]);
 
   const shouldUseFullScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.only('xs'));
 
-  const handleApply = () => {
-    onFilter(toFilter(localFilter));
+  const handleApply = (filterFields: FilterFields) => {
+    onFilter(toFilterState(filterFields));
   };
 
   const handleClear = () => {
-    setLocalFilter(toFields({}));
-  };
-
-  const handleChangeSpecialties = (value: string[]) => {
-    setLocalFilter((state) => ({ ...state, specialties: value }));
-  };
-
-  const handleChangeCities = (value: { city: string; state: string }[]) => {
-    setLocalFilter((state) => ({ ...state, locations: { ...state.locations, cities: value } }));
-  };
-
-  const handleChangeIsProvidingOnlineService = (_: any, value: boolean) => {
-    setLocalFilter((state) => ({
-      ...state,
-      locations: { ...state.locations, isProvidingOnlineService: value },
-    }));
-  };
-
-  const handleChangeIsProvidingInHomeService = (_: any, value: boolean) => {
-    setLocalFilter((state) => ({
-      ...state,
-      locations: { ...state.locations, isProvidingInHomeService: value },
-    }));
-  };
-
-  const handleChangeWeekdays = (value: string[]) => {
-    setLocalFilter((state) => ({ ...state, schedules: { ...state.schedules, weekdays: value } }));
-  };
-
-  const handleChangeStartTime = (value: Dayjs | null) => {
-    setLocalFilter((state) => ({ ...state, schedules: { ...state.schedules, startTime: value } }));
-  };
-
-  const handleChangeEndTime = (value: Dayjs | null) => {
-    setLocalFilter((state) => ({ ...state, schedules: { ...state.schedules, endTime: value } }));
-  };
-
-  const handleChangeRatingMin = (value: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalFilter((state) => ({ ...state, rating: { ...state.rating, min: value.target.value } }));
-  };
-
-  const handleChangeRatingMax = (value: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalFilter((state) => ({ ...state, rating: { ...state.rating, max: value.target.value } }));
-  };
-
-  const handleChangePriceMin = (value: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalFilter((state) => ({ ...state, price: { ...state.price, min: value.target.value } }));
-  };
-
-  const handleChangePriceMax = (value: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalFilter((state) => ({ ...state, price: { ...state.price, max: value.target.value } }));
-  };
-
-  const handleChangeEthnicities = (value: string[]) => {
-    setLocalFilter((state) => ({ ...state, ethnicities: value }));
-  };
-
-  const handleChangeGenders = (value: string[]) => {
-    setLocalFilter((state) => ({ ...state, genders: value }));
-  };
-
-  const handleChangePaymentMethods = (value: string[]) => {
-    setLocalFilter((state) => ({ ...state, paymentMethods: value }));
+    setValues({});
   };
 
   return (
@@ -278,10 +237,10 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
             <Typography component="legend" fontWeight={(theme) => theme.typography.fontWeightMedium}>
               Especialidades
             </Typography>
-            <SelectAutocomplete
-              options={specialtyOptions}
-              value={localFilter.specialties}
-              onChange={handleChangeSpecialties}
+            <Controller
+              control={control}
+              name="specialties"
+              render={({ field }) => <SelectAutocomplete {...field} options={specialtyOptions} />}
             />
           </Stack>
 
@@ -289,26 +248,45 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
             <Typography component="legend" fontWeight={(theme) => theme.typography.fontWeightMedium}>
               Locais
             </Typography>
-            <SelectAutocompleteVirtualized
-              options={cityOptions}
-              value={localFilter.locations.cities}
-              onChange={handleChangeCities}
-              groupBy={(option) => option.state}
-              getOptionLabel={(option) => `${option.city} - ${option.state}`}
-              getOptionLabelList={(option) => option.city}
+            <Controller
+              control={control}
+              name="locations.cities"
+              render={({ field }) => (
+                <SelectAutocompleteVirtualized
+                  {...field}
+                  options={cityOptions}
+                  groupBy={(option) => option.state}
+                  getOptionLabel={(option) => `${option.city} - ${option.state}`}
+                  getOptionLabelList={(option) => option.city}
+                />
+              )}
             />
             <FormGroup row>
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Online / Remoto"
-                checked={localFilter.locations.isProvidingOnlineService}
-                onChange={handleChangeIsProvidingOnlineService}
+              <Controller
+                control={control}
+                name="locations.isProvidingOnlineService"
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="Online / Remoto"
+                    ref={field.ref}
+                    checked={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Domicílio"
-                checked={localFilter.locations.isProvidingInHomeService}
-                onChange={handleChangeIsProvidingInHomeService}
+              <Controller
+                control={control}
+                name="locations.isProvidingInHomeService"
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="Domicílio"
+                    ref={field.ref}
+                    checked={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
             </FormGroup>
           </Stack>
@@ -317,33 +295,47 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
             <Typography component="legend" fontWeight={(theme) => theme.typography.fontWeightMedium}>
               Horários
             </Typography>
-            <SelectAutocomplete
-              options={weekdayOptions}
-              value={localFilter.schedules.weekdays}
-              onChange={handleChangeWeekdays}
+            <Controller
+              control={control}
+              name="schedules.weekdays"
+              render={({ field }) => <SelectAutocomplete {...field} options={weekdayOptions} />}
             />
             <Stack spacing={2} direction="row">
-              <TimePicker
-                renderInput={(params) => <TextField {...params} fullWidth size="small" label="Inicial" />}
-                cancelText="Cancelar"
-                okText="OK"
-                toolbarTitle="Horário inicial"
-                ampm={false}
-                ampmInClock={false}
-                value={localFilter.schedules.startTime}
-                onAccept={handleChangeStartTime}
-                onChange={() => {}}
+              <Controller
+                control={control}
+                name="schedules.startTime"
+                render={({ field }) => (
+                  <TimePicker
+                    renderInput={(params) => <TextField {...params} fullWidth size="small" label="Inicial" />}
+                    cancelText="Cancelar"
+                    okText="OK"
+                    toolbarTitle="Horário inicial"
+                    ampm={false}
+                    ampmInClock={false}
+                    ref={field.ref}
+                    value={field.value}
+                    onAccept={field.onChange}
+                    onChange={() => {}}
+                  />
+                )}
               />
-              <TimePicker
-                renderInput={(params) => <TextField {...params} fullWidth size="small" label="Final" />}
-                cancelText="Cancelar"
-                okText="OK"
-                toolbarTitle="Horário final"
-                ampm={false}
-                ampmInClock={false}
-                value={localFilter.schedules.endTime}
-                onAccept={handleChangeEndTime}
-                onChange={() => {}}
+              <Controller
+                control={control}
+                name="schedules.endTime"
+                render={({ field }) => (
+                  <TimePicker
+                    renderInput={(params) => <TextField {...params} fullWidth size="small" label="Final" />}
+                    cancelText="Cancelar"
+                    okText="OK"
+                    toolbarTitle="Horário final"
+                    ampm={false}
+                    ampmInClock={false}
+                    ref={field.ref}
+                    value={field.value}
+                    onAccept={field.onChange}
+                    onChange={() => {}}
+                  />
+                )}
               />
             </Stack>
           </Stack>
@@ -353,21 +345,19 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
               Avaliação
             </Typography>
             <Stack spacing={2} direction="row">
-              <TextField
-                fullWidth
-                size="small"
-                type="number"
-                label="Mínima"
-                value={localFilter.rating.min}
-                onChange={handleChangeRatingMin}
+              <Controller
+                control={control}
+                name="rating.min"
+                render={({ field }) => (
+                  <TextField {...field} fullWidth size="small" type="number" label="Mínima" />
+                )}
               />
-              <TextField
-                fullWidth
-                size="small"
-                type="number"
-                label="Máxima"
-                value={localFilter.rating.max}
-                onChange={handleChangeRatingMax}
+              <Controller
+                control={control}
+                name="rating.max"
+                render={({ field }) => (
+                  <TextField {...field} fullWidth size="small" type="number" label="Máxima" />
+                )}
               />
             </Stack>
           </Stack>
@@ -377,21 +367,19 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
               Preço
             </Typography>
             <Stack spacing={2} direction="row">
-              <TextField
-                fullWidth
-                size="small"
-                type="number"
-                label="Mínimo"
-                value={localFilter.price.min}
-                onChange={handleChangePriceMin}
+              <Controller
+                control={control}
+                name="price.min"
+                render={({ field }) => (
+                  <TextField {...field} fullWidth size="small" type="number" label="Mínimo" />
+                )}
               />
-              <TextField
-                fullWidth
-                size="small"
-                type="number"
-                label="Máximo"
-                value={localFilter.price.max}
-                onChange={handleChangePriceMax}
+              <Controller
+                control={control}
+                name="price.max"
+                render={({ field }) => (
+                  <TextField {...field} fullWidth size="small" type="number" label="Máximo" />
+                )}
               />
             </Stack>
           </Stack>
@@ -400,10 +388,10 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
             <Typography component="legend" fontWeight={(theme) => theme.typography.fontWeightMedium}>
               Etnias
             </Typography>
-            <SelectAutocomplete
-              options={ethnicityOptions}
-              value={localFilter.ethnicities}
-              onChange={handleChangeEthnicities}
+            <Controller
+              control={control}
+              name="ethnicities"
+              render={({ field }) => <SelectAutocomplete {...field} options={ethnicityOptions} />}
             />
           </Stack>
 
@@ -411,10 +399,10 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
             <Typography component="legend" fontWeight={(theme) => theme.typography.fontWeightMedium}>
               Gêneros
             </Typography>
-            <SelectAutocomplete
-              options={genderOptions}
-              value={localFilter.genders}
-              onChange={handleChangeGenders}
+            <Controller
+              control={control}
+              name="genders"
+              render={({ field }) => <SelectAutocomplete {...field} options={genderOptions} />}
             />
           </Stack>
 
@@ -422,10 +410,10 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
             <Typography component="legend" fontWeight={(theme) => theme.typography.fontWeightMedium}>
               Formas de pagamento
             </Typography>
-            <SelectAutocomplete
-              options={paymentMethodOptions}
-              value={localFilter.paymentMethods}
-              onChange={handleChangePaymentMethods}
+            <Controller
+              control={control}
+              name="paymentMethods"
+              render={({ field }) => <SelectAutocomplete {...field} options={paymentMethodOptions} />}
             />
           </Stack>
         </Stack>
@@ -434,7 +422,7 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
         <Button variant="outlined" onClick={handleClear}>
           Limpar
         </Button>
-        <Button variant="contained" onClick={handleApply}>
+        <Button variant="contained" onClick={handleSubmit(handleApply)}>
           Aplicar filtros
         </Button>
       </DialogActions>
