@@ -14,13 +14,14 @@ interface TrainerProfileReviewsProps {
   trainerId: string;
 }
 
+// #TODO: Criar componentes "ReviewList" e "ReviewListItem"
+
 export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = ({ trainerId }) => {
-  const { data = [], isLoading, isSuccess, isError } = useGetTrainerReviewsQuery({ trainerId });
+  const { data = [], isFetching, isSuccess, isError } = useGetTrainerReviewsQuery({ trainerId });
 
   return (
     <Card title={`Avaliações (${data.length})`}>
-      {isSuccess && data.length > 0 && (
-        // #TODO: Criar componentes "ReviewList" e "ReviewListItem"
+      {!isFetching && isSuccess && data.length > 0 && (
         <List disablePadding>
           {data.map((review, index) => (
             <ListItem key={review.id} disableGutters divider={index !== data.length - 1}>
@@ -43,15 +44,15 @@ export const TrainerProfileReviews: React.FC<TrainerProfileReviewsProps> = ({ tr
         </List>
       )}
 
-      {isSuccess && data.length === 0 && (
+      {!isFetching && isSuccess && data.length === 0 && (
         <Typography variant="body2">Personal Trainer não possui avaliações.</Typography>
       )}
 
-      {isError && (
+      {!isFetching && isError && (
         <Typography variant="body2">Não foi possível carregar as avaliações do Personal Trainer.</Typography>
       )}
 
-      {isLoading && (
+      {isFetching && (
         <Box sx={styles.loading}>
           <Box display="flex" justifyContent="space-between">
             <Skeleton variant="rectangular" width="100px" height="0.875rem" />

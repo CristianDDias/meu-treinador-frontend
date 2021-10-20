@@ -16,9 +16,9 @@ import { styles } from './TrainerProfile.jss';
 
 export const TrainerProfile: React.FC = () => {
   const { trainerId } = useParams<{ trainerId: string }>();
-  const { data, isLoading, isSuccess, isError } = useGetTrainerDetailsQuery({ trainerId });
+  const { data, isFetching, isSuccess, isError } = useGetTrainerDetailsQuery({ trainerId });
 
-  if (isLoading) {
+  if (isFetching) {
     return <TrainerProfileSkeleton />;
   }
 
@@ -29,11 +29,6 @@ export const TrainerProfile: React.FC = () => {
       </Box>
     );
   }
-
-  // #TODO: Substituir botões de contato? Opções:
-  // - Enviar mensagem
-  // - Agendar
-  // - Avaliar
 
   // #TODO: Criar card para exibir fotos adicionais
 

@@ -7,35 +7,35 @@ import { useGetFavoriteTrainersQuery } from '../../redux/api';
 import { styles } from './FavoriteTrainers.jss';
 
 export const FavoriteTrainers: React.FC = () => {
-  const { data = [], isLoading, isSuccess, isError } = useGetFavoriteTrainersQuery();
+  const { data = [], isFetching, isSuccess, isError } = useGetFavoriteTrainersQuery();
 
   return (
     <Box sx={styles.container}>
       <Typography sx={styles.label}>Favoritos ({isSuccess ? data.length : 0})</Typography>
 
-      <Box sx={styles.list}>
-        {isSuccess && data.length > 0 && <TrainerList trainers={data} />}
+      {!isFetching && isSuccess && data.length > 0 && (
+        <Box sx={styles.list}>
+          <TrainerList trainers={data} />
+        </Box>
+      )}
 
-        {isSuccess && data.length === 0 && (
-          <Box sx={styles.indicator}>
-            <Typography align="center">Você não possui Personal Trainers favoritos.</Typography>
-          </Box>
-        )}
+      {!isFetching && isSuccess && data.length === 0 && (
+        <Box sx={styles.indicator}>
+          <Typography align="center">Você não possui favoritos.</Typography>
+        </Box>
+      )}
 
-        {isError && (
-          <Box sx={styles.indicator}>
-            <Typography align="center">
-              Não foi possível carregar a lista de Personal Trainers favoritos.
-            </Typography>
-          </Box>
-        )}
+      {!isFetching && isError && (
+        <Box sx={styles.indicator}>
+          <Typography align="center">Não foi possível carregar a lista de favoritos.</Typography>
+        </Box>
+      )}
 
-        {isLoading && (
-          <Box sx={styles.indicator}>
-            <CircularProgress color="primary" />
-          </Box>
-        )}
-      </Box>
+      {isFetching && (
+        <Box sx={styles.indicator}>
+          <CircularProgress color="primary" />
+        </Box>
+      )}
     </Box>
   );
 };

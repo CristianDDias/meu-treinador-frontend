@@ -9,7 +9,11 @@ import Skeleton from '@mui/material/Skeleton';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { Card } from '../../../components/Card/Card';
 import { TrainerHiringForm } from './TrainerHiringForm/TrainerHiringForm';
-import { useGetTrainerRequestQuery, usePostTrainerRequestMutation } from '../../../redux/api';
+import {
+  useGetTrainerRequestQuery,
+  useCreateTrainerRequestMutation,
+  useDeclineTrainerRequestMutation,
+} from '../../../redux/api';
 import { TrainerRequestStatus, TrainerFormAnswer } from '../../../interfaces/trainer';
 import { styles } from './TrainerProfileActions.jss';
 
@@ -19,8 +23,9 @@ interface TrainerProfileActionsProps {
 }
 
 export const TrainerProfileActions: React.FC<TrainerProfileActionsProps> = ({ trainerId, phone }) => {
-  const { data, isLoading: isLoadingGet } = useGetTrainerRequestQuery({ trainerId });
-  const [postTrainerRequest, { isLoading: isLoadingPost }] = usePostTrainerRequestMutation();
+  const { data, isFetching } = useGetTrainerRequestQuery({ trainerId });
+  const [createTrainerRequest, { isLoading: isLoadingCreate }] = useCreateTrainerRequestMutation();
+  const [declineTrainerRequest, { isLoading: isLoadingDecline }] = useDeclineTrainerRequestMutation();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -32,13 +37,17 @@ export const TrainerProfileActions: React.FC<TrainerProfileActionsProps> = ({ tr
   };
 
   const handleSubmit = (formAnswers: TrainerFormAnswer[]) => {
-    postTrainerRequest({ trainerId, form: formAnswers });
+    createTrainerRequest({ trainerId, form: formAnswers });
     setOpen(false);
+  };
+
+  const handleDecline = () => {
+    declineTrainerRequest({ trainerId });
   };
 
   return (
     <Card>
-      {isLoadingGet || isLoadingPost ? (
+      {isFetching || isLoadingCreate || isLoadingDecline ? (
         <Box sx={styles.container}>
           <Skeleton variant="rectangular" width="100%" height={36} />
           <Skeleton variant="rectangular" width="100%" height={36} />
@@ -73,8 +82,9 @@ export const TrainerProfileActions: React.FC<TrainerProfileActionsProps> = ({ tr
             Mensagem
           </Button>
 
-          {data?.status === TrainerRequestStatus.Accepted && (
-            <Button variant="outlined" color="error" startIcon={<RemoveCircleIcon />}>
+          {(data?.status === TrainerRequestStatus.Pending ||
+            data?.status === TrainerRequestStatus.Accepted) && (
+            <Button variant="outlined" color="error" startIcon={<RemoveCircleIcon />} onClick={handleDecline}>
               Cancelar
             </Button>
           )}

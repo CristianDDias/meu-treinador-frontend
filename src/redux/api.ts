@@ -71,23 +71,35 @@ type GetTrainerRequestRequest = {
 
 type GetTrainerRequestResponse = TrainerRequest | undefined;
 
-type PostTrainerRequestRequest = {
+type CreateTrainerRequestRequest = {
   trainerId: string;
   form: TrainerFormAnswer[];
 };
 
-type PostTrainerRequestResponse = void;
+type CreateTrainerRequestResponse = void;
+
+type AcceptTrainerRequestRequest = {
+  trainerId: string;
+};
+
+type AcceptTrainerRequestResponse = void;
+
+type DeclineTrainerRequestRequest = {
+  trainerId: string;
+};
+
+type DeclineTrainerRequestResponse = void;
 
 type GetFavoriteTrainersRequest = void;
 
 type GetFavoriteTrainersResponse = Trainer[];
 
-type PatchFavoriteTrainersRequest = {
+type UpdateFavoriteTrainersRequest = {
   trainer: Trainer;
   isFavorite: boolean;
 };
 
-type PatchFavoriteTrainersResponse = void;
+type UpdateFavoriteTrainersResponse = void;
 
 export const api = createApi({
   reducerPath: 'meuTreinadorApi',
@@ -135,11 +147,25 @@ export const api = createApi({
       }),
       providesTags: ['TrainerRequest'],
     }),
-    postTrainerRequest: builder.mutation<PostTrainerRequestResponse, PostTrainerRequestRequest>({
+    createTrainerRequest: builder.mutation<CreateTrainerRequestResponse, CreateTrainerRequestRequest>({
       query: ({ trainerId, form }) => ({
         url: `trainers/${trainerId}/request/${process.env.REACT_APP_CUSTOMER_ID}`,
         method: 'POST',
         body: { form },
+      }),
+      invalidatesTags: ['TrainerRequest'],
+    }),
+    acceptTrainerRequest: builder.mutation<AcceptTrainerRequestResponse, AcceptTrainerRequestRequest>({
+      query: ({ trainerId }) => ({
+        url: `trainers/${trainerId}/request/${process.env.REACT_APP_CUSTOMER_ID}/accept`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['TrainerRequest'],
+    }),
+    declineTrainerRequest: builder.mutation<DeclineTrainerRequestResponse, DeclineTrainerRequestRequest>({
+      query: ({ trainerId }) => ({
+        url: `trainers/${trainerId}/request/${process.env.REACT_APP_CUSTOMER_ID}/decline`,
+        method: 'PATCH',
       }),
       invalidatesTags: ['TrainerRequest'],
     }),
@@ -149,7 +175,7 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
-    patchFavoriteTrainers: builder.mutation<PatchFavoriteTrainersResponse, PatchFavoriteTrainersRequest>({
+    updateFavoriteTrainers: builder.mutation<UpdateFavoriteTrainersResponse, UpdateFavoriteTrainersRequest>({
       query: ({ trainer, isFavorite }) => ({
         url: `customers/${process.env.REACT_APP_CUSTOMER_ID}/favorite-trainers`,
         method: 'PATCH',
@@ -171,9 +197,11 @@ export const {
   useGetTrainersQuery,
   useGetTrainerDetailsQuery,
   useGetTrainerReviewsQuery,
-  useGetTrainerRequestQuery,
   useGetTrainerHiringFormTemplateQuery,
+  useGetTrainerRequestQuery,
+  useCreateTrainerRequestMutation,
+  useAcceptTrainerRequestMutation,
+  useDeclineTrainerRequestMutation,
   useGetFavoriteTrainersQuery,
-  usePostTrainerRequestMutation,
-  usePatchFavoriteTrainersMutation,
+  useUpdateFavoriteTrainersMutation,
 } = api;

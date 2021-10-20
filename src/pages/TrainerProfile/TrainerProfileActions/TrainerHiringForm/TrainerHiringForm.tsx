@@ -34,16 +34,21 @@ export const TrainerHiringForm: React.FC<TrainerHiringFormProps> = ({
   onSubmit,
   onClose,
 }) => {
-  const result = useGetTrainerHiringFormTemplateQuery({ trainerId }, { skip: !open });
+  const query = useGetTrainerHiringFormTemplateQuery({ trainerId }, { skip: !open });
   const formMethods = useForm();
 
   const shouldUseFullScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.only('xs'));
 
+  // eslint-disable-next-line prefer-destructuring
+  const isFetching = query.isFetching;
+  const isSuccess = !query.isFetching && query.isSuccess;
+  const isError = !query.isFetching && query.isError;
+
   const handleSubmit = (answers: Record<string, string | string[]>) => {
-    if (result.isSuccess) {
+    if (isSuccess) {
       onSubmit(
         Object.values(answers).map((answer, index) => ({
-          ...result.data.form[index],
+          ...query.data.form[index],
           answer: answer as any,
         }))
       );
@@ -60,7 +65,7 @@ export const TrainerHiringForm: React.FC<TrainerHiringFormProps> = ({
       onClose={onClose}
     >
       <DialogTitle>
-        {result.isSuccess ? result.data.name : '...'}
+        {isSuccess ? query.data.name : '...'}
         <IconButton
           aria-label="close"
           sx={{
@@ -76,31 +81,27 @@ export const TrainerHiringForm: React.FC<TrainerHiringFormProps> = ({
       </DialogTitle>
 
       <DialogContent dividers>
-        {result.isLoading && (
+        {isFetching && (
           <Stack justifyContent="center" alignItems="center" height="100%">
             <CircularProgress color="primary" />
           </Stack>
         )}
 
-        {result.error && (
+        {isError && (
           <Stack justifyContent="center" alignItems="center" height="100%">
             <Typography variant="body2">Não foi possível carregar o formulário.</Typography>
           </Stack>
         )}
 
-        {result.isSuccess && (
+        {isSuccess && (
           <FormProvider {...formMethods}>
-            <TrainerHiringFormFields formQuestions={result.data.form} />
+            <TrainerHiringFormFields formQuestions={query.data.form} />
           </FormProvider>
         )}
       </DialogContent>
 
       <DialogActions>
-        <Button
-          variant="contained"
-          onClick={formMethods.handleSubmit(handleSubmit)}
-          disabled={!result.isSuccess}
-        >
+        <Button variant="contained" onClick={formMethods.handleSubmit(handleSubmit)} disabled={!isSuccess}>
           Enviar
         </Button>
       </DialogActions>

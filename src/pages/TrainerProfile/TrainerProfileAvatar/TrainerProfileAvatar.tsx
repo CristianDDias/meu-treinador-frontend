@@ -9,7 +9,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Card } from '../../../components/Card/Card';
 import { Trainer } from '../../../interfaces/trainer';
 import { formatRatingValue } from '../../../utils/formatters';
-import { useGetFavoriteTrainersQuery, usePatchFavoriteTrainersMutation } from '../../../redux/api';
+import { useGetFavoriteTrainersQuery, useUpdateFavoriteTrainersMutation } from '../../../redux/api';
 import { styles } from './TrainerProfileAvatar.jss';
 
 interface TrainerProfileAvatarProps {
@@ -18,12 +18,12 @@ interface TrainerProfileAvatarProps {
 
 export const TrainerProfileAvatar: React.FC<TrainerProfileAvatarProps> = ({ trainer }) => {
   const { data = [], isSuccess } = useGetFavoriteTrainersQuery();
-  const [patchFavoriteTrainers] = usePatchFavoriteTrainersMutation();
+  const [updateFavoriteTrainers] = useUpdateFavoriteTrainersMutation();
 
   const isFavorite = isSuccess ? data.some(({ id }) => id === trainer.id) : false;
 
   const handleClickFavorite = () => {
-    patchFavoriteTrainers({ trainer, isFavorite: !isFavorite });
+    updateFavoriteTrainers({ trainer, isFavorite: !isFavorite });
   };
 
   return (

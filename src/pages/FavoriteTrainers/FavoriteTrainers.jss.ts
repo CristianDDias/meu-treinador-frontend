@@ -22,7 +22,7 @@ export const styles = {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: (theme) => theme.spacing(2, 2, 4),
+    padding: (theme) => theme.spacing(2),
   } as SxProps<Theme>,
 
   label: {

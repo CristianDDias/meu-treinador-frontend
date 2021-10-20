@@ -20,7 +20,7 @@ export const TrainerHiringFormFields: React.FC<TrainerHiringFormFieldsProps> = (
       return '';
     }
     if (type === QuestionType.SingleChoice) {
-      return '';
+      return null;
     }
     if (type === QuestionType.MultipleChoice) {
       return [];
@@ -31,7 +31,7 @@ export const TrainerHiringFormFields: React.FC<TrainerHiringFormFieldsProps> = (
   return (
     <Stack spacing={2} divider={<Divider />}>
       {formQuestions.map((formQuestion, index) => (
-        <Stack spacing={2}>
+        <Stack spacing={2} key={index.toString()}>
           <Typography component="legend">{formQuestion.question}</Typography>
           <Controller
             control={control}
