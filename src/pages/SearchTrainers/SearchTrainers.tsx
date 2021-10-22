@@ -10,7 +10,10 @@ import { useGetTrainersQuery } from '../../redux/api';
 
 export const SearchTrainers: React.FC = () => {
   const filter = useAppSelector((state) => state.filter);
-  const { data, isFetching, isSuccess, isError } = useGetTrainersQuery({ filter });
+  const { data, isFetching, isSuccess, isError } = useGetTrainersQuery({
+    filter,
+    pagination: { page: 1, limit: 50 },
+  });
 
   return (
     <Box sx={styles.container}>
