@@ -1,6 +1,6 @@
 export const genderOptions = ['Feminino', 'Masculino', 'Não binário'];
 
-export const ethnicityOptions = ['Amarela', 'Branca', 'Indígena', 'Parda', 'Preta'];
+export const ethnicityOptions = ['Amarela', 'Branca', 'Indígena', 'Parda', 'Preta/Negra'];
 
 export const paymentMethodOptions = ['Boleto', 'Cartão de crédito', 'Cartão de débito', 'Dinheiro', 'PIX'];
 

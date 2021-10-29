@@ -385,7 +385,7 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
 
           <Stack spacing={2}>
             <Typography component="legend" fontWeight={(theme) => theme.typography.fontWeightMedium}>
-              Etnias
+              Raça/Cor
             </Typography>
             <Controller
               control={control}
@@ -396,7 +396,7 @@ export const TrainerFilter: React.FC<TrainerFilterProps> = ({ open, filter, onFi
 
           <Stack spacing={2}>
             <Typography component="legend" fontWeight={(theme) => theme.typography.fontWeightMedium}>
-              Gêneros
+              Sexo
             </Typography>
             <Controller
               control={control}
